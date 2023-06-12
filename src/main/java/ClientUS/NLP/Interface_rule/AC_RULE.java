@@ -1,4 +1,4 @@
-package NLP.interface_rule;
+package ClientUS.NLP.Interface_rule;
 
 public interface AC_RULE {
     void AC1();

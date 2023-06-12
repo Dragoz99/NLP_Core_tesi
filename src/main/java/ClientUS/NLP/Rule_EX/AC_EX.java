@@ -1,6 +1,6 @@
-package NLP.Rule_EX;
+package ClientUS.NLP.Rule_EX;
 
-import NLP.interface_rule.AC_RULE;
+import ClientUS.NLP.Interface_rule.AC_RULE;
 
 public class AC_EX implements AC_RULE {
     @Override

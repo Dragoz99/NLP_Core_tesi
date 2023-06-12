@@ -1,7 +1,7 @@
-package NLP.Rule_EX;
+package ClientUS.NLP.Rule_EX;
 
 
-import NLP.interface_rule.A_RULE;
+import ClientUS.NLP.Interface_rule.A_RULE;
 
 /**
  *

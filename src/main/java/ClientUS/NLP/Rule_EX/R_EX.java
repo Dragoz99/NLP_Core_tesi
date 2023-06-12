@@ -1,6 +1,6 @@
-package NLP.Rule_EX;
+package ClientUS.NLP.Rule_EX;
 
-import NLP.interface_rule.R_RULE;
+import ClientUS.NLP.Interface_rule.R_RULE;
 
 public class R_EX implements R_RULE {
     @Override

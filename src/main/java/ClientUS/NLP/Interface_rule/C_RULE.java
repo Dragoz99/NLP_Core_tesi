@@ -1,4 +1,4 @@
-package NLP.interface_rule;
+package ClientUS.NLP.Interface_rule;
 
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;

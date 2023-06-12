@@ -1,6 +1,6 @@
-package NLP.Rule_EX;
+package ClientUS.NLP.Rule_EX;
 
-import NLP.interface_rule.H_RULE;
+import ClientUS.NLP.Interface_rule.H_RULE;
 
 public class H_EX implements H_RULE {
     @Override

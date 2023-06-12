@@ -1,6 +1,6 @@
-package NLP.Rule_EX;
+package ClientUS.NLP.Rule_EX;
 
-import NLP.interface_rule.C_RULE;
+import ClientUS.NLP.Interface_rule.C_RULE;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 
