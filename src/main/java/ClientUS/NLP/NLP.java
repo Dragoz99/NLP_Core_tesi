@@ -106,12 +106,7 @@ public class NLP {
             SemanticGraph dependencies = sentence.get(SemanticGraphCoreAnnotations.EnhancedDependenciesAnnotation.class);
 
 
-           /* AC_rule(dependencies); // ac rule execute
-            System.out.println("[--------------[C_RULES]--------------]");
-            C_rule(dependencies);
-            System.out.println("[--------------[R_RULES]--------------]");
-            R_rule(dependencies);
-            */
+
 
 
         }
