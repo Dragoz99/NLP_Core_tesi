@@ -26,7 +26,7 @@ public class SchermataPrincipale extends JFrame {
         });
     }
 
-    /**
+    /**V
      * Create the frame.
      */
     public SchermataPrincipale() {

@@ -10,20 +10,27 @@ public class A_EX implements A_RULE {
     @Override
     public void A1() {
 
-    }
 
+
+    }
     @Override
     public void A2() {
 
-    }
 
+
+    }
     @Override
     public void A3() {
 
-    }
 
+
+
+    }
     @Override
     public void A4() {
+
+
+
 
     }
 

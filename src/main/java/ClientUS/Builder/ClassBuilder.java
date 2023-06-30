@@ -1,2 +1,4 @@
-package ClientUS.Builder;public class ClassBuilder {
+package ClientUS.Builder;
+
+public class ClassBuilder {
 }

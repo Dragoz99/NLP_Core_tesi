@@ -9,6 +9,8 @@ public interface UserInterface extends Remote {
     void searchByTag(String a) throws RemoteException;
     void downloardUserStory() throws RemoteException;
     void viewUserStoryPNG() throws RemoteException;
+    void testRMI() throws RemoteException;
+
 
 
 }

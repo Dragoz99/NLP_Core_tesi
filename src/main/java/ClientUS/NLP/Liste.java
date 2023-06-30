@@ -1,0 +1,71 @@
+package ClientUS.NLP;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Liste {
+    List<String> NN_list;
+    List<String> VB_list;
+    String Actor_of_story;
+    List<String> c_list;
+    List<String> r_list;
+    List<String> ac_list;
+
+
+    public List<String> getNN_list() {
+        return NN_list;
+    }
+
+    public void setNN_list(List<String> NN_list) {
+        this.NN_list = NN_list;
+    }
+
+    public List<String> getVB_list() {
+        return VB_list;
+    }
+
+    public void setVB_list(List<String> VB_list) {
+        this.VB_list = VB_list;
+    }
+
+    public String getActor_of_story() {
+        return Actor_of_story;
+    }
+
+    public void setActor_of_story(String actor_of_story) {
+        Actor_of_story = actor_of_story;
+    }
+
+    public List<String> getC_list() {
+        return c_list;
+    }
+
+    public void setC_list(List<String> c_list) {
+        this.c_list = c_list;
+    }
+
+    public List<String> getR_list() {
+        return r_list;
+    }
+
+    public void setR_list(List<String> r_list) {
+        this.r_list = r_list;
+    }
+
+    public List<String> getAc_list() {
+        return ac_list;
+    }
+
+    public void setAc_list(List<String> ac_list) {
+        this.ac_list = ac_list;
+    }
+
+    public Liste(){
+        NN_list = new ArrayList<>();
+        VB_list = new ArrayList<>();
+        c_list = new ArrayList<>();
+        r_list = new ArrayList<>();
+        ac_list = new ArrayList<>();
+    }
+
+}

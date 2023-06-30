@@ -1,5 +1,8 @@
 package ClientUS.NLP;
 
+import ClientUS.NLP.Rule_EX.AC_EX;
+import ClientUS.NLP.Rule_EX.C_EX;
+import ClientUS.NLP.Rule_EX.R_EX;
 import com.google.common.io.Files;
 import edu.stanford.nlp.ie.util.RelationTriple;
 import edu.stanford.nlp.ling.CoreAnnotations;
@@ -17,16 +20,13 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 public class NLP {
-
-
-
     List<CoreMap> sentences;
     public List<String> NN_list;
     public List<String> VB_list;
     public List<String> C_list;
 
     public File file;
-    public String Actor_of_story;
+    public Actor_of_story actor;
 
 
     //Liste Supplementali
@@ -34,16 +34,21 @@ public class NLP {
     Scanner scan = new Scanner(System.in);
 
 
-    public NLP(File file) throws IOException {
+    public NLP() throws IOException {
+
+
+        Liste liste = new Liste();
+
     // pre regole
     Properties props = new Properties();
     props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref,depparse,natlog,openie,coref");
     StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
     //file
-    this.file = file;
+
     this.NN_list = new ArrayList<String>();
     this.VB_list = new ArrayList<String>();
+    actor = new Actor_of_story("");
 
     // read some text from the file..
     file = new File("src/main/resources/sample-context.txt");
@@ -76,15 +81,17 @@ public class NLP {
 
                 // riempimento delle list
                 if(pos.equalsIgnoreCase("NN") ){
-                    NN_list.add(word);
+                    liste.getNN_list().add(word);
+                    //NN_list.add(word);
                 }
 
                 if(pos.equalsIgnoreCase("VB") || pos.equalsIgnoreCase("VBP")){
-                    VB_list.add(word);
+                     //VB_list.add(word);
+                    liste.getVB_list().add(word);
                 }
             }
-            for(int i =0;i<NN_list.size();i++){
-                System.out.println(NN_list.get(i));
+            for(int i =0;i<liste.getNN_list().size();i++){
+                System.out.println(liste.getNN_list().get(i));
             }
 
             //-----------------------------
@@ -102,18 +109,19 @@ public class NLP {
                             triple.objectLemmaGloss());
                 }
             }
-            System.out.println("[--------------[AC_RULES]--------------]");
-            SemanticGraph dependencies = sentence.get(SemanticGraphCoreAnnotations.EnhancedDependenciesAnnotation.class);
 
+            SemanticGraph dependencies = sentence.get(SemanticGraphCoreAnnotations
+                    .EnhancedDependenciesAnnotation.class);
 
-
-
-
+            System.out.println("[---------------[AC_RULES]--------------]");
+            AC_EX ac_ex = new AC_EX(dependencies,actor);
+            System.out.println("[---------------[C_RULES]---------------]");
+            C_EX c_ex = new C_EX(dependencies,actor,liste);
+            System.out.println("[---------------[R_RULES]---------------]");
+            R_EX r_ex = new R_EX(dependencies,liste);
         }
-
-
-
-
-
+    }
+    public static void main(String[] args) throws IOException {
+        new NLP();
     }
 }
