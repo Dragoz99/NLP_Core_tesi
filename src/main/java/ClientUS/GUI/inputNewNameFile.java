@@ -18,18 +18,15 @@ public class inputNewNameFile extends JFrame {
         jButton2 = new javax.swing.JButton();
 
 
+        setTitle("new file");
+        setResizable(false);
 
         jLabel1.setText("name: ");
 
         jButton1.setText("indietro");
 
         jButton2.setText("ok");
-        jButton2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new InputUserStory().setVisible(true);
-            }
-        });
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -63,6 +60,14 @@ public class inputNewNameFile extends JFrame {
         );
 
 
+        jButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new InputUserStory().setVisible(true);
+                setVisible(false);
+            }
+
+        });
         pack();
     }
 

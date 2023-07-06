@@ -79,9 +79,7 @@ public class SchermataPrincipale extends JFrame {
         btnNewButton_2.setBounds(275, 195, 89, 23);
         contentPane.add(btnNewButton_2);
 
-        JLabel lblNewLabel_1 = new JLabel("Versione 0.0");
-        lblNewLabel_1.setBounds(10, 236, 79, 14);
-        contentPane.add(lblNewLabel_1);
+
 
         JLabel lblNewLabel_2 = new JLabel("Status");
         lblNewLabel_2.setBounds(332, 236, 37, 14);
@@ -95,6 +93,10 @@ public class SchermataPrincipale extends JFrame {
         lblNewLabel_4.setBackground(Color.GRAY);
         lblNewLabel_4.setBounds(10, 91, 227, 93);
         contentPane.add(lblNewLabel_4);
+
+
+        setResizable(false);
+        setTitle("UserStory v1.0");
     }
 }
 

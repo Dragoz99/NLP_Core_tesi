@@ -1,6 +1,7 @@
 package ClientUS.NLP;
 
 import ClientUS.NLP.Rule_EX.AC_EX;
+import ClientUS.NLP.Rule_EX.A_EX;
 import ClientUS.NLP.Rule_EX.C_EX;
 import ClientUS.NLP.Rule_EX.R_EX;
 import com.google.common.io.Files;
@@ -118,7 +119,9 @@ public class NLP {
             System.out.println("[---------------[C_RULES]---------------]");
             C_EX c_ex = new C_EX(dependencies,actor,liste);
             System.out.println("[---------------[R_RULES]---------------]");
-            R_EX r_ex = new R_EX(dependencies,liste);
+            R_EX r_ex = new R_EX(dependencies,liste,actor);
+            System.out.println("[---------------[A_RULES]---------------]");
+            A_EX a_ex = new A_EX(dependencies,liste);
         }
     }
     public static void main(String[] args) throws IOException {

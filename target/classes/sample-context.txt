@@ -1,1 +1,1 @@
-As a potential customer, I want to be able to easily browse and search for products so that I can find what I am looking for.
+As a registered user, I want to be able to easily apply coupons and promotions so that I can save money on purchases.
