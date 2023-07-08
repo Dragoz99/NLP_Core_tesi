@@ -1,10 +1,10 @@
 package ClientUS;
 
+import ClientUS.GUI.SchermataPrincipaleV2;
 import ServerUS.UserInterface;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 
 public class ClientUS implements RemoteListener {
 
@@ -21,10 +21,15 @@ public class ClientUS implements RemoteListener {
         try{
             reg = LocateRegistry.getRegistry();
             stub = (UserInterface) reg.lookup("");
+            //RemoteListener rifRemoto = (RemoteListener) UnicastRemoteObject.exportObject(clientUS,port);
             //esecuzione codice
             stub.testRMI();
 
-            RemoteListener rifRemoto = (RemoteListener) UnicastRemoteObject.exportObject(clientUS,port);
+
+            // CONTINUARE CON L'RMI
+
+
+            new SchermataPrincipaleV2(stub);
 
             // avvio interfaccia grafica
 

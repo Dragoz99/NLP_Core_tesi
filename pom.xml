@@ -13,6 +13,8 @@
         <maven.compiler.target>18</maven.compiler.target>
     </properties>
     <dependencies>
+
+        <!-- STANFORD PARSER -->
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
@@ -36,11 +38,20 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/net.sourceforge.plantuml/plantuml -->
         <dependency>
             <groupId>net.sourceforge.plantuml</groupId>
             <artifactId>plantuml</artifactId>
             <version>8059</version>
+        </dependency>
+
+        <!-- MY SQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
         </dependency>
     </dependencies>
 </project>
