@@ -1,5 +1,7 @@
 package ClientUS.NLP;
 
+import ClientUS.NLP.Other.r_rel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ public class Liste {
     List<String> VB_list;
     String Actor_of_story;
     List<String> c_list;
-    List<String> r_list;
+    List<r_rel> r_list;
     List<String> ac_list;
 
 
@@ -44,11 +46,11 @@ public class Liste {
         this.c_list = c_list;
     }
 
-    public List<String> getR_list() {
+    public List<r_rel> getR_list() {
         return r_list;
     }
 
-    public void setR_list(List<String> r_list) {
+    public void setR_list(List<r_rel> r_list) {
         this.r_list = r_list;
     }
 
@@ -60,6 +62,14 @@ public class Liste {
         this.ac_list = ac_list;
     }
 
+    /**
+     *
+     * @param rel
+     */
+    public void add_item_r_list(r_rel rel){
+        r_list.add(rel);
+        System.out.println("inserimento nella lista");
+    }
     public Liste(){
         NN_list = new ArrayList<>();
         VB_list = new ArrayList<>();

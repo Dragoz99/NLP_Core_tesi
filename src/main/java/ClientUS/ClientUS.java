@@ -24,8 +24,6 @@ public class ClientUS implements RemoteListener {
             //RemoteListener rifRemoto = (RemoteListener) UnicastRemoteObject.exportObject(clientUS,port);
             //esecuzione codice
             stub.testRMI();
-
-
             // CONTINUARE CON L'RMI
 
 

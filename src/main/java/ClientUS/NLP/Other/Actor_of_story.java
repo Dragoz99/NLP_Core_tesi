@@ -1,4 +1,4 @@
-package ClientUS.NLP;
+package ClientUS.NLP.Other;
 
 public class Actor_of_story {
     String ActorOfStory;

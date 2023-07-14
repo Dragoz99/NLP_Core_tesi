@@ -1,30 +1,40 @@
 package ClientUS.NLP.Rule_EX;
 
-import ClientUS.NLP.Actor_of_story;
+import ClientUS.NLP.Other.Actor_of_story;
 import ClientUS.NLP.Interface_rule.AC_RULE;
+import ServerUS.UserInterface;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class AC_EX implements AC_RULE {
     private List<SemanticGraphEdge> List_case_SG; // lista dei SemanticGraph
     private SemanticGraph semanticGraph;
+    private UserInterface stub;
     Actor_of_story Actor_of_story;
-    public AC_EX(SemanticGraph semanticGraph, Actor_of_story x){
+    public AC_EX(SemanticGraph semanticGraph, Actor_of_story x, UserInterface stub) throws SQLException, RemoteException {
         this.Actor_of_story =x;
         this.semanticGraph = semanticGraph;
+        this.stub = stub;
+
         List_case_SG = semanticGraph.findAllRelns("case");
         System.out.println(List_case_SG);
         AC1(Actor_of_story);
         AC3();
+
     }
     @Override
-    public void AC1(Actor_of_story act) {
+    public void AC1(Actor_of_story act) throws SQLException, RemoteException {
             for(int i = 0;i<List_case_SG.size();i++){ // scannerizza la lista
                 if(List_case_SG.get(i).getTarget().originalText().equalsIgnoreCase("As")){ // trova se c'è un 'As' collegato
                     if(List_case_SG.get(i).getSource().tag().equalsIgnoreCase("NN")){ // controlla se c'è un NN collegato
                         System.out.println("[ACTOR ACCEPT NN] :"+List_case_SG.get(i).getSource());
+                       /* stub.insertUserStory(
+
+                        );*/
                     }
                     Actor_of_story.setActorOfStory(List_case_SG.get(i).getSource().originalText());
                     System.out.println("[AC_RULE] - [ACTOR FOUND]: "+act.getActorOfStory());

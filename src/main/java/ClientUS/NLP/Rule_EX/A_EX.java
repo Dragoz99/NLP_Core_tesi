@@ -12,10 +12,7 @@ import java.util.List;
  *
  */
 public class A_EX implements A_RULE {
-
-
     Liste liste;
-
     SemanticGraph semanticGraph;
     List<SemanticGraphEdge> A1_list;
 
@@ -27,16 +24,10 @@ public class A_EX implements A_RULE {
     }
     @Override
     public void A1() {
-
-
         A1_list = semanticGraph.findAllRelns("amod");
         for(int i =0;i<A1_list.size();i++){
-
             System.out.println(A1_list.get(i).getTarget().originalText());
         }
-
-
-
     }
     @Override
     public void A2() {
@@ -58,17 +49,14 @@ public class A_EX implements A_RULE {
 
 
     }
-
     @Override
     public void A5() {
 
     }
-
     @Override
     public void A6() {
 
     }
-
     @Override
     public void A7() {
 

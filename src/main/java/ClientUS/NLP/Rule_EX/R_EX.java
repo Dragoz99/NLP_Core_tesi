@@ -1,13 +1,15 @@
 package ClientUS.NLP.Rule_EX;
 
-import ClientUS.NLP.Actor_of_story;
+import ClientUS.NLP.Other.Actor_of_story;
 import ClientUS.NLP.Interface_rule.R_RULE;
 import ClientUS.NLP.Liste;
+import ClientUS.NLP.Other.r_rel;
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +24,7 @@ public class R_EX implements R_RULE {
 
     List<SemanticGraphEdge> R3_list;
 
-    ClientUS.NLP.Actor_of_story Actor_of_story;
+    ClientUS.NLP.Other.Actor_of_story Actor_of_story;
 
 
     public R_EX(SemanticGraph semanticGraph, Liste liste ,Actor_of_story Actor_of_story){
@@ -50,29 +52,38 @@ public class R_EX implements R_RULE {
             temp_list = semanticGraph.getShortestUndirectedPathEdges(indW1,indW2);
             System.out.println("-----------------------------");
             System.out.println(temp_list);
-
-            for(int j =0;j<temp_list.size();j++){  // scan del path trovato
-                switch (temp_list.get(j).getTarget().tag()){
-                    case "PRP":
+            try{
+                for(int j =0;j<temp_list.size();j++){  // scan del path trovato
+                    switch (temp_list.get(j).getTarget().tag()){
+                        case "PRP":
+                            Subject = temp_list.get(j).getTarget().originalText();
+                            break;
+                        case "VB":
+                            verb = temp_list.get(j).getTarget().originalText();
+                            break;
+                        case "NN":
+                            if(liste.getC_list().contains(temp_list.get(j).getTarget().originalText())){ // controlla la lista C_list
+                                obj = temp_list.get(j).getTarget().originalText();
+                            }
+                            break;
+                    }
+                    if(temp_list.get(j).getTarget().originalText().equalsIgnoreCase("I")){
                         Subject = temp_list.get(j).getTarget().originalText();
-                        break;
-                    case "VB":
-                        verb = temp_list.get(j).getTarget().originalText();
-                        break;
-                    case "NN":
-                        if(liste.getC_list().contains(temp_list.get(j).getTarget().originalText())){ // controlla la lista C_list
-                            obj = temp_list.get(j).getTarget().originalText();
-                        }
-                        break;
+                    }
                 }
-                if(temp_list.get(j).getTarget().originalText().equalsIgnoreCase("I")){
-                    Subject = temp_list.get(j).getTarget().originalText();
-                }
+            }catch (NullPointerException e){
+                System.out.println("[R1] fail");
+                e.printStackTrace();
             }
             System.out.println("subject: "+Subject+ "\nverb: "+verb+"\nobject: "+obj);
+
+
             //______--------------------------
             // mettere i comandi di inserimento al database! lista
             //______--------------------------
+        }
+        for(int i = 0; i<R2_list_temp.size();i++){
+                System.out.println(Arrays.toString(R2_list_temp.toArray()));
         }
     }
 
@@ -101,7 +112,19 @@ public class R_EX implements R_RULE {
             String NN = R2_list.get(i).getTarget().originalText();
             String Op_r = VB+"_"+IN+"("+Actor_of_story.getActorOfStory()+","+NN+")";
             System.out.println("[R2]"+Op_r);
+
+
+
+            liste.getR_list().add(new r_rel(Actor_of_story.getActorOfStory(),NN)); // inserimento nella lista.
+
+
+
+
+
+
         }
+
+
     }
 
     /**

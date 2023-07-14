@@ -1,6 +1,6 @@
 package ClientUS.NLP.Interface_rule;
 
-import ClientUS.NLP.Actor_of_story;
+import ClientUS.NLP.Other.Actor_of_story;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 

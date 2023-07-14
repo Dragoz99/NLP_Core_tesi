@@ -1,6 +1,8 @@
 package ServerUS;
 
-public class StoryBuilder {
+import java.io.Serializable;
+
+public class StoryBuilder implements Serializable {
 
     private String nome;
     private String descrizione;
@@ -8,9 +10,30 @@ public class StoryBuilder {
     private String versione;
     private String data_creazione;
     private String nome_progetto;
+    private String tag;
+    private String id;
 
-    public StoryBuilder(){
 
+
+
+    public StoryBuilder(String id,String nome, String descrizione,String autore, String versione,String  data_creazione){
+        this.id = id; // id della storia. fa riferimento al database icescrum
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.autore = autore;
+        this.tag = "";
+        this.versione = versione;
+        this.data_creazione = data_creazione;
+
+    }
+
+    public StoryBuilder(String nome,String descrizione, String autore,String versione, String data_creazione){
+            this.nome = nome;
+            this.descrizione = descrizione;
+            this.autore = autore;
+            this.versione = versione;
+            this.data_creazione = data_creazione;
+            this.tag = "nullo";
     }
 
     public String getNome() {
@@ -62,6 +85,21 @@ public class StoryBuilder {
     }
 
 
+    public String getTag(){
+        return tag;
+    }
+    public void setTag(String tag){
+        this.tag = tag;
+    }
+
+    public String getId(){
+        return id;
+    }
+    public void print(){
+        System.out.println(
+                "["+nome +"/"+descrizione +"/"+ autore+ "/"+versione+"/"+data_creazione+"]"
+        );
+    }
 
 
 

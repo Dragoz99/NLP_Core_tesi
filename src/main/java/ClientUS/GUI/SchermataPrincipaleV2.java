@@ -1,16 +1,24 @@
 package ClientUS.GUI;
 
+import ClientUS.NLP.ThreadNLP;
+import ServerUS.StoryBuilder;
 import ServerUS.UserInterface;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class SchermataPrincipaleV2 extends javax.swing.JFrame {
+
+
     private JButton jButton1;
     private JButton jButton2;
     private JButton jButton3;
@@ -21,14 +29,19 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
     private JScrollPane jScrollPane2;
     private JTable jTable1;
 
+    private StoryBuilder userStorySelected;
+    private JButton text_story = new JButton();
+
     private int row_selezionata;
+
+    private UserInterface stub;
     /**
      *
      * Creates new form SchermataSingola
      */
     public SchermataPrincipaleV2(UserInterface stub) throws RemoteException, SQLException {
-
-        initComponents(stub);
+        this.stub = stub;
+        initComponents(this.stub);
     }
 
     /**
@@ -58,12 +71,14 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-
-
         //inserire il comando SQL per richieder tutti i dati.
         //popolare la tabella con i dati del database.
 
-        LinkedList<String> dati_tabella = stub.serachAllUserStoryfromDatabase_Icescrum();
+        ArrayList<StoryBuilder> dati_tabella = stub.serachAllUserStoryfromDatabase_Icescrum();
+
+        for (StoryBuilder i: dati_tabella){
+           i.print();
+        }
 
         String[] colonne =   new String [] {
                 "Project", "User", "Name", "Description", "Date"
@@ -71,32 +86,19 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
         Object[][] matrix_dati = new Object[dati_tabella.size()][5];
 
         for(int i = 0;i<dati_tabella.size();i++){ // riempe la matrice
-                matrix_dati[i][0] = dati_tabella.poll(); // progetto
-                matrix_dati[i][1] = dati_tabella.poll(); // user
-                matrix_dati[i][2] = dati_tabella.poll();; // nome
-                matrix_dati[i][3] = dati_tabella.poll(); // descrizione
-                matrix_dati[i][4] = dati_tabella.poll();; // data
-               // matrix_dati[i][5] = dati_tabella.poll();; // tag
-
+                matrix_dati[i][0] = dati_tabella.get(i).getNome_progetto(); // progetto
+                matrix_dati[i][1] = dati_tabella.get(i).getAutore();// user
+                matrix_dati[i][2] = dati_tabella.get(i).getNome(); // nome
+                //matrix_dati[i][3] = dati_tabella.get(i).getDescrizione(); // descrizione
+                matrix_dati[i][4] = dati_tabella.get(i).getData_creazione(); // data
+                //matrix_dati[i][5] = dati_tabella.poll();; // tag
         }
 
         DefaultTableModel model = new DefaultTableModel(matrix_dati,colonne);
         jTable1.setModel(model);
 
-     /*   jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null}
-                },
-
-        ));*/
-
-
-       // jTable1.setModel();
-
+        jTable1.getColumn("Description").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("Description").setCellEditor(new ButtonEditor(new JCheckBox()));
         jTable1.setToolTipText("");
 
         jTable1.addMouseListener(new MouseListener() {
@@ -104,6 +106,16 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
 
                 row_selezionata= jTable1.getSelectedRow();
+            /*  userStorySelected = new StoryBuilder(
+                        dati_tabella.get(row_selezionata).getNome(), // nome
+                        dati_tabella.get(row_selezionata).getData_creazione(), // descrizione
+                        dati_tabella.get(row_selezionata).getAutore(), // autore
+
+                        dati_tabella.get(row_selezionata).getDescrizione(),
+
+
+                );*/
+                userStorySelected = dati_tabella.get(row_selezionata);
             }
 
             @Override
@@ -128,21 +140,37 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Ok");
+        jButton1.setText("Genera");
         jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+                    jButton1ActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
-        jButton2.setText("View");
-        jButton2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        text_story.addActionListener(new java.awt.event.ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new VisualizzaUserStory(new StoryBuilder(
+                        dati_tabella.get(row_selezionata).getNome_progetto(),
+                        dati_tabella.get(row_selezionata).getDescrizione(),
+                        dati_tabella.get(row_selezionata).getAutore(),
+                        dati_tabella.get(row_selezionata).getVersione(),
+                        dati_tabella.get(row_selezionata).getData_creazione()
+                ));
+            }
+        });
+        //jButton2.setText("View");
+        //jButton2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+       /* jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
-        });
+        });*/
 
         jButton3.setText("Find");
         jButton3.setToolTipText("");
@@ -173,7 +201,7 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                       // .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())
         );
@@ -185,7 +213,7 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
+                                //.addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1)
                                 .addGap(26, 26, 26))
@@ -221,10 +249,15 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    // bottone genera
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         // TODO add your handling code here:
-
         JOptionPane.showMessageDialog(null,row_selezionata);
+
+        userStorySelected.print();
+        ThreadNLP threadNLP = new ThreadNLP(userStorySelected,stub);
+        Thread thread = new Thread(threadNLP);
+        thread.start();
 
         // estrae la storia e la
     }
@@ -232,12 +265,49 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+    private void viewBtnActionPerformed(java.awt.event.ActionEvent evt){
+
+    }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 
 
-    /**
-     * @param args the command line arguments
-     */
+    //classe per implementare i bottoni nella tabella
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer(){
+            setOpaque(true);
+        }
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? ">" : value.toString());
+            return this;
+        }
+    }
 
+    class ButtonEditor extends  DefaultCellEditor{
+        private String label;
+
+        public ButtonEditor(JCheckBox checkBox){
+            super(checkBox);
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column){
+            label = (value == null) ? ">": value.toString();
+            text_story.setText(label);
+            /**
+             * Quando il bottone viene premuto si assegna alla variabile l'indice dell'elemento selezionato
+             */
+            row_selezionata = row;
+            return text_story;
+        }
+        public Object getCellEditorValue()
+        {
+            return new String(label);
+        }
+    }
 
 
     // Variables declaration - do not modify

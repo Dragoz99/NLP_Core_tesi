@@ -1,6 +1,6 @@
 package ClientUS.NLP.Rule_EX;
 
-import ClientUS.NLP.Actor_of_story;
+import ClientUS.NLP.Other.Actor_of_story;
 import ClientUS.NLP.Interface_rule.C_RULE;
 import ClientUS.NLP.Liste;
 import edu.stanford.nlp.semgraph.SemanticGraph;
@@ -26,8 +26,6 @@ public class C_EX implements C_RULE {
         this.semanticGraph = semanticGraph;
         this.actorOfStory = actor;
         this.list = list;
-
-
         C1(actor);
         C2();
         C3();

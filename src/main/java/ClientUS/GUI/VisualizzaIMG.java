@@ -16,9 +16,6 @@ public class VisualizzaIMG extends JFrame {
         JButton btnNewButton = new JButton("New button");
 
         frame.pack();
-
-
-
         frame.setVisible(true);
     }
 }
