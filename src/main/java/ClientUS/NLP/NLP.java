@@ -6,6 +6,8 @@ import ClientUS.NLP.Rule_EX.AC_EX;
 import ClientUS.NLP.Rule_EX.A_EX;
 import ClientUS.NLP.Rule_EX.C_EX;
 import ClientUS.NLP.Rule_EX.R_EX;
+import ClientUS.RemoteListener;
+import ServerUS.CheckObject.ServeReturnClassCheck;
 import ServerUS.StoryBuilder;
 import ServerUS.UserInterface;
 import com.google.common.io.Files;
@@ -26,7 +28,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.*;
 
-public class NLP {
+public class NLP implements RemoteListener {
     List<CoreMap> sentences;
     public List<String> NN_list;
     public List<String> VB_list;
@@ -146,11 +148,36 @@ public class NLP {
                 System.out.println(liste.getR_list());
 
 
+
                 insert_data_list data_list = new insert_data_list(liste,stub); // filename
+                String ddl = "SELECT * FROM class";
+              /*ResultSet resultSet =  stub.check_db_resultSet(ddl);
+                ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+                int columnsNumber = resultSetMetaData.getColumnCount();
+                while (resultSet.next()) {
+                    for (int i = 1; i <= columnsNumber; i++) {
+                        if (i > 1) System.out.print(",  ");
+                        String columnValue = resultSet.getString(i);
+                        System.out.print(columnValue + " " + resultSetMetaData.getColumnName(i));
+                    }
+                    System.out.println("");
+                }*/
+
                 data_list.insert_filename(a); //class
-                for(int i =0;i<liste.getC_list().size();i++){
-                    data_list.insert_class(a,liste.getC_list().get(i));
+
+                ServeReturnClassCheck abbo = new ServeReturnClassCheck(a); // controllo se esiste il filename
+                boolean prova = abbo.checkExistFileName();
+                System.out.println(prova);
+                if(!prova){
+                    for(int i =0;i<liste.getC_list().size();i++){
+                        data_list.insert_class(a,liste.getC_list().get(i));
+                    }
+                }else{
+                    System.out.println("[Attenzione]: classi non inserite. file gia esiste");
                 }
+
+
 
             }
     }

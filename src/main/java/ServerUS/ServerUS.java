@@ -31,7 +31,6 @@ public class ServerUS extends UnicastRemoteObject implements UserInterface{
     public static Connection connection_icescrum = null;
     public static Connection connection_userstorydb = null;
 
-
     public ServerUS() throws RemoteException {
         super();
     }
@@ -93,7 +92,6 @@ public class ServerUS extends UnicastRemoteObject implements UserInterface{
 
     }
 
-
     @Override
     public synchronized void viewUserStoryPNG() throws RemoteException {
 
@@ -110,21 +108,17 @@ public class ServerUS extends UnicastRemoteObject implements UserInterface{
         Statement statement = connection_userstorydb.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet resultSet = statement.executeQuery(checkQuery);
         ResultSetMetaData resultSetMetaData =resultSet.getMetaData();
-        return resultSetMetaData.isSigned(0);
 
+        return resultSetMetaData.isSigned(0);
     }
 
     @Override
     public synchronized ArrayList<StoryBuilder> serachAllUserStoryfromDatabase_Icescrum() throws RemoteException, SQLException {
-
         String igi = "" +
                 "Select is_story.id,is_project.pkey, is_user.username, is_story.name, is_story.description, is_story.date_created\n" +
                 "from is_project ,is_user, is_story\n" +
                 "where is_project.id = is_story.backlog_id and is_user.id = is_story.creator_id";
-
-
         connection_icescrum = DriverManager.getConnection(URL_Icescrum, user, password);
-
         Statement statement_icescrum = connection_icescrum.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet resultSet_1 = statement_icescrum.executeQuery(igi);
 
@@ -139,20 +133,32 @@ public class ServerUS extends UnicastRemoteObject implements UserInterface{
             String name = resultSet_1.getString("name");
             String description = resultSet_1.getString("description");
             String date_created = resultSet_1.getString("date_created");
-
             arrayList.add(new StoryBuilder(
                     id,name, description,username,pkey,date_created));
         }
-
       for(int i = 0;i<arrayList.size();i++){
-
           arrayList.get(i).print();
       }
-
         // Arrylist<String> [pkey,nome,descrizione,data_creazione]
-
-
-
         return arrayList;
+    }
+
+    /**
+     * inserisci un comando ddl come parametro e lo eseguisce
+     * riportando un RestulSet da esaminare
+     *
+     * questa funzione è generica per qualsiasi tipo di funzionalità
+     * @param ddl
+     * @return ResultSet
+     * @throws RemoteException
+     * @throws SQLException
+     */
+
+    @Override
+    public ResultSet check_db_resultSet(String ddl) throws RemoteException, SQLException {
+        connection_userstorydb = DriverManager.getConnection(URL_UserStoryDB,user,password);
+        Statement statement =connection_userstorydb.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet resultSet = statement.executeQuery(ddl);
+        return resultSet;
     }
 }

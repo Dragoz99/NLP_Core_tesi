@@ -25,19 +25,14 @@ public class ClientUS implements RemoteListener {
             //esecuzione codice
             stub.testRMI();
             // CONTINUARE CON L'RMI
-
-
             new SchermataPrincipaleV2(stub);
-
             // avvio interfaccia grafica
-
 
         }catch (Exception e){
             e.printStackTrace();
             System.err.println("Client exc: "+e);
         }
     }
-
     public static void main(String[] args) throws Exception {
         new ClientUS(1100);
     }

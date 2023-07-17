@@ -1,12 +1,13 @@
 package ClientUS.NLP;
 
+import ClientUS.RemoteListener;
 import ServerUS.StoryBuilder;
 import ServerUS.UserInterface;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class ThreadNLP implements Runnable{
+public class ThreadNLP implements Runnable, RemoteListener {
 
     StoryBuilder storyBuilder;
     UserInterface stub;
