@@ -114,7 +114,7 @@ public class R_EX implements R_RULE {
             System.out.println("[R2]"+Op_r);
 
 
-
+            liste.add_item_r_list(new r_rel(Actor_of_story.getActorOfStory(),NN)); // prova
             liste.getR_list().add(new r_rel(Actor_of_story.getActorOfStory(),NN)); // inserimento nella lista.
 
 

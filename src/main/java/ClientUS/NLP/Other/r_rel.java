@@ -4,6 +4,9 @@ public class r_rel {
     private String class_1;
     private String class_2;
 
+
+
+
     public r_rel(String class_1, String class_2){
         this.class_1 = class_1;
         this.class_2 = class_2;

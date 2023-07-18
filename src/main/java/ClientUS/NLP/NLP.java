@@ -138,14 +138,17 @@ public class NLP implements RemoteListener {
                 A_EX a_ex = new A_EX(dependencies,liste);
 
                 // prova
-                System.out.println("------");
+                System.out.println("-------");
+                System.out.println("----NN--");
                 System.out.println(liste.getNN_list());
-                System.out.println("------");
+                System.out.println("----C--");
                 System.out.println(liste.getC_list());
-                System.out.println("------");
+                System.out.println("----AC--");
                 System.out.println(liste.getAc_list());
-                System.out.println("------");
+                System.out.println("----R--");
                 System.out.println(liste.getR_list());
+                liste.print_R_list();
+                System.out.println("-------");
 
 
 
@@ -166,12 +169,13 @@ public class NLP implements RemoteListener {
 
                 data_list.insert_filename(a); //class
 
+
                 ServeReturnClassCheck abbo = new ServeReturnClassCheck(a); // controllo se esiste il filename
                 boolean prova = abbo.checkExistFileName();
                 System.out.println(prova);
                 if(!prova){
                     for(int i =0;i<liste.getC_list().size();i++){
-                        data_list.insert_class(a,liste.getC_list().get(i));
+                        data_list.insert_class(a,liste.getC_list().get(i)); // inseriemtno classi nel db
                     }
                 }else{
                     System.out.println("[Attenzione]: classi non inserite. file gia esiste");

@@ -49,6 +49,12 @@ public class Liste {
     public List<r_rel> getR_list() {
         return r_list;
     }
+    public void print_R_list() {
+        for(int i = 0;i<r_list.size();i++){
+            r_list.get(i).print();
+
+        }
+    }
 
     public void setR_list(List<r_rel> r_list) {
         this.r_list = r_list;
