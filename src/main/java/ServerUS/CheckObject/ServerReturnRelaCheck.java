@@ -35,7 +35,6 @@ public class ServerReturnRelaCheck implements Serializable {
      * @param a
      * @throws SQLException
      */
-
     public void esegui_query(String a) throws SQLException {
         rowSet.setCommand(a);
         rowSet.execute();

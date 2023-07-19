@@ -69,13 +69,17 @@ public class Liste {
     }
 
     /**
-     *
+     * Funzione per aggiungere oggetti di tipo r_rel (dedicati alle relazioni) nella lista
+     * relazioni della classe Liste.
      * @param rel
      */
     public void add_item_r_list(r_rel rel){
         r_list.add(rel);
         System.out.println("inserimento nella lista");
     }
+
+
+
     public Liste(){
         NN_list = new ArrayList<>();
         VB_list = new ArrayList<>();

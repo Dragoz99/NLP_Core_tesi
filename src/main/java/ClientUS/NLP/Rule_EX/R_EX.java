@@ -31,12 +31,12 @@ public class R_EX implements R_RULE {
         this.semanticGraph = semanticGraph;
         this.liste = liste;
         this.Actor_of_story = Actor_of_story;
-
         R1();
         R2();
         R3();
 
-
+        System.out.println("stamapa R_list");
+        liste.print_R_list();
     }
 
     /**
@@ -78,10 +78,11 @@ public class R_EX implements R_RULE {
             System.out.println("subject: "+Subject+ "\nverb: "+verb+"\nobject: "+obj);
 
 
-            //______--------------------------
+            //______--------______-------______
             // mettere i comandi di inserimento al database! lista
-            //______--------------------------
+            //______--------______-------______
         }
+
         for(int i = 0; i<R2_list_temp.size();i++){
                 System.out.println(Arrays.toString(R2_list_temp.toArray()));
         }
@@ -112,19 +113,9 @@ public class R_EX implements R_RULE {
             String NN = R2_list.get(i).getTarget().originalText();
             String Op_r = VB+"_"+IN+"("+Actor_of_story.getActorOfStory()+","+NN+")";
             System.out.println("[R2]"+Op_r);
-
-
             liste.add_item_r_list(new r_rel(Actor_of_story.getActorOfStory(),NN)); // prova
-            liste.getR_list().add(new r_rel(Actor_of_story.getActorOfStory(),NN)); // inserimento nella lista.
-
-
-
-
-
-
+           // liste.getR_list().add(new r_rel(Actor_of_story.getActorOfStory(),NN)); // inserimento nella lista.
         }
-
-
     }
 
     /**
@@ -139,17 +130,14 @@ public class R_EX implements R_RULE {
         System.out.println("--------------R3---------------");
         R3_list = semanticGraph.findAllRelns("obl");
 
-
         String assosation;
         for(int i = 0;i<R3_list.size();i++){
-
             assosation = R3_list.get(i).getRelation().getSpecific();
             //System.out.println(R3_list.get(i).getRelation().getSpecific());
-
             switch (assosation){
-
                 case "for":
                     //scrivi il comando Sql
+
                     break;
                 case "of":
                     //scrivi il comando Sql

@@ -16,25 +16,20 @@ public class ServerReturnObject implements Serializable {
         rowSet.setUrl("jdbc:mysql://localhost:3307/userstorydb");
         rowSet.setUsername("root");
         rowSet.setPassword("1234");
-        rowSet.setCommand("select count(*) from class where class_filename_id = '"+a.getId()+"'");
-        rowSet.execute();
+        //rowSet.setCommand("select count(*) from class where class_filename_id = '"+a.getId()+"'");
+        //rowSet.execute();
         //System.out.println(rowSet.getMaxRows());
     }
-
     public void printAllTable() throws SQLException {
         while(rowSet.next()){
                 System.out.println(rowSet.getObject(1));
                 //System.out.println("row:getString"+ rowSet.getString(i));
                 //System.out.println(concatRis);
-                 System.out.println("getRow() :"+ rowSet.getRow());
-
-
-
+                System.out.println("getRow() :"+ rowSet.getRow());
         }
     }
     public boolean contin() throws SQLException{
         boolean bool = false;
-
         while(rowSet.next()){
             Object rowReturn = rowSet.getObject(1);
             if(rowReturn.equals("true")){
@@ -55,6 +50,31 @@ public class ServerReturnObject implements Serializable {
     }
 
 
+    public void esegui_query(String a) throws SQLException {
+        rowSet.setCommand(a);
+        rowSet.execute();
+    }
+
+    public boolean checkExistFileName() throws SQLException {
+        String checkMate ="null";
+        while(rowSet.next()){
+            checkMate = rowSet.getString(1);
+        }
+        if(checkMate.equals("true")) {
+            return true;
+        }
+        return false;
+    }
+
+    public int returnClassId(String nome) throws SQLException{
+        int id_class = 69696969;
+        while(rowSet.next()){
+            if(rowSet.getString(2).equals(nome)){
+                id_class = rowSet.getInt(1);
+            }
+        }
+        return id_class;
+    }
 
 
 }

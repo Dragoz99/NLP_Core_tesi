@@ -7,7 +7,7 @@ import ClientUS.NLP.Rule_EX.A_EX;
 import ClientUS.NLP.Rule_EX.C_EX;
 import ClientUS.NLP.Rule_EX.R_EX;
 import ClientUS.RemoteListener;
-import ServerUS.CheckObject.ServeReturnClassCheck;
+import ServerUS.CheckObject.ServerReturnObject;
 import ServerUS.StoryBuilder;
 import ServerUS.UserInterface;
 import com.google.common.io.Files;
@@ -153,34 +153,23 @@ public class NLP implements RemoteListener {
 
 
                 insert_data_list data_list = new insert_data_list(liste,stub); // filename
-                String ddl = "SELECT * FROM class";
-              /*ResultSet resultSet =  stub.check_db_resultSet(ddl);
-                ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-
-                int columnsNumber = resultSetMetaData.getColumnCount();
-                while (resultSet.next()) {
-                    for (int i = 1; i <= columnsNumber; i++) {
-                        if (i > 1) System.out.print(",  ");
-                        String columnValue = resultSet.getString(i);
-                        System.out.print(columnValue + " " + resultSetMetaData.getColumnName(i));
-                    }
-                    System.out.println("");
-                }*/
-
                 data_list.insert_filename(a); //class
 
-
-                ServeReturnClassCheck abbo = new ServeReturnClassCheck(a); // controllo se esiste il filename
-                boolean prova = abbo.checkExistFileName();
+                ServerReturnObject returnObject = new ServerReturnObject(a);
+                // controllo
+                returnObject.esegui_query("select if(count(*) >0,\"true\",\"false\") from class where class_filename_id = '"+a.getId()+"'");
+                boolean prova = returnObject.checkExistFileName();
                 System.out.println(prova);
                 if(!prova){
+                    // inserimento classi
                     for(int i =0;i<liste.getC_list().size();i++){
                         data_list.insert_class(a,liste.getC_list().get(i)); // inseriemtno classi nel db
                     }
                 }else{
                     System.out.println("[Attenzione]: classi non inserite. file gia esiste");
                 }
-
+                // inserimento relazioni
+                data_list.insert_relazion(a,liste);
 
 
             }
