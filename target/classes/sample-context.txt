@@ -1,1 +1,1 @@
-As a registered user, I want to be able to easily apply coupons and promotions so that I can save money on purchases.
+as a stategic RestautantName manager ,I want to be able to generate reports on sales and website performance, to analyze market trends and make data-driven strategic decisions.

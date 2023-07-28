@@ -143,15 +143,25 @@ public class NLP implements RemoteListener {
                 System.out.println(liste.getNN_list());
                 System.out.println("----C--");
                 System.out.println(liste.getC_list());
+
+                //
+                //esperimento
+
+
+                //-----------------------------
                 System.out.println("----AC--");
                 System.out.println(liste.getAc_list());
                 System.out.println("----R--");
                 System.out.println(liste.getR_list());
                 liste.print_R_list();
+                System.out.println("----A---");
+                System.out.println(liste.getA_list());
                 System.out.println("-------");
 
-
-
+//---------------------------------------------------------------------------------------------------------------
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//---------------------------------------------------------------------------------------------------------------
                 insert_data_list data_list = new insert_data_list(liste,stub); // filename
                 data_list.insert_filename(a); //class
 

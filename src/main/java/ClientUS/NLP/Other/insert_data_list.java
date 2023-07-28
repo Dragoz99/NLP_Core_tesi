@@ -60,29 +60,48 @@ public class insert_data_list {
     }
     public void insert_relazion(StoryBuilder a, Liste liste) throws SQLException, RemoteException{
         ServerReturnObject serverReturnObject = new ServerReturnObject(a);
-        serverReturnObject.esegui_query(
-                "select class_id, class_name " +
-                    "from class" +
-                    " where class_filename_id = '"+a.getId()+"'");
-        // [- coso -]
-        for(int i = 0;i<liste.getR_list().size();i++){
 
-         String nome_class_1 = liste.getR_list().get(i).getClass_1();
-         String nome_class_2 = liste.getR_list().get(i).getClass_2();
+       String cc =
+            "select if(count(*) >0,\"true\",\"false\") " +
+            "from relazioni " +
+            "where relazioni_classFileName_id_1  = '"+a.getId()+"' and relazioni_classFileName_id_2 = '"+a.getId()+"'";
+        serverReturnObject.esegui_query(cc);
 
-         int class1_ID_ret = serverReturnObject.returnClassId(nome_class_1);
-         int class2_ID_ret = serverReturnObject.returnClassId(nome_class_2);
+        boolean check_boolean = serverReturnObject.checkBoolean(); // controllo
+        System.out.println("controllo c:"+check_boolean);
 
-         stub.insertDDL_userStory("insert into relazioni(relazioni_className_1,relazioni_className_2," +
-                 "relazioni_classID_1,relazioni_classID_2,relazioni_classFileName_id_1," +
-                 "relazioni_classFileName_id_2)" +
-                 " values ('"+nome_class_1+"','"
-                 +nome_class_2+"','"+class1_ID_ret+"','"
-                 +class2_ID_ret+"','"+a.getId()+"','"+a.getId()+"')");
-        }
-        /*tring nome_class1 = liste.getR_list().get(0).getClass_1();
-        System.out.println("[---"+nome_class1+"---]");
-        int classID_ret =  serverReturnObject.returnClassId(nome_class1); //
-        System.out.println(classID_ret);*/
+        //if(!check_boolean) { // controllo
+         /* serverReturnObject.esegui_query(
+                    "select class_id, class_name " +
+                            "from class " +
+                            "where class_filename_id = '" + a.getId() + "'");*/
+
+        serverReturnObject.esegui_query(cc);
+            if (!serverReturnObject.checkBoolean()) {
+                for (int i = 0; i < liste.getR_list().size(); i++) {
+
+                    String nome_class_1 = liste.getR_list().get(i).getClass_1();
+                    String nome_class_2 = liste.getR_list().get(i).getClass_2();
+
+                        stub.insertDDL_userStory("insert into relazioni" +
+                                "(relazioni_className_1,relazioni_className_2,relazioni_classID_1,relazioni_classID_2," +
+                                "relazioni_classFileName_id_1,relazioni_classFileName_id_2)" +
+                                " values ('" + nome_class_1 + "','" + nome_class_2 + "'," +
+                                " (select class_id from class where class_name = '"
+                                    + nome_class_1 + "' and class_filename_id = '" + a.getId() + "')," +
+                                " (select class_id from class where class_name = '"
+                                    + nome_class_2 + "' and class_filename_id = '" + a.getId() + "')," +
+                                "'" + a.getId() + "','" + a.getId() + "')");
+                }
+            }
+        //}
+        // \(^-^)/
+    }
+
+
+    public void insert_attibute(StoryBuilder a, Liste liste) throws SQLException {
+        ServerReturnObject attributeObj = new ServerReturnObject(a);
+        String cc = "";
+
     }
 }

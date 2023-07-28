@@ -100,7 +100,7 @@ public class R_EX implements R_RULE {
         R2_list = semanticGraph.findAllRelns("obl");
         // 1) ricerco una nuova lista escludendo i collegamenti che hanno come sorgente tag diveso da VB
 
-        for(int i = 0;i<R2_list.size();i++){
+        for(int i = 0;i<R2_list.size();i++){ // cerco tutti gli obj collegati a un verbo taggato VB
             if(!Objects.equals(R2_list.get(i).getSource().tag(),"VB")){ // se il tag è diverso da VB
                 R2_list.remove(i);
             }
@@ -114,8 +114,30 @@ public class R_EX implements R_RULE {
             String Op_r = VB+"_"+IN+"("+Actor_of_story.getActorOfStory()+","+NN+")";
             System.out.println("[R2]"+Op_r);
             liste.add_item_r_list(new r_rel(Actor_of_story.getActorOfStory(),NN)); // prova
-           // liste.getR_list().add(new r_rel(Actor_of_story.getActorOfStory(),NN)); // inserimento nella lista.
+            //liste.getR_list().add(new r_rel(Actor_of_story.getActorOfStory(),NN)); // inserimento nella lista.
         }
+/*
+        System.out.println("+++++++++++++++++++++++++++");
+        //--- RIPETERE L'OPERAZIONE CON LA RELAZIONE OBJ
+        R2_list = semanticGraph.findAllRelns("obj");
+
+        for(int i = 0;i<R2_list.size();i++) {
+            if (!Objects.equals(R2_list.get(i).getSource().tag(), "VB")) { // se il tag è diverso da VB
+                R2_list.remove(i); // fa da filtro anti cagate
+            }
+        }
+        System.out.println(R2_list);
+        for(int i = 0;i<R2_list.size();i++){
+            String VB = R2_list.get(i).getSource().originalText();
+            String IN = R2_list.get(i).getRelation().getSpecific();
+            String NN = R2_list.get(i).getTarget().originalText();
+            String Op_r = VB+"("+Actor_of_story.getActorOfStory()+","+NN+")";
+            System.out.println("[R2]"+Op_r);
+            liste.add_item_r_list(new r_rel(Actor_of_story.getActorOfStory(),NN)); // prova
+            // liste.getR_list().add(new r_rel(Actor_of_story.getActorOfStory(),NN)); // inserimento nella lista.
+        }
+*/
+
     }
 
     /**
@@ -137,7 +159,6 @@ public class R_EX implements R_RULE {
             switch (assosation){
                 case "for":
                     //scrivi il comando Sql
-
                     break;
                 case "of":
                     //scrivi il comando Sql

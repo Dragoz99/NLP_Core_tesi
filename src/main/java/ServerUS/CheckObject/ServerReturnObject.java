@@ -55,6 +55,16 @@ public class ServerReturnObject implements Serializable {
         rowSet.execute();
     }
 
+    public boolean checkBoolean() throws SQLException{
+        String checkMate ="null";
+        while(rowSet.next()){
+            checkMate = rowSet.getString(1);
+        }
+        if(checkMate.equals("true")) {
+            return true;
+        }
+        return false;
+    }
     public boolean checkExistFileName() throws SQLException {
         String checkMate ="null";
         while(rowSet.next()){
@@ -66,15 +76,24 @@ public class ServerReturnObject implements Serializable {
         return false;
     }
 
+
+    // non serve a un cazzo
     public int returnClassId(String nome) throws SQLException{
         int id_class = 69696969;
         while(rowSet.next()){
             if(rowSet.getString(2).equals(nome)){
                 id_class = rowSet.getInt(1);
+                break;
+            }else{
+                System.out.println("[Errore]: int reutnrClassId() - false ");
+                id_class = rowSet.getInt(1);
+                System.out.println(id_class);
+                break;
             }
         }
         return id_class;
     }
 
+    // scannerizza  uno a uno.
 
 }
