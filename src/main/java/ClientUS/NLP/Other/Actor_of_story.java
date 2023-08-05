@@ -9,8 +9,10 @@ public class Actor_of_story {
     String ActorOfStory; // nome [cangiante]
     String Actor_ref; // nome [Index]
 
+
+
     public Actor_of_story(String actorOfStory){
-        this.ActorOfStory = actorOfStory; //nome attuale
+        this.ActorOfStory = actorOfStory; //nome cangiante
         Actor_ref = ""; //riferimento
     }
     public String getActorOfStory(){
@@ -30,6 +32,7 @@ public class Actor_of_story {
     }
 
 
+
     /**
      * metodo per modificare il riferimento. <p>
      * serve
@@ -37,5 +40,12 @@ public class Actor_of_story {
      */
     public void setActor_ref(String actor_ref) {
         Actor_ref = actor_ref;
+    }
+
+    public c_obj toC_obj(){
+        c_obj a = new c_obj();
+        a.setNome_cangiante(ActorOfStory);
+        a.setNome_index(Actor_ref);
+        return a;
     }
 }

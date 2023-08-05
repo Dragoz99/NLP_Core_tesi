@@ -21,7 +21,6 @@ public class ServerUS extends UnicastRemoteObject implements UserInterface{
     private static String port = "3307";        //5432
     private static String user = "root";
     private static String password = "1234";
-
     private static final String URL_Icescrum = "jdbc:mysql://localhost:3307/icescrum";
 
     private static final String URL_UserStoryDB = "jdbc:mysql://localhost:3307/userstorydb";

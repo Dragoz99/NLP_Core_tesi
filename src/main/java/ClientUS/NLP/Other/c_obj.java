@@ -12,9 +12,13 @@ public class c_obj {
     private String nome_cangiante;
     private String nome_index ;
 
+    public c_obj(){
+        nome_cangiante ="";
+        nome_index = "";
+    }
     public c_obj(String nome){
         this.nome_cangiante= nome;
-        nome_index = "";
+        nome_index = nome;
     }
     public String getNome_cangiante() {
         return nome_cangiante;

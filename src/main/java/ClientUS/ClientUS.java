@@ -27,7 +27,6 @@ public class ClientUS implements RemoteListener {
             // CONTINUARE CON L'RMI
             new SchermataPrincipaleV2(stub);
             // avvio interfaccia grafica
-
         }catch (Exception e){
             e.printStackTrace();
             System.err.println("Client exc: "+e);

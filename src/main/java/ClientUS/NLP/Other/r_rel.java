@@ -23,4 +23,9 @@ public class r_rel {
     public void print(){
         System.out.println("["+class_1+","+class_2+"]");
     }
+    public String getAll(){
+        return "["+class_1+","+class_2+"]";
+    }
+
+
 }

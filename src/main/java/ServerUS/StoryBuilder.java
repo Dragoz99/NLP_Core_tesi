@@ -13,9 +13,6 @@ public class StoryBuilder implements Serializable {
     private String tag;
     private String id;
 
-
-
-
     public StoryBuilder(String id,String nome, String descrizione,String autore, String versione,String  data_creazione){
         this.id = id; // id della storia. fa riferimento al database icescrum
         this.nome = nome;

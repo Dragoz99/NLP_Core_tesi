@@ -1,17 +1,20 @@
 package ClientUS.NLP;
 
 import ClientUS.NLP.Other.a_rel;
+import ClientUS.NLP.Other.c_obj;
 import ClientUS.NLP.Other.r_rel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Liste {
     List<String> NN_list;
     List<String> VB_list;
     String Actor_of_story;
-    List<String> c_list;
-    List<r_rel> r_list;
+    List<c_obj> c_list; // contine le classi
+    List<r_rel> r_list; // contine le relazioni
     List<String> ac_list;
     List<a_rel> a_list;
 
@@ -40,20 +43,16 @@ public class Liste {
     public void setActor_of_story(String actor_of_story) {
         Actor_of_story = actor_of_story;
     }
-    public List<String> getC_list() {
+    public List<c_obj> getC_list() {
         return c_list;
     }
-    public void setC_list(List<String> c_list) {
+    public void setC_list(List<c_obj> c_list) {
         this.c_list = c_list;
     }
     public List<r_rel> getR_list() {
         return r_list;
     }
-    public void print_R_list() {
-        for(int i = 0;i<r_list.size();i++){
-            r_list.get(i).print();
-        }
-    }
+
     public void setR_list(List<r_rel> r_list) {
         this.r_list = r_list;
     }
@@ -63,6 +62,32 @@ public class Liste {
     public void setAc_list(List<String> ac_list) {
         this.ac_list = ac_list;
     }
+
+
+    public void removeDuplicates_r(){
+        Set<r_rel> set = new HashSet<>(r_list);
+        r_list.clear();
+        r_list.addAll(set);
+
+    }
+    public void removeDuplicates_r_manuale(){
+        List<r_rel> newList = new ArrayList<>();
+        for (int i = 0; i < r_list.size(); i++) {
+            if (!newList.contains(r_list.get(i))) {
+                newList.add(r_list.get(i));
+            }
+        }
+    }
+
+    /**
+     * funzione per stampare la lista R
+     */
+    public void print_R_list() {
+        for (ClientUS.NLP.Other.r_rel r_rel : r_list) {
+            r_rel.print();
+        }
+    }
+
     /**
      * Funzione per aggiungere oggetti di tipo r_rel (dedicati alle relazioni) nella lista
      * relazioni della classe Liste.
@@ -79,7 +104,6 @@ public class Liste {
         r_list = new ArrayList<>();
         ac_list = new ArrayList<>();
         a_list = new ArrayList<>();
-
     }
 
 }

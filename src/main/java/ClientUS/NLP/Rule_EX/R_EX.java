@@ -1,8 +1,8 @@
 package ClientUS.NLP.Rule_EX;
 
-import ClientUS.NLP.Other.Actor_of_story;
 import ClientUS.NLP.Interface_rule.R_RULE;
 import ClientUS.NLP.Liste;
+import ClientUS.NLP.Other.Actor_of_story;
 import ClientUS.NLP.Other.r_rel;
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.semgraph.SemanticGraph;
@@ -33,18 +33,22 @@ public class R_EX implements R_RULE {
         this.Actor_of_story = Actor_of_story;
         R1();
         R2();
-        R3();
+      //  R3();
 
-        System.out.println("stamapa R_list");
+
+        System.out.println("--------R_EX: risultato--------");
+       System.out.println("stamapa R_list");
         liste.print_R_list();
+        //liste.removeDuplicates_r();
     }
 
     /**
-     * pdf: regole 2 [R3], regole [R1]
+     * [R1]
+     * The verb is an association between the direct object of the sentence and the subject: verb ( direct object, subject)
      */
     @Override
-    public void R1(){
-        List<SemanticGraph> R2_list_temp = new ArrayList<>();
+    public void R1() {
+       /*List<SemanticGraph> R2_list_temp = new ArrayList<>();
         IndexedWord indW1 = semanticGraph.getNodeByWordPattern("I");
         IndexedWord indW2;
         for(int i = 0; i<liste.getC_list().size();i++){
@@ -75,75 +79,133 @@ public class R_EX implements R_RULE {
                 System.out.println("[R1] fail");
                 e.printStackTrace();
             }
-            System.out.println("subject: "+Subject+ "\nverb: "+verb+"\nobject: "+obj);
-
-
+            System.out.println("subject: "+Subject+ "\n verb: "+verb+"\n object: "+obj);
             //______--------______-------______
             // mettere i comandi di inserimento al database! lista
             //______--------______-------______
         }
+        for(int i = 0; i<R2_list_temp.size();i++){System.out.println(Arrays.toString(R2_list_temp.toArray()));} */
+        // creazione di una lista temporanea --> poi si elimiano i duplicati
 
-        for(int i = 0; i<R2_list_temp.size();i++){
-                System.out.println(Arrays.toString(R2_list_temp.toArray()));
+        ArrayList<r_rel> r_rels = new ArrayList<>();
+        IndexedWord indW1 = semanticGraph.getNodeByWordPattern("I"); // si assume che I si riferisce al Actor of user story
+        IndexedWord indW2;
+        for (int i = 0; i < liste.getC_list().size(); i++) {
+            indW2 = semanticGraph.getNodeByWordPattern(liste.getC_list().get(i).getNome_index());// salva temporanamente il nome della calsse della C_list
+            temp_list = semanticGraph.getShortestUndirectedPathEdges(indW1, indW2);
+            System.out.println(semanticGraph.getNodeByWordPattern(liste.getC_list().get(i).getNome_index()));
+            System.out.println("-----------------------------");
+            System.out.println(temp_list); // lista congiunzioni
+            try {
+                for (int j = 0; j < temp_list.size(); j++) {
+                    switch (temp_list.get(j).getTarget().tag()) {
+                        case "PRP":
+                            Subject = temp_list.get(j).getTarget().originalText();
+                            break;
+                        case "VB":
+                            verb = temp_list.get(j).getTarget().originalText();
+                            break;
+                        case "NN":
+                            obj = temp_list.get(j).getTarget().originalText();
+                            /*if(liste.getC_list().contains(temp_list.get(j).getTarget().originalText())){ // controlla la lista C_list
+                                obj = temp_list.get(j).getTarget().originalText();*/
+                            break;
+                    }
+
+                }
+
+                // se i tre campi non sono vuoti , allora aggiungi
+                if (!Subject.isEmpty() && !verb.isEmpty() && !obj.isEmpty()) {
+                    if (!Objects.equals(Actor_of_story.getActor_ref(), obj)) { // se sono diversi i due campi, inserisci altrimenti no
+                        if (!liste.getR_list().contains(new r_rel(Actor_of_story.getActor_ref(), obj))) { // se non contiene un duplicato
+                            liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), obj));
+                            System.out.println("aggiunto " + Actor_of_story.getActor_ref() + " , " + obj);
+                            // liste.removeDuplicates_r();
+
+                        }
+
+                    }
+
+                }
+            } catch (NullPointerException e) {
+                System.out.println("[R1] fail");
+                e.printStackTrace();
+            }
+            //liste.removeDuplicates_r(); // togli i duplicati.
+
+            //System.out.println("subject: "+Subject+ "\nverb: "+verb+"\nobject: "+obj);
+           /* System.out.println("subject: "+Subject);
+            System.out.println("verb:" + verb);
+            System.out.println("object: "+obj);
+
         }
+
+        /*for(int j = 0;j<liste.getC_list().size();j++){
+
+            System.out.println("selezionato: " + liste.getC_list().get(j).getNome_index());
+            if(liste.getC_list().get(j).getNome_index().equals(obj)){
+                liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), liste.getC_list().get(j).getNome_index()));
+
+
+            }
+
+        }
+        removeDuplicates(liste.getR_list());
+        System.out.println("stampa");
+        liste.print_R_list(); // stampa */
+
+        }
+
+        liste.removeDuplicates_r_manuale();
+        liste.print_R_list();
     }
 
     /**
-     * [R2] verb with preposition
-     *
-     * questa regola crea la funzione in relazione. non la relazione stessa
-     *  pdf: Regole [R2], Regole2 [R4]
+     * [R2] Verb with preposition
      */
     @Override
-    public void R2() {
-        System.out.println("--------------R2 ---------------");
-        R2_list = semanticGraph.findAllRelns("obl");
-        // 1) ricerco una nuova lista escludendo i collegamenti che hanno come sorgente tag diveso da VB
+    public void R2()  {
+        // trovare [VB--(obl)-->NN--(case)-->IN]
+        System.out.println("------------[R2]-------------");
+        // obl:*
+        List<SemanticGraphEdge> list_obj_R2 = semanticGraph.findAllRelns("obl");
+        List<SemanticGraphEdge> list_case_R2 = semanticGraph.findAllRelns("case");
+        System.out.println("obl: "+Arrays.toString(list_obj_R2.toArray()));
+        System.out.println("case: "+Arrays.toString(list_case_R2.toArray()));
 
-        for(int i = 0;i<R2_list.size();i++){ // cerco tutti gli obj collegati a un verbo taggato VB
-            if(!Objects.equals(R2_list.get(i).getSource().tag(),"VB")){ // se il tag è diverso da VB
-                R2_list.remove(i);
+
+        for (SemanticGraphEdge semanticGraphEdge : list_obj_R2) {
+            for (SemanticGraphEdge graphEdge : list_case_R2) {
+                if (semanticGraphEdge.getTarget().index() == graphEdge.getSource().index()) {
+                    if (!Objects.equals(semanticGraphEdge.getTarget().originalText(), Actor_of_story.getActor_ref())) {
+                        System.out.println("aggiungo : [" + Actor_of_story.getActor_ref() + " , " + semanticGraphEdge.getTarget().originalText() + "]");
+                        liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), semanticGraphEdge.getTarget().originalText())); // "inserimento nella lista"
+                    }
+                }
             }
         }
-        // test
-        System.out.println(R2_list);
-        for(int i = 0;i<R2_list.size();i++){
-            String VB = R2_list.get(i).getSource().originalText();
-            String IN = R2_list.get(i).getRelation().getSpecific();
-            String NN = R2_list.get(i).getTarget().originalText();
-            String Op_r = VB+"_"+IN+"("+Actor_of_story.getActorOfStory()+","+NN+")";
-            System.out.println("[R2]"+Op_r);
-            liste.add_item_r_list(new r_rel(Actor_of_story.getActorOfStory(),NN)); // prova
-            //liste.getR_list().add(new r_rel(Actor_of_story.getActorOfStory(),NN)); // inserimento nella lista.
-        }
-/*
-        System.out.println("+++++++++++++++++++++++++++");
-        //--- RIPETERE L'OPERAZIONE CON LA RELAZIONE OBJ
-        R2_list = semanticGraph.findAllRelns("obj");
+        liste.removeDuplicates_r();
 
-        for(int i = 0;i<R2_list.size();i++) {
-            if (!Objects.equals(R2_list.get(i).getSource().tag(), "VB")) { // se il tag è diverso da VB
-                R2_list.remove(i); // fa da filtro anti cagate
-            }
-        }
-        System.out.println(R2_list);
-        for(int i = 0;i<R2_list.size();i++){
-            String VB = R2_list.get(i).getSource().originalText();
-            String IN = R2_list.get(i).getRelation().getSpecific();
-            String NN = R2_list.get(i).getTarget().originalText();
-            String Op_r = VB+"("+Actor_of_story.getActorOfStory()+","+NN+")";
-            System.out.println("[R2]"+Op_r);
-            liste.add_item_r_list(new r_rel(Actor_of_story.getActorOfStory(),NN)); // prova
-            // liste.getR_list().add(new r_rel(Actor_of_story.getActorOfStory(),NN)); // inserimento nella lista.
-        }
-*/
 
+
+       liste.print_R_list(); // comprende "stampa R_list"
+
+
+      /* System.out.println("Risultato R2 prima: ");
+       liste.print_R_list();
+      /*for(int i =0;i<liste.getR_list().size();i++){
+           System.out.println(liste.getR_list().get(i).getAll());
+       }
+
+        liste.removeDuplicates_r();
+        System.out.println("Risultato R2 dopo: ");
+        liste.print_R_list();
+        System.out.println("------------------------------");*/
     }
 
     /**
      * R3: Prepositions like "of ","to", "for" and "about" detect an association.
      * pdf: regole [R1]
-     *
      *
      * utilità: rinforza la regola [R2]
      */
@@ -177,6 +239,7 @@ public class R_EX implements R_RULE {
 
 
 
+
         
     }
     /**
@@ -202,5 +265,21 @@ public class R_EX implements R_RULE {
      */
     public void R5() {
 
+    }
+
+    public static List<r_rel> removeDuplicates(List<r_rel> list) {
+        // Create a new ArrayList
+        List<r_rel> newList = new ArrayList<>();
+        // Traverse through the first list
+        for (r_rel element : list) {
+            // If this element is not present in newList
+            // then add it
+            if (!newList.contains(element)) {
+                newList.add(element);
+            }
+        }
+
+        // return the new list
+        return newList;
     }
 }

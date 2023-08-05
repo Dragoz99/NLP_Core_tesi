@@ -21,13 +21,13 @@ public class insert_data_list {
         this.liste=liste;
         this.stub=stub;
     }
-    public void insert_class(StoryBuilder storyBuilder, String class_name) throws SQLException, RemoteException {
-            stub.insertDDL_userStory("INSERT INTO class (class_name,class_filename_id,class_type)" +
-                    "VALUES('" + class_name +
+    public void insert_class(StoryBuilder storyBuilder, String name_index, String name_cangiante ) throws SQLException, RemoteException {
+            stub.insertDDL_userStory("INSERT INTO class (class_name,class_filename_id,class_type,name_cangiante)" +
+                    "VALUES('" + name_index +
                     "','" + storyBuilder.getId()+
-                    "','" + " private "+
+                    "','" + " private "+ "','" + name_cangiante+
                     "')");
-            System.out.println("[Inserimento] "+class_name+" inserimento classe eseguito con successo ");
+            System.out.println("[Inserimento] "+name_index+" ," +name_cangiante + " : con successo");
     }
 
     public void insert_filename(StoryBuilder storyBuilder) throws SQLException, RemoteException {
@@ -70,21 +70,20 @@ public class insert_data_list {
         boolean check_boolean = serverReturnObject.checkBoolean(); // controllo
         System.out.println("controllo c:"+check_boolean);
 
-        //if(!check_boolean) { // controllo
-         /* serverReturnObject.esegui_query(
+        if(!check_boolean) { // controllo
+          serverReturnObject.esegui_query(
                     "select class_id, class_name " +
                             "from class " +
-                            "where class_filename_id = '" + a.getId() + "'");*/
+                            "where class_filename_id = '" + a.getId() + "'");
 
         serverReturnObject.esegui_query(cc);
             if (!serverReturnObject.checkBoolean()) {
-                for (int i = 0; i < liste.getR_list().size(); i++) {
+                for (int i = 0; i < liste.getR_list().size(); i++) { // se è vuota come può riempire ???
 
                     String nome_class_1 = liste.getR_list().get(i).getClass_1();
                     String nome_class_2 = liste.getR_list().get(i).getClass_2();
-
                         stub.insertDDL_userStory("insert into relazioni" +
-                                "(relazioni_className_1,relazioni_className_2,relazioni_classID_1,relazioni_classID_2," +
+                                "(relazioni_className_1, relazioni_className_2, relazioni_classID_1, relazioni_classID_2," +
                                 "relazioni_classFileName_id_1,relazioni_classFileName_id_2)" +
                                 " values ('" + nome_class_1 + "','" + nome_class_2 + "'," +
                                 " (select class_id from class where class_name = '"
@@ -94,7 +93,7 @@ public class insert_data_list {
                                 "'" + a.getId() + "','" + a.getId() + "')");
                 }
             }
-        //}
+        }
         // \(^-^)/
     }
 

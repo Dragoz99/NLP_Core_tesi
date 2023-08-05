@@ -9,8 +9,8 @@ public interface C_RULE {
     void C1(Actor_of_story actor);
     void C2();
     void C3();
-    void C4(int i);
-    void C5(int i);
+    void C4();
+    void C5();
 
     void C6();
     void find_component_noun(SemanticGraph semanticGraph);

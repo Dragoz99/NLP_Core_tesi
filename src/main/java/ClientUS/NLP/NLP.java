@@ -14,7 +14,6 @@ import com.google.common.io.Files;
 import edu.stanford.nlp.ie.util.RelationTriple;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
-import edu.stanford.nlp.naturalli.NaturalLogicAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
@@ -44,14 +43,14 @@ public class NLP implements RemoteListener {
     Scanner scan = new Scanner(System.in);
 
 
-    public NLP(StoryBuilder a,UserInterface stub) throws IOException, SQLException {
+    public NLP(StoryBuilder storyBuilder,UserInterface stub) throws IOException, SQLException {
 
         this.stub = stub; // collegamento
         Liste liste = new Liste();
 
 
         // pre regole
-            Properties props = new Properties();
+        Properties props = new Properties();
         props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref,depparse,natlog,openie,coref");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
@@ -67,7 +66,7 @@ public class NLP implements RemoteListener {
 
         //create an empty Annotation just with the given text
         //Annotation Document = new Annotation(text);
-        Annotation Document = new Annotation(a.getDescrizione());
+        Annotation Document = new Annotation(storyBuilder.getDescrizione());
         //Annotation Document = new Annotation("As a registered user, I want to be able to easily return or exchange items so that I can shop with confidence and get the products that I need.");
         // run all Annotators on this text
         pipeline.annotate(Document);
@@ -109,7 +108,7 @@ public class NLP implements RemoteListener {
                 //-----------------------------
                 //----     OPEN IE        ----
                 //-----------------------------
-                System.out.println("[---OPENIE---]");
+             /*   System.out.println("[---OPENIE---]");
                 for (CoreMap TT : Document.get(CoreAnnotations.SentencesAnnotation.class)) {
                     // Get the OpenIE triples for the sentence
                     triples = TT.get(NaturalLogicAnnotations.RelationTriplesAnnotation.class);
@@ -121,7 +120,7 @@ public class NLP implements RemoteListener {
                                 triple.objectLemmaGloss());
                     }
                 }
-
+*/
                 SemanticGraph dependencies = sentence.get(SemanticGraphCoreAnnotations
                         .EnhancedDependenciesAnnotation.class);
 
@@ -163,32 +162,36 @@ public class NLP implements RemoteListener {
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //---------------------------------------------------------------------------------------------------------------
                 insert_data_list data_list = new insert_data_list(liste,stub); // filename
-                data_list.insert_filename(a); //class
+                data_list.insert_filename(storyBuilder);
+                ServerReturnObject returnObject = new ServerReturnObject(storyBuilder);
 
-                ServerReturnObject returnObject = new ServerReturnObject(a);
-                // controllo
-                returnObject.esegui_query("select if(count(*) >0,\"true\",\"false\") from class where class_filename_id = '"+a.getId()+"'");
-                boolean prova = returnObject.checkExistFileName();
-                System.out.println(prova);
-                if(!prova){
+                // esecuzione controllo nel database
+                returnObject.esegui_query("select if(count(*) >0,\"true\",\"false\") from class where class_filename_id = '"+storyBuilder.getId()+"'");
+                boolean controllo_conteggio = returnObject.checkExistFileName(); // ritorna un valore booleano
+                System.out.println(controllo_conteggio);
+
+                if(!controllo_conteggio){
                     // inserimento classi
                     for(int i =0;i<liste.getC_list().size();i++){
-                        data_list.insert_class(a,liste.getC_list().get(i)); // inseriemtno classi nel db
+                        data_list.insert_class(
+                                storyBuilder,
+                                liste.getC_list().get(i).getNome_index(),
+                                liste.getC_list().get(i).getNome_cangiante()); // inserimento nome cangiante all'interno del db
                     }
                 }else{
                     System.out.println("[Attenzione]: classi non inserite. file gia esiste");
                 }
                 // inserimento relazioni
-                data_list.insert_relazion(a,liste);
-
-
+                data_list.insert_relazion(storyBuilder,liste);
             }
     }
     /**
      * inserimento delle info riguardanti il nome del file
      */
     private void check(StoryBuilder a) throws SQLException, RuntimeException, RemoteException {
-        stub.insertDDL_userStory("select exist (select * from filename where filename_id ='"+a.getId()+"')");
+        stub.insertDDL_userStory(
+                "select exist (select * from filename where filename_id ='"+a.getId()+"')"
+        );
     }
 
 
