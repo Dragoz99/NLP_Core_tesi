@@ -27,5 +27,23 @@ public class r_rel {
         return "["+class_1+","+class_2+"]";
     }
 
+    public static boolean r_rel_eql(r_rel a, r_rel b){
+        boolean check = false;
+        if(a.getClass_1() == b.getClass_1()){
+            if(a.getClass_2()== b.getClass_2()){
+                check= true;
+            }
+        }
+        return check;
+    }
+    public static boolean r_rel_eql(Actor_of_story a, r_rel b){
+        boolean check = false;
+        if(a.getActor_ref() == b.getClass_2()){
+            check = true;
+        }
+        return check;
+
+    }
+
 
 }

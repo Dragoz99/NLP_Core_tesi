@@ -33,11 +33,11 @@ public class R_EX implements R_RULE {
         this.Actor_of_story = Actor_of_story;
         R1();
         R2();
-      //  R3();
+        R3();
 
 
         System.out.println("--------R_EX: risultato--------");
-       System.out.println("stamapa R_list");
+        System.out.println("stamapa R_list");
         liste.print_R_list();
         //liste.removeDuplicates_r();
     }
@@ -87,7 +87,7 @@ public class R_EX implements R_RULE {
         for(int i = 0; i<R2_list_temp.size();i++){System.out.println(Arrays.toString(R2_list_temp.toArray()));} */
         // creazione di una lista temporanea --> poi si elimiano i duplicati
 
-        ArrayList<r_rel> r_rels = new ArrayList<>();
+
         IndexedWord indW1 = semanticGraph.getNodeByWordPattern("I"); // si assume che I si riferisce al Actor of user story
         IndexedWord indW2;
         for (int i = 0; i < liste.getC_list().size(); i++) {
@@ -107,8 +107,9 @@ public class R_EX implements R_RULE {
                             break;
                         case "NN":
                             obj = temp_list.get(j).getTarget().originalText();
-                            /*if(liste.getC_list().contains(temp_list.get(j).getTarget().originalText())){ // controlla la lista C_list
-                                obj = temp_list.get(j).getTarget().originalText();*/
+                            break;
+                        case "NNS":
+                            obj = temp_list.get(j).getTarget().originalText();
                             break;
                     }
 
@@ -119,40 +120,16 @@ public class R_EX implements R_RULE {
                     if (!Objects.equals(Actor_of_story.getActor_ref(), obj)) { // se sono diversi i due campi, inserisci altrimenti no
                         if (!liste.getR_list().contains(new r_rel(Actor_of_story.getActor_ref(), obj))) { // se non contiene un duplicato
                             liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), obj));
-                            System.out.println("aggiunto " + Actor_of_story.getActor_ref() + " , " + obj);
-                            // liste.removeDuplicates_r();
-
+                            System.out.println("aggiunto [" + Actor_of_story.getActor_ref() + " , " + obj +"] ");
+                            liste.removeDuplicates_r_manuale();
                         }
-
                     }
-
                 }
             } catch (NullPointerException e) {
                 System.out.println("[R1] fail");
                 e.printStackTrace();
             }
-            //liste.removeDuplicates_r(); // togli i duplicati.
 
-            //System.out.println("subject: "+Subject+ "\nverb: "+verb+"\nobject: "+obj);
-           /* System.out.println("subject: "+Subject);
-            System.out.println("verb:" + verb);
-            System.out.println("object: "+obj);
-
-        }
-
-        /*for(int j = 0;j<liste.getC_list().size();j++){
-
-            System.out.println("selezionato: " + liste.getC_list().get(j).getNome_index());
-            if(liste.getC_list().get(j).getNome_index().equals(obj)){
-                liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), liste.getC_list().get(j).getNome_index()));
-
-
-            }
-
-        }
-        removeDuplicates(liste.getR_list());
-        System.out.println("stampa");
-        liste.print_R_list(); // stampa */
 
         }
 
@@ -176,19 +153,34 @@ public class R_EX implements R_RULE {
 
         for (SemanticGraphEdge semanticGraphEdge : list_obj_R2) {
             for (SemanticGraphEdge graphEdge : list_case_R2) {
-                if (semanticGraphEdge.getTarget().index() == graphEdge.getSource().index()) {
-                    if (!Objects.equals(semanticGraphEdge.getTarget().originalText(), Actor_of_story.getActor_ref())) {
+                if (semanticGraphEdge.getTarget().index() == graphEdge.getSource().index()) { // se controllo incrociato a Z
+                    if (!Objects.equals(semanticGraphEdge.getTarget().originalText(), Actor_of_story.getActor_ref())) { // se non contiene
+
+                        r_rel relazione =  new r_rel(Actor_of_story.getActor_ref(), semanticGraphEdge.getTarget().originalText());
                         System.out.println("aggiungo : [" + Actor_of_story.getActor_ref() + " , " + semanticGraphEdge.getTarget().originalText() + "]");
                         liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), semanticGraphEdge.getTarget().originalText())); // "inserimento nella lista"
+                        liste.removeDuplicates_r_manuale(); // sempre per sicurazza : non funziona ora (05/08/2023)!
+                        r_rel index_rel ;
+                        for(int i =0;i<liste.getR_list().size();i++){ // controlla se non ci sono duplicati (tutto scritto a mano)
+                            index_rel = liste.getR_list().get(i);
+                            int j = i+1;
+                            while(j<liste.getR_list().size()){ // funziona
+                                if(r_rel.r_rel_eql(index_rel,liste.getR_list().get(j))) {
+                                    System.out.println("rimosso da R_list: "+ liste.getR_list().get(j));
+                                   liste.getR_list().remove(j);
+                                }
+                                j++;
+                            }
+                        }
                     }
                 }
             }
         }
+
+
+        System.out.println("lista dopo R2");
         liste.removeDuplicates_r();
-
-
-
-       liste.print_R_list(); // comprende "stampa R_list"
+        liste.print_R_list(); // comprende "stampa R_list"
 
 
       /* System.out.println("Risultato R2 prima: ");
@@ -211,10 +203,26 @@ public class R_EX implements R_RULE {
      */
     @Override
     public void R3() {
-        System.out.println("--------------R3---------------");
-        R3_list = semanticGraph.findAllRelns("obl");
-
+        System.out.println("--------------[R3]---------------");
+        R3_list = semanticGraph.findAllRelns("nmod");
         String assosation;
+        for (SemanticGraphEdge semanticGraphEdge : R3_list) {
+            assosation = semanticGraphEdge.getRelation().getSpecific();
+            //System.out.println(R3_list.get(i).getRelation().getSpecific());
+            switch (assosation) {
+                case "for", "of", "to", "about" -> {
+                    System.out.println("[R3]: aggiunto : [" + semanticGraphEdge.getSource().originalText() + " , " + semanticGraphEdge.getTarget().originalText() + "]");
+                    liste.add_item_r_list(new r_rel(semanticGraphEdge.getSource().originalText(), semanticGraphEdge.getTarget().originalText()));
+                }
+                default -> {
+                }
+
+            }
+
+        }
+
+        System.out.println(R3_list);
+       /* String assosation;
         for(int i = 0;i<R3_list.size();i++){
             assosation = R3_list.get(i).getRelation().getSpecific();
             //System.out.println(R3_list.get(i).getRelation().getSpecific());
@@ -235,21 +243,21 @@ public class R_EX implements R_RULE {
                     // non è una associazione
             }
             System.out.println();
-        }
-
-
-
-
-        
+        }*/
     }
     /**
-     * R3:  Noun–noun compound
-     * pdf: regole [R5]
+     * [R4]
+     * Possessive case: "s’", "my", "his"… determine an association; Correlation of pronouns with nouns to extract the associations using
+     * coreference resolution of Stanford core NLP tool
      *
      */
     @Override
     public void R4() {
         System.out.println("---------R4--------");
+
+
+
+
 
 
     }

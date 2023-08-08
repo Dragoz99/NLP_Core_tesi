@@ -139,7 +139,7 @@ public class C_EX implements C_RULE {
      */
     @Override
     public void C3() { // da sistemare
-        System.out.println("---[C3]---");
+        System.out.println("--------------[C3]--------------");
         //List<SemanticGraphEdge> List_Compound_temp = semanticGraph.findAllRelns("compound");
         System.out.println(List_compound);
         for(int i = 0;i<IndexedWord_list_compound.size();i++){ // su  IndexedWord_list_compound
@@ -330,8 +330,16 @@ public class C_EX implements C_RULE {
         for (SemanticGraphEdge semanticGraphEdge : List_conj) {
             if ((semanticGraphEdge.getSource().tag().equalsIgnoreCase("NN") || semanticGraphEdge.getSource().tag().equalsIgnoreCase("NNS")) &&
                     (semanticGraphEdge.getTarget().tag().equalsIgnoreCase("NN") || semanticGraphEdge.getTarget().tag().equalsIgnoreCase("NNS"))) {
-                list.getC_list().add(new c_obj(semanticGraphEdge.getSource().originalText()));
-                list.getC_list().add(new c_obj(semanticGraphEdge.getTarget().originalText()));
+
+                c_obj c_source = new c_obj(semanticGraphEdge.getSource().originalText());
+                c_obj c_target = new c_obj(semanticGraphEdge.getTarget().originalText());
+
+                if(list.getC_list().contains(c_source)) {
+                    list.getC_list().add(new c_obj(semanticGraphEdge.getSource().originalText()));
+                }
+                if(list.getC_list().contains(c_target)){
+                    list.getC_list().add(new c_obj(semanticGraphEdge.getTarget().originalText()));
+                }
                 System.out.println();
             }
         }

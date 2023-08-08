@@ -31,6 +31,7 @@ public class NLP implements RemoteListener {
     List<CoreMap> sentences;
     public List<String> NN_list;
     public List<String> VB_list;
+
     public List<String> C_list;
 
     public File file;
@@ -121,6 +122,9 @@ public class NLP implements RemoteListener {
                     }
                 }
 */
+                //--------------------------
+                //---     Coreference    ---
+                //--------------------------
                 SemanticGraph dependencies = sentence.get(SemanticGraphCoreAnnotations
                         .EnhancedDependenciesAnnotation.class);
 
