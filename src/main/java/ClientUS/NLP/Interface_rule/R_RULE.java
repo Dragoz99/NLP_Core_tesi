@@ -41,5 +41,5 @@ public interface R_RULE {
      *
      * utilità: aggiunta opt
      */
-    void R5();
+
 }

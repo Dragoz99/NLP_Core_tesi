@@ -2,6 +2,7 @@ package ClientUS.NLP;
 
 import ClientUS.NLP.Other.a_rel;
 import ClientUS.NLP.Other.c_obj;
+import ClientUS.NLP.Other.h_rel;
 import ClientUS.NLP.Other.r_rel;
 
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ public class Liste {
     List<r_rel> r_list; // contine le relazioni
     List<String> ac_list;
     List<a_rel> a_list;
+
+    List<h_rel> h_list;
+
 
 
     public List<a_rel> getA_list() {
@@ -98,6 +102,27 @@ public class Liste {
         r_list.add(rel);
         System.out.println("inserimento nella lista");
     }
+
+    public List<h_rel> getH_list() {
+        return h_list;
+    }
+
+    public void setH_list(List<h_rel> h_list) {
+        this.h_list = h_list;
+    }
+
+    public void add_item_h_list(h_rel hRel){
+        h_list.add(hRel);
+        System.out.println("inserimento nella lista");
+
+    }
+
+    public void print_h_list(){
+        for (ClientUS.NLP.Other.h_rel h_rel : h_list) {
+            h_rel.print();
+        }
+    }
+
     public Liste(){
         NN_list = new ArrayList<>();
         VB_list = new ArrayList<>();
@@ -105,6 +130,7 @@ public class Liste {
         r_list = new ArrayList<>();
         ac_list = new ArrayList<>();
         a_list = new ArrayList<>();
+        h_list = new ArrayList<>();
     }
 
 }

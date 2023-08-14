@@ -1,8 +1,8 @@
 package ClientUS.NLP.Other;
 
 public class r_rel {
-    private String class_1;
-    private String class_2;
+    private static String class_1;
+    private static String class_2;
 
     public r_rel(String class_1, String class_2){
         this.class_1 = class_1;
@@ -20,7 +20,7 @@ public class r_rel {
     public void setClass_2(String class_2) {
         this.class_2 = class_2;
     }
-    public void print(){
+    public static void print(){
         System.out.println("["+class_1+","+class_2+"]");
     }
     public String getAll(){

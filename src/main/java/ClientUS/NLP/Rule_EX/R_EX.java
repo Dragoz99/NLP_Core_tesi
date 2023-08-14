@@ -8,10 +8,7 @@ import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class R_EX implements R_RULE {
     SemanticGraph semanticGraph;
@@ -22,18 +19,21 @@ public class R_EX implements R_RULE {
     List<SemanticGraphEdge> temp_list;
     List<SemanticGraphEdge> R2_list;
 
+    List<SemanticGraph> List_coref;
     List<SemanticGraphEdge> R3_list;
 
     ClientUS.NLP.Other.Actor_of_story Actor_of_story;
 
 
-    public R_EX(SemanticGraph semanticGraph, Liste liste ,Actor_of_story Actor_of_story){
+    public R_EX(SemanticGraph semanticGraph, Liste liste , Actor_of_story Actor_of_story, List<SemanticGraph> List_coref){
         this.semanticGraph = semanticGraph;
         this.liste = liste;
+        this.List_coref= List_coref;
         this.Actor_of_story = Actor_of_story;
         R1();
         R2();
         R3();
+        R4();
 
 
         System.out.println("--------R_EX: risultato--------");
@@ -255,25 +255,22 @@ public class R_EX implements R_RULE {
     public void R4() {
         System.out.println("---------R4--------");
 
-
-
-
-
-
+        for (SemanticGraph graph : List_coref) {
+            List<SemanticGraphEdge> list = graph.findAllRelns("nmod:poss");
+            System.out.println(list);
+            if (!list.isEmpty()) {
+                r_rel r = new r_rel(Actor_of_story.getActor_ref(), list.get(0).getSource().originalText());
+                if(!liste.getR_list().contains(r)){
+                   System.out.println("non inserisco");
+                }else{
+                    liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), list.get(0).getSource().originalText()));
+                }
+            }
+        }
     }
 
 
-    /**
-     * R5: Possessive case: "s’", "my", "his"… determine an association; Correlation of pronouns with nouns to extract the associations using
-     * coreference resolution of Stanford core NLP tool
-     * pdf: regole [R4]
-     *
-     *
-     * utilità: aggiunta opt
-     */
-    public void R5() {
-
-    }
+   
 
     public static List<r_rel> removeDuplicates(List<r_rel> list) {
         // Create a new ArrayList

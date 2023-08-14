@@ -2,15 +2,14 @@ package ClientUS.NLP;
 
 import ClientUS.NLP.Other.Actor_of_story;
 import ClientUS.NLP.Other.insert_data_list;
-import ClientUS.NLP.Rule_EX.AC_EX;
-import ClientUS.NLP.Rule_EX.A_EX;
-import ClientUS.NLP.Rule_EX.C_EX;
-import ClientUS.NLP.Rule_EX.R_EX;
+import ClientUS.NLP.Rule_EX.*;
 import ClientUS.RemoteListener;
 import ServerUS.CheckObject.ServerReturnObject;
 import ServerUS.StoryBuilder;
 import ServerUS.UserInterface;
 import com.google.common.io.Files;
+import edu.stanford.nlp.coref.CorefCoreAnnotations;
+import edu.stanford.nlp.coref.data.Mention;
 import edu.stanford.nlp.ie.util.RelationTriple;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
@@ -125,6 +124,27 @@ public class NLP implements RemoteListener {
                 //--------------------------
                 //---     Coreference    ---
                 //--------------------------
+
+                List<SemanticGraph> List_coref = new ArrayList<>();
+                for (CoreMap sentence_coreg : Document.get(CoreAnnotations.SentencesAnnotation.class)) {
+                    System.out.println("-----");
+                    for(Mention m: sentence_coreg.get(CorefCoreAnnotations.CorefMentionsAnnotation.class)){
+                        Annotation annotation = new Annotation(m.toString());
+                        pipeline.annotate(annotation);
+                        for(CoreMap pippo : annotation.get(CoreAnnotations.SentencesAnnotation.class)){
+                            SemanticGraph dipe = pippo.get(SemanticGraphCoreAnnotations.EnhancedDependenciesAnnotation.class);
+                            List_coref.add(dipe);
+                            System.out.println("aggiunto :"+dipe);
+
+                        }
+
+                    }
+
+                }
+
+
+
+                //-------------------------
                 SemanticGraph dependencies = sentence.get(SemanticGraphCoreAnnotations
                         .EnhancedDependenciesAnnotation.class);
 
@@ -135,10 +155,14 @@ public class NLP implements RemoteListener {
                 C_EX c_ex = new C_EX(dependencies,actor,liste);
 
                 System.out.println("[---------------[R_RULES]---------------]");
-                R_EX r_ex = new R_EX(dependencies,liste,actor);
+                R_EX r_ex = new R_EX(dependencies,liste,actor,List_coref);
 
                 System.out.println("[---------------[A_RULES]---------------]");
                 A_EX a_ex = new A_EX(dependencies,liste);
+
+                System.out.println("[---------------[H_RULES]---------------]");
+                H_EX h_ex = new H_EX(liste,dependencies);
+
 
                 // prova
                 System.out.println("-------");
@@ -159,7 +183,11 @@ public class NLP implements RemoteListener {
                 liste.print_R_list();
                 System.out.println("----A---");
                 System.out.println(liste.getA_list());
-                System.out.println("-------");
+                System.out.println("----H---");
+                System.out.println(liste.getH_list());
+                liste.print_h_list();
+                System.out.println("----------");
+
 
 //---------------------------------------------------------------------------------------------------------------
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
