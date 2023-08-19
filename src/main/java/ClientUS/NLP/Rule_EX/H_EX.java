@@ -15,13 +15,17 @@ public class H_EX implements H_RULE {
     Liste liste;
     SemanticGraph semanticGraph;
     h_rel h;
-    List<SemanticGraphEdge> temp_list_obj;
+    List<SemanticGraphEdge> temp_list_obj; // obJ
+    List<SemanticGraphEdge> temp_list_obl; // obL
     List<SemanticGraphEdge> temp_list_acl;
-    List<SemanticGraphEdge> temp_list_obl;
+
+
+    List<SemanticGraphEdge> temp_list_compound;
+    List<SemanticGraphEdge> temp_list_ccomp;
 
     List<SemanticGraphEdge> temp_list_nmod;
     List<SemanticGraphEdge> temp_list_nmodOF;
-
+    List<SemanticGraphEdge> temp_list_nsubj;
 
     public H_EX(Liste liste, SemanticGraph semanticGraph){
         this.semanticGraph = semanticGraph;
@@ -33,30 +37,33 @@ public class H_EX implements H_RULE {
 
     /**
      *
+     * composition identification
      * [H1]
      * The following verbs indicate a relation of composition: "Contain, part of, consist, include, have, comprise…"
      */
     @Override
     public void H1() {
+        System.out.println("[-------- H1 --------]");
         temp_list_obj = semanticGraph.findAllRelns("obj");
         temp_list_acl = semanticGraph.findAllRelns("acl:relcl");
         temp_list_obl = semanticGraph.findAllRelns("obl");
         temp_list_nmod = semanticGraph.findAllRelns("nmod");
+        temp_list_nsubj = semanticGraph.findAllRelns("nsubj:xsubj");
+        temp_list_ccomp = semanticGraph.findAllRelns("ccomp");
         //temp_list_nmodOF = semanticGraph.findAllRelns("nmod:of");
+        temp_list_compound = semanticGraph.findAllRelns("compound");
 
         System.out.println(temp_list_obj);
         System.out.println(temp_list_acl);
         //System.out.println(temp_list_nmodOF);
         System.out.println(temp_list_nmod);
-        System.out.println("specific "+temp_list_nmod.get(0).getRelation().getSpecific());
-        System.out.println(temp_list_nmod.get(0).getSource().originalText());
+       // System.out.println("specific "+temp_list_nmod.get(0).getRelation().getSpecific());
+       // System.out.println(temp_list_nmod.get(0).getSource().originalText());
 
 
         //-----------------------------
-        //part_of
-        //----------------------------
-
-
+        //           part_of
+        //-----------------------------
         System.out.println("[--- PART OF ---]");
         for(SemanticGraphEdge nmodOFselector : temp_list_nmod){
 
@@ -79,11 +86,10 @@ public class H_EX implements H_RULE {
             }
         }
 
-
         //-----------------------------------
         //             consist
         //-----------------------------------
-        System.out.println(temp_list_obl);
+        System.out.println(" obl " +temp_list_obl);
         for (SemanticGraphEdge obj_sem : temp_list_obl) {
             System.out.println("-------lemma------");
             System.out.println(obj_sem.getSource().lemma());
@@ -109,67 +115,162 @@ public class H_EX implements H_RULE {
         //              comprise
         //----------------------------------
 
+        System.out.println("--- comprise ---");
+        System.out.println(" nsubj "+temp_list_nsubj);
+        System.out.println(" obj "+temp_list_obj);
 
-        // ciclo di obj
-        // if(VB == "comprise") ->
-            // obj.target = secondo componente di h
-                //ciclo di nsubj:xsubj
-                // if()
-
-
+        for(SemanticGraphEdge obj_sem : temp_list_obj){
+            if(Objects.equals(obj_sem.getSource().lemma(), "comprise")){ //selezionato [comprise]
+                System.out.println("[---lemma---]");
+                System.out.println(obj_sem.getSource().lemma());
+                String sec_comprise_h = obj_sem.getTarget().originalText();
+                System.out.println("second comp : "+ sec_comprise_h);
+                for (SemanticGraphEdge nsubj : temp_list_nsubj){
+                    if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
+                        String prim_comprise_h = nsubj.getTarget().originalText();
+                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        liste.add_item_h_list(hRel);
+                    }
+                }
+            }
+        }
         //-----------------------------------
         //   have.... working in progress...
         //     c'è un problema di fondo.
+        // bisogna gestire il caso      (Have to have) HTH
         //-----------------------------------
 
 
+        // INSOSPESO
 
+        System.out.println("--- have ---");
+        for(SemanticGraphEdge obj_sem: temp_list_obj){
+
+
+            if(Objects.equals(obj_sem.getSource().lemma(), "have")){
+                System.out.println("--- lemma ---");
+                System.out.println(obj_sem.getSource().lemma());
+                for(SemanticGraphEdge ccomp: temp_list_ccomp){
+                    //HTH
+                    if(ccomp.getSource().lemma() == ccomp.getTarget().lemma()){
+                        for(SemanticGraphEdge obj_sem2: temp_list_obj){
+                            if(ccomp.getTarget().index() == obj_sem2.getSource().index()){
+                                System.out.println("["+liste.getActor_of_story()+","+obj_sem2.getSource()+"]");
+                                liste.add_item_h_list(new h_rel(liste.getActor_of_story(), obj_sem2.getSource().originalText(),"composition"));
+                            }
+                        }
+                    }
+                }
+                    // manca il caso base e testarlo
+                    // poi si passa a H2
+            }
+        }
 
         //-----------------------------------
         //              contain
+        // MANCA UNA COSA: il collegamento con acl->xcomp
         //-----------------------------------
-
-
-
+        System.out.println("--- contain  ---");
+        for(SemanticGraphEdge obj_sem : temp_list_obj){
+            if(Objects.equals(obj_sem.getSource().lemma(), "contain")){ //selezionato [comprise]
+                System.out.println("[---lemma---]");
+                System.out.println(obj_sem.getSource().lemma());
+                String sec_comprise_h = obj_sem.getTarget().originalText();
+                System.out.println("second comp : "+ sec_comprise_h);
+                for (SemanticGraphEdge nsubj : temp_list_nsubj){
+                    if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
+                        String prim_comprise_h = nsubj.getTarget().originalText();
+                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        liste.add_item_h_list(hRel);
+                    }
+                }
+            }
+        }
         //-----------------------------------
         //              include
         //-----------------------------------
-
-
-
-            /*switch (obj_sem.getSource().lemma()) {
-
-
-
-
-
-
-
-                case "contain":
-
-                case "include":
-                    for (int j = 0; j < temp_list_acl.size(); j++) {
-                        if (temp_list_acl.get(j).getTarget().index() == obj_sem.getSource().index()) {
-                            liste.add_item_h_list(new h_rel(
-                                    temp_list_acl.get(j).getSource().originalText(),
-                                    temp_list_obj.get(j).getTarget().originalText(),
-                                    "composition"));
-                        }
+        System.out.println("--- include ---");
+        for(SemanticGraphEdge obj_sem : temp_list_obj){
+            if(Objects.equals(obj_sem.getSource().lemma(), "include")){ //selezionato [comprise]
+                System.out.println("[---lemma---]");
+                System.out.println(obj_sem.getSource().lemma());
+                String sec_comprise_h = obj_sem.getTarget().originalText();
+                System.out.println("second comp : "+ sec_comprise_h);
+                for (SemanticGraphEdge nsubj : temp_list_nsubj){
+                    if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
+                        String prim_comprise_h = nsubj.getTarget().originalText();
+                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        liste.add_item_h_list(hRel);
                     }
-                    break;
-                //liste.add_item_h_list(new h_rel());
-            }*/
+                }
+            }
         }
 
-
-    @Override
-    public void H2() {
+        //-------------------------------------------------------------
+        //                          consist
+        //-------------------------------------------------------------
+        System.out.println("--- consist ---");
+        for(SemanticGraphEdge obl_sem : temp_list_obl){
+            if(Objects.equals(obl_sem.getSource().lemma(), "consist")){ //selezionato [comprise]
+                System.out.println("[---lemma---]");
+                System.out.println(obl_sem.getSource().lemma());
+                String sec_comprise_h = obl_sem.getTarget().originalText();
+                System.out.println("second comp : "+ sec_comprise_h);
+                for (SemanticGraphEdge nsubj : temp_list_nsubj){
+                    if(Objects.equals(nsubj.getSource().originalText(), obl_sem.getSource().originalText())){
+                        String prim_comprise_h = nsubj.getTarget().originalText();
+                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        liste.add_item_h_list(hRel);
+                    }
+                }
+            }
+        }
 
     }
 
+    /**
+     * <>composition identification
+     * Compound noun: if both of nouns are classes then there is a composition relationship between them.
+     */
+    @Override
+    public void H2() {
+        System.out.println("[--------H2--------]");
+        System.out.println(liste.getH_list());
+        String classH2_primo ="";
+        String classH2_sec ="";
+
+
+
+        liste.getC_list().
+        for (SemanticGraphEdge comp_sem : temp_list_compound){
+            for(int i = 0;i<liste.getC_list().size();i++){
+                for(int j =1;j <liste.getC_list().size();j++){
+                   /* System.out.println("primo -> "+liste.getC_list().get(i).getNome_second_index());
+                    System.out.println("secondo -> "+liste.getC_list().get(j).getNome_second_index()); */
+                    if(Objects.equals(liste.getC_list().get(i).getNome_second_index(), liste.getC_list().get(j).getNome_second_index())){
+
+                        liste.add_item_h_list(new h_rel(liste.getC_list().get(i).getNome_index(),liste.getC_list().get(j).getNome_second_index(),"composition"));
+                        System.out.println("Aggiunto "+liste.getH_list().get(liste.getH_list().size()-1).print_string()); // ritona l'ultimo elemento
+
+                    }
+                }
+            }
+        }
+        liste.print_h_list();
+    }
+
+    /**
+     * Aggregation Identification
+     * The verb which belongs list of verbs that indicate a relationship aggregation: (participate ...)
+     */
     @Override
     public void H3() {
 
     }
+    // c'è da fare H5, H5
 
 }

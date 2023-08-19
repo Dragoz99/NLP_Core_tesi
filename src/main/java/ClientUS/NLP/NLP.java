@@ -163,30 +163,24 @@ public class NLP implements RemoteListener {
                 System.out.println("[---------------[H_RULES]---------------]");
                 H_EX h_ex = new H_EX(liste,dependencies);
 
-
+                System.out.println("[---------------------------------------]");
+                System.out.println("Riepilogo");
                 // prova
-                System.out.println("-------");
-                System.out.println("----NN--");
+                System.out.println("----------");
+                System.out.println("--- NN --");
                 System.out.println(liste.getNN_list());
-                System.out.println("----C--");
+                System.out.println("-- C --");
                 System.out.println(liste.getC_list());
-
-                //
-                //esperimento
-
-
-                //-----------------------------
-                System.out.println("----AC--");
+                System.out.println("-- AC --");
                 System.out.println(liste.getAc_list());
-                System.out.println("----R--");
-                System.out.println(liste.getR_list());
+                System.out.println("-- R --");
                 liste.print_R_list();
-                System.out.println("----A---");
+                System.out.println("-- A --");
                 System.out.println(liste.getA_list());
-                System.out.println("----H---");
+                System.out.println("-- H --");
                 System.out.println(liste.getH_list());
                 liste.print_h_list();
-                System.out.println("----------");
+                System.out.println("--------");
 
 
 //---------------------------------------------------------------------------------------------------------------

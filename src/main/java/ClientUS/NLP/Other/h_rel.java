@@ -9,7 +9,7 @@ public class h_rel {
         this.classe_2 = classe_2; // ucro
         this.type = type;
     }
-    public static void print(){
+    public  void print(){
         System.out.println("["+classe_1+","+classe_2+","+type+"]");
     }
     public String getClasse_1() {
@@ -29,6 +29,10 @@ public class h_rel {
         return type;
     }
 
+
+    public String print_string(){
+        return "[ "+ classe_1 +","+classe_2 +","+ type +"]";
+    }
     public void setType(String type) {
         this.type = type;
     }

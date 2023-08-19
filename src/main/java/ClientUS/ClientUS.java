@@ -14,7 +14,6 @@ public class ClientUS implements RemoteListener {
     static String host;
 
     ClientUS(){
-
     }
     public ClientUS(int port) throws Exception{
         ClientUS clientUS = new ClientUS();

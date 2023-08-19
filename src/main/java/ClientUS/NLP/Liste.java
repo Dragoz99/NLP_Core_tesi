@@ -18,10 +18,7 @@ public class Liste {
     List<r_rel> r_list; // contine le relazioni
     List<String> ac_list;
     List<a_rel> a_list;
-
     List<h_rel> h_list;
-
-
 
     public List<a_rel> getA_list() {
         return a_list;
@@ -84,14 +81,9 @@ public class Liste {
         r_list = newList;
     }
 
-    /**
-     * funzione per stampare la lista R
-     */
-    public void print_R_list() {
-        for (ClientUS.NLP.Other.r_rel r_rel : r_list) {
-            r_rel.print();
-        }
-    }
+
+
+
 
     /**
      * Funzione per aggiungere oggetti di tipo r_rel (dedicati alle relazioni) nella lista
@@ -114,14 +106,32 @@ public class Liste {
     public void add_item_h_list(h_rel hRel){
         h_list.add(hRel);
         System.out.println("inserimento nella lista");
-
     }
+
 
     public void print_h_list(){
-        for (ClientUS.NLP.Other.h_rel h_rel : h_list) {
-            h_rel.print();
+        for (h_rel hRel : h_list) {
+            hRel.print();
         }
     }
+
+    public void print_c_list(){
+        for(c_obj cObj : c_list){
+
+        }
+    }
+
+    /**
+     * funzione per stampare la lista R
+     */
+    public void print_R_list() {
+        for (ClientUS.NLP.Other.r_rel r_rel : r_list) {
+            r_rel.print();
+        }
+    }
+    // getIndexword
+
+
 
     public Liste(){
         NN_list = new ArrayList<>();

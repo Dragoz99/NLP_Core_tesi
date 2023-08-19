@@ -52,6 +52,8 @@ public class C_EX implements C_RULE {
      */
     @Override
     public void C1(Actor_of_story actor) {
+
+        System.out.println("--------------[C1]--------------");
         //list.getC_list().add(actor.getActorOfStory());
         list.getC_list().add(actor.toC_obj()); // inserisci il nome dell'attore nella lista
         System.out.print("[C1_RULE] ");
@@ -70,7 +72,7 @@ public class C_EX implements C_RULE {
      */
     @Override
     public void C2() { // da modificare
-        System.out.println("[C2]");
+        System.out.println("--------------[C2]--------------");
         List_case_SG = semanticGraph.findAllRelns("obj"); // IMP: non deve esse obj.* perchè dobbiamo trovare una cosa precisa
 
         List_compound = semanticGraph.findAllRelns("compound");
@@ -100,7 +102,7 @@ public class C_EX implements C_RULE {
             System.out.print("[C2_RULE] ");
 
             System.out.println("IndexedWord_list: " + IndexedWord_list_compound);
-/*              QUESTA PARTE è SPERIMENTALE NON FUNZIONA NSUBJ
+/*      QUESTA PARTE è SPERIMENTALE NON FUNZIONA NSUBJ
         List<SemanticGraphEdge> List_nsubj = semanticGraph.findAllRelns("nsubj");
         List<SemanticGraphEdge> List_concat ;
         IndexedWord indW1;
@@ -150,24 +152,26 @@ public class C_EX implements C_RULE {
                     String cangiante = List_compound.get(j).getTarget().originalText() +"_"+ IndexedWord_list_compound.get(i).originalText();
                     System.out.println(cangiante);
 
-                    c_obj c = new c_obj(IndexedWord_list_compound.get(i).originalText()); // crazione
+                    c_obj c = new c_obj(IndexedWord_list_compound.get(i).originalText()); // crazione del compound
+                    c.setNome_second_index(List_compound.get(j).getTarget().originalText()); //
+                    System.out.println("second_index: "+ List_compound.get(j).getTarget().originalText() );
                     c.setNome_cangiante(cangiante);
 
                     list.getC_list().add(c); // aggiungi il nome composto
-                    System.out.println("[C3]: aggiunto compound ->" +" cangiante:"+ c.getNome_cangiante()+ " index: "+ c.getNome_index());
+
+                    System.out.println("[C3]: aggiunto compound -> cangiante: "+ c.getNome_cangiante()+ "\n index: "+ c.getNome_index()+" \n sec_index: "+ c.getNome_second_index());
                 }else{
 
                 }
             }
             // controllare se esiste un compound
             boolean shi = Collections.disjoint(IndexedWord_list_compound,List_compound);
-            System.out.println("---------------------");
-            System.out.println("---------------------");
 
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("IndexedWord_list_compound "+ IndexedWord_list_compound);
             System.out.println("List_compound "+ List_compound);
-            System.out.println("---------------------");
-            System.out.println("---------------------");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~");
+
             //-------------------------------------------------
             // controlla se c'è un elemento senza un nome composto
             //-------------------------------------------------
@@ -193,6 +197,9 @@ public class C_EX implements C_RULE {
         System.out.println("prima -> [ "+ concat +"]");
         //algoritmo controlla & stermina
 
+        //RIMOZIONE DEI DOPPIONI DEI compound
+        // ES[buisness_owner, buissens, owner, money] -> [buissens_onwer, money]
+        /*
         int i=0;
         int j=1;
 
@@ -207,7 +214,10 @@ public class C_EX implements C_RULE {
             }
             i++;
             j=i+1;
-        }
+        }*/
+
+
+
         /*for(int i =0;i<list.getC_list().size();i++){
             for(int j = 1;i<list.getC_list().size();j++){
                 if(Objects.equals(list.getC_list().get(i).getNome_index(), list.getC_list().get(j).getNome_index())){
@@ -264,6 +274,7 @@ public class C_EX implements C_RULE {
      */
     @Override
     public void C4() {
+        System.out.println("--------------[C4]--------------");
         List_case = semanticGraph.findAllRelns("case");
         for(int i =0;i< List_case.size();i++){
             if(List_case.get(i).getSource().tag().equalsIgnoreCase("NN") &&
@@ -283,6 +294,11 @@ public class C_EX implements C_RULE {
 
     }
 
+
+    /**
+     * The noun after these prepositions (of, for, to) is a
+     * class.
+     */
     @Override
     public void C5() {
       /*  if((List_case.get(i).getSource().tag().equalsIgnoreCase("NNS") || List_case.get(i).getSource().tag().equalsIgnoreCase("NN")
@@ -304,7 +320,9 @@ public class C_EX implements C_RULE {
             }
 
         }
+
         System.out.println("[C5] "+ list.getC_list()); */
+        System.out.println("--------------[C5]--------------");
         List_case = semanticGraph.findAllRelns("case");
         System.out.println(semanticGraph.findAllRelns("case"));
         for (SemanticGraphEdge semanticGraphEdge : List_case) {
@@ -324,8 +342,14 @@ public class C_EX implements C_RULE {
         }
         System.out.println();
     }
+
+
+    /**
+     * Conjunction between classes
+     */
     @Override
     public void C6() {
+        System.out.println("--------------[C6]--------------");
       List_conj = semanticGraph.findAllRelns("conj");
         for (SemanticGraphEdge semanticGraphEdge : List_conj) {
             if ((semanticGraphEdge.getSource().tag().equalsIgnoreCase("NN") || semanticGraphEdge.getSource().tag().equalsIgnoreCase("NNS")) &&
@@ -343,7 +367,7 @@ public class C_EX implements C_RULE {
                 System.out.println();
             }
         }
-        System.out.print("[C6] ");
+        System.out.print(" [C6] ");
         for(int i = 0;i<list.getC_list().size();i++){
             System.out.print(list.getC_list().get(i).getNome_cangiante()+ " ,");
         }
