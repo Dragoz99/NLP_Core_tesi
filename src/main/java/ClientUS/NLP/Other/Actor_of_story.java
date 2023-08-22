@@ -43,9 +43,10 @@ public class Actor_of_story {
     }
 
     public c_obj toC_obj(){
-        c_obj a = new c_obj();
+        c_obj a = new c_obj(Actor_ref);
         a.setNome_cangiante(ActorOfStory);
         a.setNome_index(Actor_ref);
+        a.setNome_second_index(ActorOfStory.replaceAll("_"+Actor_ref,""));
         return a;
     }
 }

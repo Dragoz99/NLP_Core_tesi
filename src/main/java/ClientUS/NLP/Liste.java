@@ -82,6 +82,16 @@ public class Liste {
     }
 
 
+    public boolean contain_class_hList(String name){
+        boolean check = false;
+        for(int i = 0;i<c_list.size();i++){
+            if(c_list.get(i).getNome_index() == name) {
+                check = true;
+            }
+        }
+        return check;
+    }
+
 
 
 
@@ -117,7 +127,7 @@ public class Liste {
 
     public void print_c_list(){
         for(c_obj cObj : c_list){
-
+            cObj.print();
         }
     }
 
@@ -141,6 +151,7 @@ public class Liste {
         ac_list = new ArrayList<>();
         a_list = new ArrayList<>();
         h_list = new ArrayList<>();
+
     }
 
 }

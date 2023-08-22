@@ -37,7 +37,6 @@ public class c_obj {
     public String getNome_index() {
         return nome_index;
     }
-
     public void setNome_index(String nome_index) {
         this.nome_index = nome_index;
     }
@@ -50,6 +49,9 @@ public class c_obj {
         return nome_second_index;
     }
 
+    public void print(){
+        System.out.println("["+nome_cangiante+","+nome_index+","+nome_second_index+"]");
+    }
 
 }
 

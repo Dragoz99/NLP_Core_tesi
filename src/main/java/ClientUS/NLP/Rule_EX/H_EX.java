@@ -19,6 +19,7 @@ public class H_EX implements H_RULE {
     List<SemanticGraphEdge> temp_list_obl; // obL
     List<SemanticGraphEdge> temp_list_acl;
 
+    List<SemanticGraphEdge> temp_list_mark;
 
     List<SemanticGraphEdge> temp_list_compound;
     List<SemanticGraphEdge> temp_list_ccomp;
@@ -26,13 +27,30 @@ public class H_EX implements H_RULE {
     List<SemanticGraphEdge> temp_list_nmod;
     List<SemanticGraphEdge> temp_list_nmodOF;
     List<SemanticGraphEdge> temp_list_nsubj;
+    List<SemanticGraphEdge> temp_list_cop;
 
     public H_EX(Liste liste, SemanticGraph semanticGraph){
+        temp_list_obj = semanticGraph.findAllRelns("obj");
+        temp_list_acl = semanticGraph.findAllRelns("acl:relcl");
+        temp_list_obl = semanticGraph.findAllRelns("obl");
+        temp_list_nmod = semanticGraph.findAllRelns("nmod");
+        temp_list_nsubj = semanticGraph.findAllRelns("nsubj:xsubj");
+        temp_list_ccomp = semanticGraph.findAllRelns("ccomp");
+        //temp_list_nmodOF = semanticGraph.findAllRelns("nmod:of");
+        temp_list_compound = semanticGraph.findAllRelns("compound");
+        temp_list_cop = semanticGraph.findAllRelns("cop");
+        temp_list_mark = semanticGraph.findAllRelns("mark");
+
+
         this.semanticGraph = semanticGraph;
         this.liste = liste;
         H1();
         H2();
         H3();
+        H4(); // trovare un esempio che funzioni (user story)
+        H5(); // skip per ora
+
+
     }
 
     /**
@@ -44,14 +62,7 @@ public class H_EX implements H_RULE {
     @Override
     public void H1() {
         System.out.println("[-------- H1 --------]");
-        temp_list_obj = semanticGraph.findAllRelns("obj");
-        temp_list_acl = semanticGraph.findAllRelns("acl:relcl");
-        temp_list_obl = semanticGraph.findAllRelns("obl");
-        temp_list_nmod = semanticGraph.findAllRelns("nmod");
-        temp_list_nsubj = semanticGraph.findAllRelns("nsubj:xsubj");
-        temp_list_ccomp = semanticGraph.findAllRelns("ccomp");
-        //temp_list_nmodOF = semanticGraph.findAllRelns("nmod:of");
-        temp_list_compound = semanticGraph.findAllRelns("compound");
+
 
         System.out.println(temp_list_obj);
         System.out.println(temp_list_acl);
@@ -239,28 +250,31 @@ public class H_EX implements H_RULE {
     @Override
     public void H2() {
         System.out.println("[--------H2--------]");
-        System.out.println(liste.getH_list());
+
         String classH2_primo ="";
         String classH2_sec ="";
 
+        liste.print_c_list();
+        System.out.println("~~~~~~~~");
 
-
-        liste.getC_list().
-        for (SemanticGraphEdge comp_sem : temp_list_compound){
             for(int i = 0;i<liste.getC_list().size();i++){
-                for(int j =1;j <liste.getC_list().size();j++){
+                for(int j =i+1; j <liste.getC_list().size();j++){
                    /* System.out.println("primo -> "+liste.getC_list().get(i).getNome_second_index());
                     System.out.println("secondo -> "+liste.getC_list().get(j).getNome_second_index()); */
                     if(Objects.equals(liste.getC_list().get(i).getNome_second_index(), liste.getC_list().get(j).getNome_second_index())){
 
+                        classH2_primo = liste.getC_list().get(i).getNome_second_index();
+                        classH2_sec = liste.getC_list().get(j).getNome_second_index();
+
+                        System.out.println("[ "+classH2_primo+" , "+classH2_sec+" ]");
+
                         liste.add_item_h_list(new h_rel(liste.getC_list().get(i).getNome_index(),liste.getC_list().get(j).getNome_second_index(),"composition"));
                         System.out.println("Aggiunto "+liste.getH_list().get(liste.getH_list().size()-1).print_string()); // ritona l'ultimo elemento
-
                     }
                 }
             }
-        }
-        liste.print_h_list();
+
+       // liste.print_h_list();
     }
 
     /**
@@ -269,8 +283,95 @@ public class H_EX implements H_RULE {
      */
     @Override
     public void H3() {
+        System.out.println("[---------H3----------]");
+        List<String> verb_aggregation = List.of(new String[]{
+                "participate"});
+        // POSSIAMO METTERE WORDNET MA diventerebbe un casino adesso a scriverlo
+
+        String classe_2 ="";
+        String classe_1 ="";
+        for(SemanticGraphEdge obl_sem: temp_list_obl){
+            if (Objects.equals(obl_sem.getSource().lemma(), "participate")){
+                classe_2 = obl_sem.getTarget().originalText();
+            }
+        }
+        for(SemanticGraphEdge nsubj_sem: temp_list_nsubj ){
+            if (Objects.equals(nsubj_sem.getSource().lemma(), "participate")){
+                for(int i = 0;i<liste.getC_list().size();i++){
+                    if(Objects.equals(liste.getC_list().get(i).getNome_index(), nsubj_sem.getTarget().originalText())){
+                        classe_1 = nsubj_sem.getTarget().originalText();
+                    }
+                }
+            }
+        }
+
+        if(classe_1 == ""){
+            classe_1 = liste.getActor_of_story();
+        }
+
+        if ((classe_1 != "")&& (classe_2 != "") ){
+            liste.add_item_h_list(new h_rel(classe_1,classe_2,"aggregation"));
+        }
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~");
+        liste.print_h_list();
+    }
+
+    /**
+     * If the subject and the direct object of the sentence are classes, and the verb that connects the two objects is "to be", then the class (the
+     * object) is the parent class, this rule determines inheritance relationships
+     */
+    @Override
+    public void H4() {
+        System.out.println("------[H4]-----");
+        System.out.println(temp_list_nsubj);
+        System.out.println(temp_list_cop);
+        System.out.println(temp_list_mark);
+        for(SemanticGraphEdge cop_sem : temp_list_cop){
+            if(Objects.equals(cop_sem.getTarget().lemma(), "be")){
+                for(SemanticGraphEdge mark_sem: temp_list_mark){
+                    if(Objects.equals(mark_sem.getTarget().lemma(), "to")){
+                        // ho trovato "to be"
+                        for(SemanticGraphEdge nsubj_sem: temp_list_nsubj){
+                            for(int i = 0;i<liste.getC_list().size();i++){   // controllo se tutte e due sono delle classi
+                                String nsubj_contenuto_uno = nsubj_sem.getSource().originalText();
+                                String nsubj_contenuto_due = nsubj_sem.getTarget().originalText();
+                                h_rel hRel = new h_rel("","","inheritance");
+
+                                if ((liste.contain_class_hList(nsubj_contenuto_uno))){
+                                    if ((liste.contain_class_hList(nsubj_contenuto_due))){
+                                        hRel.setClasse_1(nsubj_contenuto_uno);
+                                        hRel.setClasse_2(nsubj_contenuto_due);
+                                        liste.add_item_h_list(hRel);
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+        }
 
     }
+
+    @Override
+    public void H5() {
+
+    }
+
+    /**
+     * questa funzione è una versione futura di H3 per implementare wordnet.
+     */
+    public void H3_1(){
+
+
+
+    }
+
     // c'è da fare H5, H5
 
 }
