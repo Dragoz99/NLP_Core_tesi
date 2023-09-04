@@ -4,11 +4,15 @@ import ClientUS.NLP.Interface_rule.R_RULE;
 import ClientUS.NLP.Liste;
 import ClientUS.NLP.Other.Actor_of_story;
 import ClientUS.NLP.Other.r_rel;
+import ClientUS.NLP.Other.r_rel_new;
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class R_EX implements R_RULE {
     SemanticGraph semanticGraph;
@@ -22,6 +26,8 @@ public class R_EX implements R_RULE {
     List<SemanticGraph> List_coref;
     List<SemanticGraphEdge> R3_list;
 
+    r_rel_new rRelNew;
+
     ClientUS.NLP.Other.Actor_of_story Actor_of_story;
 
 
@@ -30,7 +36,9 @@ public class R_EX implements R_RULE {
         this.liste = liste;
         this.List_coref= List_coref;
         this.Actor_of_story = Actor_of_story;
-        R1();
+        rRelNew = new r_rel_new();
+        //R1();
+        R1_v2();
         R2();
         R3();
         R4();
@@ -136,6 +144,21 @@ public class R_EX implements R_RULE {
         liste.removeDuplicates_r_manuale();
         liste.print_R_list();
     }
+
+
+
+    public void R1_v2(){
+        List<SemanticGraphEdge> list_obj =semanticGraph.findAllRelns("obj");
+        for(int i = 0;i<list_obj.size();i++){
+            if(list_obj.get(i).getTarget().tag() == "NN" ){
+                rRelNew.getClass1().add(liste.getActor_of_story());
+                rRelNew.getClass2().add(list_obj.get(i).getTarget().originalText());
+                System.out.println("inserimento di ["+ liste.getActor_of_story()+","+list_obj.get(i).getTarget().originalText()+"]");
+            }
+        }
+
+    }
+
 
     /**
      * [R2] Verb with preposition
