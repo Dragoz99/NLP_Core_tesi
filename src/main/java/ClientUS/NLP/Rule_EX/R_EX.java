@@ -149,11 +149,16 @@ public class R_EX implements R_RULE {
 
     public void R1_v2(){
         List<SemanticGraphEdge> list_obj =semanticGraph.findAllRelns("obj");
-        for(int i = 0;i<list_obj.size();i++){
-            if(list_obj.get(i).getTarget().tag() == "NN" ){
+        for (SemanticGraphEdge semanticGraphEdge : list_obj) {
+            if (Objects.equals(semanticGraphEdge.getTarget().tag(), "NN")) {
                 rRelNew.getClass1().add(liste.getActor_of_story());
-                rRelNew.getClass2().add(list_obj.get(i).getTarget().originalText());
-                System.out.println("inserimento di ["+ liste.getActor_of_story()+","+list_obj.get(i).getTarget().originalText()+"]");
+                rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
+                System.out.println("inserimento di [" + liste.getActor_of_story() + "," + semanticGraphEdge.getTarget().originalText() + "]");
+            }
+            if (Objects.equals(semanticGraphEdge.getTarget().tag(), "NNS")) {
+                rRelNew.getClass1().add(liste.getActor_of_story());
+                rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
+                System.out.println("inserimento di [" + liste.getActor_of_story() + "," + semanticGraphEdge.getTarget().originalText() + "]");
             }
         }
 
@@ -181,6 +186,12 @@ public class R_EX implements R_RULE {
 
                         r_rel relazione =  new r_rel(Actor_of_story.getActor_ref(), semanticGraphEdge.getTarget().originalText());
                         System.out.println("aggiungo : [" + Actor_of_story.getActor_ref() + " , " + semanticGraphEdge.getTarget().originalText() + "]");
+
+                        rRelNew.getClass1().add(Actor_of_story.getActor_ref());
+                        rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
+
+
+
                         liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), semanticGraphEdge.getTarget().originalText())); // "inserimento nella lista"
                         liste.removeDuplicates_r_manuale(); // sempre per sicurazza : non funziona ora (05/08/2023)!
                         r_rel index_rel ;
@@ -202,8 +213,9 @@ public class R_EX implements R_RULE {
 
 
         System.out.println("lista dopo R2");
-        liste.removeDuplicates_r();
-        liste.print_R_list(); // comprende "stampa R_list"
+        //liste.removeDuplicates_r();
+        //liste.print_R_list(); // comprende "stampa R_list"
+        rRelNew.print();
 
 
       /* System.out.println("Risultato R2 prima: ");
@@ -235,7 +247,11 @@ public class R_EX implements R_RULE {
             switch (assosation) {
                 case "for", "of", "to", "about" -> {
                     System.out.println("[R3]: aggiunto : [" + semanticGraphEdge.getSource().originalText() + " , " + semanticGraphEdge.getTarget().originalText() + "]");
-                    liste.add_item_r_list(new r_rel(semanticGraphEdge.getSource().originalText(), semanticGraphEdge.getTarget().originalText()));
+                    //liste.add_item_r_list(new r_rel(semanticGraphEdge.getSource().originalText(), semanticGraphEdge.getTarget().originalText()));
+
+                    rRelNew.getClass1().add(semanticGraphEdge.getSource().originalText());
+                    rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
+
                 }
                 default -> {
                 }
@@ -287,6 +303,8 @@ public class R_EX implements R_RULE {
                    System.out.println("non inserisco");
                 }else{
                     liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), list.get(0).getSource().originalText()));
+                    rRelNew.getClass1().add(Actor_of_story.getActor_ref());
+                    rRelNew.getClass2().add(list.get(0).getSource().originalText());
                 }
             }
         }
