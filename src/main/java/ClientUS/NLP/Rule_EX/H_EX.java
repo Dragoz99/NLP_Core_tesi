@@ -134,17 +134,6 @@ public class H_EX implements H_RULE {
                 }
             }
         }
-
-
-
-
-        // ciclo di obj
-        // if(VB == "comprise") ->
-            // obj.target = secondo componente di h
-                //ciclo di nsubj:xsubj
-                // if()
-
-
         ///-----------------------------------
         //   have.... working in progress...
         //     c'è un problema di fondo.
@@ -190,6 +179,9 @@ public class H_EX implements H_RULE {
                     if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
                         String prim_comprise_h = nsubj.getTarget().originalText();
                         h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        hRelNew.getClass_1().add(prim_comprise_h);
+                        hRelNew.getClass_2().add(sec_comprise_h);
+                        hRelNew.getType().add("composition");
                         System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
                         liste.add_item_h_list(hRel);
                     }
@@ -212,15 +204,18 @@ public class H_EX implements H_RULE {
                 for (SemanticGraphEdge nsubj : temp_list_nsubj){
                     if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
                         String prim_comprise_h = nsubj.getTarget().originalText();
-                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
-                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
-                        liste.add_item_h_list(hRel);
+                       // h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+
+                        hRelNew.getClass_1().add(prim_comprise_h);
+                        hRelNew.getClass_2().add(sec_comprise_h);
+                        hRelNew.getType().add("composition");
+
+                        System.out.println("["+prim_comprise_h+","+sec_comprise_h+", composition]");
+
                     }
                 }
             }
         }
-
-
         //-----------------------------------
         //           consist
         //-----------------------------------
@@ -234,39 +229,21 @@ public class H_EX implements H_RULE {
                 for (SemanticGraphEdge nsubj : temp_list_nsubj){
                     if(Objects.equals(nsubj.getSource().originalText(), obl_sem.getSource().originalText())){
                         String prim_comprise_h = nsubj.getTarget().originalText();
-                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
-                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
-                        liste.add_item_h_list(hRel);
+
+                        hRelNew.getClass_1().add(prim_comprise_h);
+                        hRelNew.getClass_2().add(sec_comprise_h);
+                        hRelNew.getType().add("composition");
+
+                        //h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                       // System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        //liste.add_item_h_list(hRel);
+                        System.out.println("aggiunto: ["+prim_comprise_h+","+sec_comprise_h+",composition ]");
                     }
                 }
             }
         }
 
-
-
-            /*switch (obj_sem.getSource().lemma()) {
-
-
-
-
-
-
-
-                case "contain":
-
-                case "include":
-                    for (int j = 0; j < temp_list_acl.size(); j++) {
-                        if (temp_list_acl.get(j).getTarget().index() == obj_sem.getSource().index()) {
-                            liste.add_item_h_list(new h_rel(
-                                    temp_list_acl.get(j).getSource().originalText(),
-                                    temp_list_obj.get(j).getTarget().originalText(),
-                                    "composition"));
-                        }
-                    }
-                    break;
-                //liste.add_item_h_list(new h_rel());
-            }*/
-        }
+    }
 
 
     @Override
