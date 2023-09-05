@@ -248,12 +248,74 @@ public class H_EX implements H_RULE {
 
     @Override
     public void H2() {
+        System.out.println("[--------H2--------]");
+
+        String classH2_primo ="";
+        String classH2_sec ="";
+
+        liste.print_c_list();
+        System.out.println("~~~~~~~~");
+
+        for(int i = 0;i<liste.getC_list().size();i++){
+            for(int j =i+1; j <liste.getC_list().size();j++){
+                   /* System.out.println("primo -> "+liste.getC_list().get(i).getNome_second_index());
+                    System.out.println("secondo -> "+liste.getC_list().get(j).getNome_second_index()); */
+                if(Objects.equals(liste.getC_list().get(i).getNome_second_index(), liste.getC_list().get(j).getNome_second_index())){
+
+                    classH2_primo = liste.getC_list().get(i).getNome_second_index();
+                    classH2_sec = liste.getC_list().get(j).getNome_second_index();
+
+                    System.out.println("[ "+classH2_primo+" , "+classH2_sec+" ]");
+
+                    hRelNew.getClass_1().add(classH2_primo);
+                    hRelNew.getClass_2().add(classH2_sec);
+                    hRelNew.getType().add("composition");
+
+                    System.out.println(" aggiunto ["+classH2_primo+","+classH2_sec+",composition]");
+
+                }
+            }
+        }
+
+
+
 
     }
 
     @Override
     public void H3() {
+        System.out.println("[---------H3----------]");
+        List<String> verb_aggregation = List.of(new String[]{
+                "participate"});
+        // POSSIAMO METTERE WORDNET MA diventerebbe un casino adesso a scriverlo
 
+        String classe_2 ="";
+        String classe_1 ="";
+        for(SemanticGraphEdge obl_sem: temp_list_obl){
+            if (Objects.equals(obl_sem.getSource().lemma(), "participate")){
+                classe_2 = obl_sem.getTarget().originalText();
+            }
+        }
+        for(SemanticGraphEdge nsubj_sem: temp_list_nsubj ){
+            if (Objects.equals(nsubj_sem.getSource().lemma(), "participate")){
+                for(int i = 0;i<liste.getC_list().size();i++){
+                    if(Objects.equals(liste.getC_list().get(i).getNome_index(), nsubj_sem.getTarget().originalText())){
+                        classe_1 = nsubj_sem.getTarget().originalText();
+                    }
+                }
+            }
+        }
+
+        if(classe_1 == ""){
+            classe_1 = liste.getActor_of_story();
+        }
+
+        if ((classe_1 != "")&& (classe_2 != "") ){
+            liste.add_item_h_list(new h_rel(classe_1,classe_2,"aggregation"));
+        }
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~");
+        liste.print_h_list();
     }
 
 }

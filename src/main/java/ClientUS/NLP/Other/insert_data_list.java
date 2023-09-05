@@ -56,7 +56,6 @@ public class insert_data_list {
         }else{
             System.out.println("Elemento già presente");
         }
-
     }
     public void insert_relazion(StoryBuilder a, Liste liste) throws SQLException, RemoteException{
         ServerReturnObject serverReturnObject = new ServerReturnObject(a);

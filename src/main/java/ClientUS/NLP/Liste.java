@@ -126,6 +126,12 @@ public class Liste {
     public r_rel_new getrRelNew() {
         return rRelNew;
     }
+    public void print_c_list(){
+        for(c_obj cObj : c_list){
+            cObj.print();
+        }
+    }
+
     public void setrRelNew(r_rel_new rRelNew) {
         this.rRelNew = rRelNew;
     }

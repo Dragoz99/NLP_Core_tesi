@@ -52,6 +52,7 @@ public class C_EX implements C_RULE {
      */
     @Override
     public void C1(Actor_of_story actor) {
+        System.out.println("--------------[C1]--------------");
         //list.getC_list().add(actor.getActorOfStory());
         list.getC_list().add(actor.toC_obj()); // inserisci il nome dell'attore nella lista
         System.out.print("[C1_RULE] ");
@@ -70,7 +71,7 @@ public class C_EX implements C_RULE {
      */
     @Override
     public void C2() { // da modificare
-        System.out.println("[C2]");
+        System.out.println("--------------[C2]--------------");
         List_case_SG = semanticGraph.findAllRelns("obj"); // IMP: non deve esse obj.* perchè dobbiamo trovare una cosa precisa
 
         List_compound = semanticGraph.findAllRelns("compound");
@@ -161,13 +162,10 @@ public class C_EX implements C_RULE {
             }
             // controllare se esiste un compound
             boolean shi = Collections.disjoint(IndexedWord_list_compound,List_compound);
-            System.out.println("---------------------");
-            System.out.println("---------------------");
-
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("IndexedWord_list_compound "+ IndexedWord_list_compound);
             System.out.println("List_compound "+ List_compound);
-            System.out.println("---------------------");
-            System.out.println("---------------------");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~");
             //-------------------------------------------------
             // controlla se c'è un elemento senza un nome composto
             //-------------------------------------------------
@@ -192,7 +190,7 @@ public class C_EX implements C_RULE {
         }
         System.out.println("prima -> [ "+ concat +"]");
         //algoritmo controlla & stermina
-
+/*
         int i=0;
         int j=1;
 
@@ -264,6 +262,7 @@ public class C_EX implements C_RULE {
      */
     @Override
     public void C4() {
+        System.out.println("--------------[C4]--------------");
         List_case = semanticGraph.findAllRelns("case");
         for(int i =0;i< List_case.size();i++){
             if(List_case.get(i).getSource().tag().equalsIgnoreCase("NN") &&
@@ -305,6 +304,9 @@ public class C_EX implements C_RULE {
 
         }
         System.out.println("[C5] "+ list.getC_list()); */
+
+        System.out.println("--------------[C5]--------------");
+
         List_case = semanticGraph.findAllRelns("case");
         System.out.println(semanticGraph.findAllRelns("case"));
         for (SemanticGraphEdge semanticGraphEdge : List_case) {
@@ -326,6 +328,7 @@ public class C_EX implements C_RULE {
     }
     @Override
     public void C6() {
+        System.out.println("--------------[C6]--------------");
       List_conj = semanticGraph.findAllRelns("conj");
         for (SemanticGraphEdge semanticGraphEdge : List_conj) {
             if ((semanticGraphEdge.getSource().tag().equalsIgnoreCase("NN") || semanticGraphEdge.getSource().tag().equalsIgnoreCase("NNS")) &&
