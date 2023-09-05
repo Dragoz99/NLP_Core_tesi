@@ -3,6 +3,7 @@ package ClientUS.NLP.Rule_EX;
 import ClientUS.NLP.Interface_rule.H_RULE;
 import ClientUS.NLP.Liste;
 import ClientUS.NLP.Other.h_rel;
+import ClientUS.NLP.Other.h_rel_new;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 
@@ -24,12 +25,15 @@ public class H_EX implements H_RULE {
     List<SemanticGraphEdge> temp_list_nsubj;
     List<SemanticGraphEdge> temp_list_ccomp;
 
+    h_rel_new hRelNew;
+
 
 
 
     public H_EX(Liste liste, SemanticGraph semanticGraph){
         this.semanticGraph = semanticGraph;
         this.liste = liste;
+        hRelNew = new h_rel_new();
         H1();
         H2();
         H3();
@@ -55,8 +59,8 @@ public class H_EX implements H_RULE {
         System.out.println(temp_list_acl);
         //System.out.println(temp_list_nmodOF);
         System.out.println(temp_list_nmod);
-       // System.out.println("specific "+temp_list_nmod.get(0).getRelation().getSpecific());
-      //  System.out.println(temp_list_nmod.get(0).getSource().originalText());
+        //System.out.println("specific "+temp_list_nmod.get(0).getRelation().getSpecific());
+        //System.out.println(temp_list_nmod.get(0).getSource().originalText());
 
 
         //-----------------------------
@@ -69,16 +73,12 @@ public class H_EX implements H_RULE {
 
             System.out.println(nmodOFselector.getSource().originalText());
             if((Objects.equals(nmodOFselector.getRelation().getSpecific(), "of")) && (Objects.equals(nmodOFselector.getSource().originalText(), "part"))){
-                System.out.println("ok boss");
                 for(SemanticGraphEdge aclSelector: temp_list_acl){
                     if(nmodOFselector.getSource().index() == aclSelector.getTarget().index()){ // esiste una relazione ACL:relcl? con target NN? con index uguali
-                            System.out.println("ok il prezzo è giusto");
-                           liste.add_item_h_list(
-                                   new h_rel(
-                                   nmodOFselector.getTarget().originalText(),
-                                   aclSelector.getSource().originalText(),
-                                   "composition"));
-                           liste.print_h_list();
+                           hRelNew.getClass_1().add(nmodOFselector.getTarget().originalText());
+                           hRelNew.getClass_2().add(aclSelector.getSource().originalText());
+                           hRelNew.getType().add("composition");
+                           System.out.println("["+nmodOFselector.getTarget().originalText()+","+aclSelector.getSource().originalText()+", composition ]");
                     }
                 }
             }else{
@@ -102,13 +102,9 @@ public class H_EX implements H_RULE {
                         System.out.println("ok: Acl_sem");
                         for (SemanticGraphEdge nmod_sem : temp_list_nmod) {
                             if (obj_sem.getTarget().index() == nmod_sem.getSource().index()) { // i due index combaciano
-                                liste.add_item_h_list(
-                                        new h_rel(
-                                                obj_sem.getSource().originalText(),
-                                                nmod_sem.getTarget().originalText(),
-                                                "composition"));
-
-
+                                hRelNew.getClass_1().add(obj_sem.getSource().originalText());
+                                hRelNew.getClass_2().add(nmod_sem.getTarget().originalText());
+                                hRelNew.getType().add("composition");
                             }
                         }
                     }
