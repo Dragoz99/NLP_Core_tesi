@@ -83,6 +83,9 @@ public class H_EX implements H_RULE {
         //-----------------------------------
         //             consist
         //-----------------------------------
+
+
+        System.out.println("[R3]---[consist]");
         System.out.println(temp_list_obl);
         for (SemanticGraphEdge obj_sem : temp_list_obl) {
             System.out.println("-------lemma------");
@@ -108,6 +111,9 @@ public class H_EX implements H_RULE {
         //----------------------------------
         //              comprise
         //----------------------------------
+        System.out.println("[R3]---[comprise]");
+
+
 
 
         // ciclo di obj

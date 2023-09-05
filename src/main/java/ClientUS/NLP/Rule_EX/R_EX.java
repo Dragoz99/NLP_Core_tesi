@@ -161,10 +161,7 @@ public class R_EX implements R_RULE {
                 System.out.println("inserimento di [" + liste.getActor_of_story() + "," + semanticGraphEdge.getTarget().originalText() + "]");
             }
         }
-
     }
-
-
     /**
      * [R2] Verb with preposition
      */
@@ -251,38 +248,13 @@ public class R_EX implements R_RULE {
 
                     rRelNew.getClass1().add(semanticGraphEdge.getSource().originalText());
                     rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
-
                 }
                 default -> {
                 }
-
             }
-
         }
-
         System.out.println(R3_list);
-       /* String assosation;
-        for(int i = 0;i<R3_list.size();i++){
-            assosation = R3_list.get(i).getRelation().getSpecific();
-            //System.out.println(R3_list.get(i).getRelation().getSpecific());
-            switch (assosation){
-                case "for":
-                    //scrivi il comando Sql
-                    break;
-                case "of":
-                    //scrivi il comando Sql
-                    break;
-                case "to":
-                    //scrivi il comando Sql
-                    break;
-                case "about":
-                    //scrivi il comando Sql
-                    break;
-                default:
-                    // non è una associazione
-            }
-            System.out.println();
-        }*/
+
     }
     /**
      * [R4]
@@ -305,6 +277,8 @@ public class R_EX implements R_RULE {
                     liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), list.get(0).getSource().originalText()));
                     rRelNew.getClass1().add(Actor_of_story.getActor_ref());
                     rRelNew.getClass2().add(list.get(0).getSource().originalText());
+
+                    System.out.println("Aggiunto :["+Actor_of_story.getActor_ref()+","+list.get(0).getSource().originalText()+"]");
                 }
             }
         }
