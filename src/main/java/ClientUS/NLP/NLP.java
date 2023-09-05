@@ -214,7 +214,8 @@ public class NLP implements RemoteListener {
                     System.out.println("[Attenzione]: classi non inserite. file gia esiste");
                 }
                 // inserimento relazioni
-                data_list.insert_relazion(storyBuilder,liste);
+                //data_list.insert_relazion(storyBuilder,liste);
+                data_list.insert_relazioni_new(storyBuilder,liste);
             }
     }
     /**

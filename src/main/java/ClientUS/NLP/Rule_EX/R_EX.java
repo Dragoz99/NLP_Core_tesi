@@ -46,7 +46,9 @@ public class R_EX implements R_RULE {
 
         System.out.println("--------R_EX: risultato--------");
         System.out.println("stamapa R_list");
-        liste.print_R_list();
+        //liste.print_R_list();
+        liste.setrRelNew(rRelNew);
+        liste.getrRelNew().print();
         //liste.removeDuplicates_r();
     }
 

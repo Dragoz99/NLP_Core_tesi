@@ -97,6 +97,46 @@ public class insert_data_list {
         // \(^-^)/
     }
 
+    public void insert_relazioni_new(StoryBuilder a, Liste liste) throws SQLException, RemoteException{
+        ServerReturnObject serverReturnObject = new ServerReturnObject(a);
+
+        String cc =
+                "select if(count(*) >0,\"true\",\"false\") " +
+                        "from relazioni " +
+                        "where relazioni_classFileName_id_1  = '"+a.getId()+"' and relazioni_classFileName_id_2 = '"+a.getId()+"'";
+        serverReturnObject.esegui_query(cc);
+
+        boolean check_boolean = serverReturnObject.checkBoolean(); // controllo
+        System.out.println("controllo c:"+check_boolean);
+
+        if(!check_boolean) { // controllo
+            serverReturnObject.esegui_query(
+                    "select class_id, class_name " +
+                            "from class " +
+                            "where class_filename_id = '" + a.getId() + "'");
+
+            serverReturnObject.esegui_query(cc);
+            if (!serverReturnObject.checkBoolean()) {
+                for (int i = 0; i < liste.getrRelNew().getClass1().size(); i++) { // se è vuota come può riempire ???
+
+                    String nome_class_1 = liste.getrRelNew().getClass1().get(i);
+                    String nome_class_2 = liste.getrRelNew().getClass2().get(i);
+
+                    stub.insertDDL_userStory("insert into relazioni" +
+                            "(relazioni_className_1, relazioni_className_2, relazioni_classID_1, relazioni_classID_2," +
+                            "relazioni_classFileName_id_1,relazioni_classFileName_id_2)" +
+                            " values ('" + nome_class_1 + "','" + nome_class_2 + "'," +
+                            " (select class_id from class where class_name = '"
+                            + nome_class_1 + "' and class_filename_id = '" + a.getId() + "')," +
+                            " (select class_id from class where class_name = '"
+                            + nome_class_2 + "' and class_filename_id = '" + a.getId() + "')," +
+                            "'" + a.getId() + "','" + a.getId() + "')");
+                }
+            }
+        }
+        // \(^-^)/
+    }
+
 
     public void insert_attibute(StoryBuilder a, Liste liste) throws SQLException {
         ServerReturnObject attributeObj = new ServerReturnObject(a);

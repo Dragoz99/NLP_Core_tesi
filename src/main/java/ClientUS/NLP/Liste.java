@@ -1,9 +1,6 @@
 package ClientUS.NLP;
 
-import ClientUS.NLP.Other.a_rel;
-import ClientUS.NLP.Other.c_obj;
-import ClientUS.NLP.Other.h_rel;
-import ClientUS.NLP.Other.r_rel;
+import ClientUS.NLP.Other.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,6 +17,8 @@ public class Liste {
     List<a_rel> a_list;
 
     List<h_rel> h_list;
+
+    r_rel_new rRelNew ;
 
 
 
@@ -66,6 +65,8 @@ public class Liste {
     public void setAc_list(List<String> ac_list) {
         this.ac_list = ac_list;
     }
+
+
 
     public List<r_rel>  removeDuplicates_r(){
         Set<r_rel> set = new HashSet<>(r_list);
@@ -122,6 +123,12 @@ public class Liste {
             h_rel.print();
         }
     }
+    public r_rel_new getrRelNew() {
+        return rRelNew;
+    }
+    public void setrRelNew(r_rel_new rRelNew) {
+        this.rRelNew = rRelNew;
+    }
 
     public Liste(){
         NN_list = new ArrayList<>();
@@ -131,6 +138,9 @@ public class Liste {
         ac_list = new ArrayList<>();
         a_list = new ArrayList<>();
         h_list = new ArrayList<>();
+        rRelNew = new r_rel_new();
+
+
     }
 
 }

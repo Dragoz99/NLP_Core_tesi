@@ -21,6 +21,8 @@ public class H_EX implements H_RULE {
 
     List<SemanticGraphEdge> temp_list_nmod;
     List<SemanticGraphEdge> temp_list_nmodOF;
+    List<SemanticGraphEdge> temp_list_nsubj;
+
 
 
     public H_EX(Liste liste, SemanticGraph semanticGraph){
@@ -42,14 +44,15 @@ public class H_EX implements H_RULE {
         temp_list_acl = semanticGraph.findAllRelns("acl:relcl");
         temp_list_obl = semanticGraph.findAllRelns("obl");
         temp_list_nmod = semanticGraph.findAllRelns("nmod");
+        temp_list_nsubj = semanticGraph.findAllRelns("nsubj");
         //temp_list_nmodOF = semanticGraph.findAllRelns("nmod:of");
 
         System.out.println(temp_list_obj);
         System.out.println(temp_list_acl);
         //System.out.println(temp_list_nmodOF);
         System.out.println(temp_list_nmod);
-        System.out.println("specific "+temp_list_nmod.get(0).getRelation().getSpecific());
-        System.out.println(temp_list_nmod.get(0).getSource().originalText());
+       // System.out.println("specific "+temp_list_nmod.get(0).getRelation().getSpecific());
+      //  System.out.println(temp_list_nmod.get(0).getSource().originalText());
 
 
         //-----------------------------
@@ -83,8 +86,6 @@ public class H_EX implements H_RULE {
         //-----------------------------------
         //             consist
         //-----------------------------------
-
-
         System.out.println("[R3]---[consist]");
         System.out.println(temp_list_obl);
         for (SemanticGraphEdge obj_sem : temp_list_obl) {
@@ -102,6 +103,8 @@ public class H_EX implements H_RULE {
                                                 obj_sem.getSource().originalText(),
                                                 nmod_sem.getTarget().originalText(),
                                                 "composition"));
+
+
                             }
                         }
                     }
@@ -112,6 +115,23 @@ public class H_EX implements H_RULE {
         //              comprise
         //----------------------------------
         System.out.println("[R3]---[comprise]");
+        System.out.println(temp_list_obj);
+        for(SemanticGraphEdge obj_sem: temp_list_obj){
+            System.out.println("---- lemma ----");
+            System.out.println(obj_sem.getSource().lemma());
+
+            if(Objects.equals(obj_sem.getSource().lemma(), "comprise")){
+
+                for(SemanticGraphEdge nsubj_sem : temp_list_nsubj){
+                    if(nsubj_sem.getSource().index() == obj_sem.getSource().index()){
+
+                    }
+
+                }
+
+            }
+
+        }
 
 
 
