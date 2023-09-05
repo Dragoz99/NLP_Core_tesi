@@ -22,6 +22,8 @@ public class H_EX implements H_RULE {
     List<SemanticGraphEdge> temp_list_nmod;
     List<SemanticGraphEdge> temp_list_nmodOF;
     List<SemanticGraphEdge> temp_list_nsubj;
+    List<SemanticGraphEdge> temp_list_ccomp;
+
 
 
 
@@ -45,6 +47,8 @@ public class H_EX implements H_RULE {
         temp_list_obl = semanticGraph.findAllRelns("obl");
         temp_list_nmod = semanticGraph.findAllRelns("nmod");
         temp_list_nsubj = semanticGraph.findAllRelns("nsubj");
+        temp_list_ccomp = semanticGraph.findAllRelns("ccomp");
+
         //temp_list_nmodOF = semanticGraph.findAllRelns("nmod:of");
 
         System.out.println(temp_list_obj);
@@ -114,23 +118,25 @@ public class H_EX implements H_RULE {
         //----------------------------------
         //              comprise
         //----------------------------------
-        System.out.println("[R3]---[comprise]");
-        System.out.println(temp_list_obj);
-        for(SemanticGraphEdge obj_sem: temp_list_obj){
-            System.out.println("---- lemma ----");
-            System.out.println(obj_sem.getSource().lemma());
+        System.out.println("--- comprise ---");
+        System.out.println(" nsubj "+temp_list_nsubj);
+        System.out.println(" obj "+temp_list_obj);
 
-            if(Objects.equals(obj_sem.getSource().lemma(), "comprise")){
-
-                for(SemanticGraphEdge nsubj_sem : temp_list_nsubj){
-                    if(nsubj_sem.getSource().index() == obj_sem.getSource().index()){
-
+        for(SemanticGraphEdge obj_sem : temp_list_obj){
+            if(Objects.equals(obj_sem.getSource().lemma(), "comprise")){ //selezionato [comprise]
+                System.out.println("[---lemma---]");
+                System.out.println(obj_sem.getSource().lemma());
+                String sec_comprise_h = obj_sem.getTarget().originalText();
+                System.out.println("second comp : "+ sec_comprise_h);
+                for (SemanticGraphEdge nsubj : temp_list_nsubj){
+                    if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
+                        String prim_comprise_h = nsubj.getTarget().originalText();
+                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        liste.add_item_h_list(hRel);
                     }
-
                 }
-
             }
-
         }
 
 
@@ -143,23 +149,102 @@ public class H_EX implements H_RULE {
                 // if()
 
 
-        //-----------------------------------
+        ///-----------------------------------
         //   have.... working in progress...
         //     c'è un problema di fondo.
+        // bisogna gestire il caso      (Have to have) HTH
         //-----------------------------------
 
 
+        // INSOSPESO
+
+        System.out.println("--- have ---");
+        for(SemanticGraphEdge obj_sem: temp_list_obj){
 
 
+            if(Objects.equals(obj_sem.getSource().lemma(), "have")){
+                System.out.println("--- lemma ---");
+                System.out.println(obj_sem.getSource().lemma());
+                for(SemanticGraphEdge ccomp: temp_list_ccomp){
+                    //HTH
+                    if(ccomp.getSource().lemma() == ccomp.getTarget().lemma()){
+                        for(SemanticGraphEdge obj_sem2: temp_list_obj){
+                            if(ccomp.getTarget().index() == obj_sem2.getSource().index()){
+                                System.out.println("["+liste.getActor_of_story()+","+obj_sem2.getSource()+"]");
+                                liste.add_item_h_list(new h_rel(liste.getActor_of_story(), obj_sem2.getSource().originalText(),"composition"));
+                            }
+                        }
+                    }
+                }
+                // manca il caso base e testarlo
+                // poi si passa a H2
+            }
+        }
         //-----------------------------------
         //              contain
         //-----------------------------------
-
+        System.out.println("--- contain  ---");
+        for(SemanticGraphEdge obj_sem : temp_list_obj){
+            if(Objects.equals(obj_sem.getSource().lemma(), "contain")){ //selezionato [comprise]
+                System.out.println("[---lemma---]");
+                System.out.println(obj_sem.getSource().lemma());
+                String sec_comprise_h = obj_sem.getTarget().originalText();
+                System.out.println("second comp : "+ sec_comprise_h);
+                for (SemanticGraphEdge nsubj : temp_list_nsubj){
+                    if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
+                        String prim_comprise_h = nsubj.getTarget().originalText();
+                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        liste.add_item_h_list(hRel);
+                    }
+                }
+            }
+        }
 
 
         //-----------------------------------
         //              include
         //-----------------------------------
+
+        System.out.println("--- include ---");
+        for(SemanticGraphEdge obj_sem : temp_list_obj){
+            if(Objects.equals(obj_sem.getSource().lemma(), "include")){ //selezionato [comprise]
+                System.out.println("[---lemma---]");
+                System.out.println(obj_sem.getSource().lemma());
+                String sec_comprise_h = obj_sem.getTarget().originalText();
+                System.out.println("second comp : "+ sec_comprise_h);
+                for (SemanticGraphEdge nsubj : temp_list_nsubj){
+                    if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
+                        String prim_comprise_h = nsubj.getTarget().originalText();
+                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        liste.add_item_h_list(hRel);
+                    }
+                }
+            }
+        }
+
+
+        //-----------------------------------
+        //           consist
+        //-----------------------------------
+        System.out.println("--- consist ---");
+        for(SemanticGraphEdge obl_sem : temp_list_obl){
+            if(Objects.equals(obl_sem.getSource().lemma(), "consist")){ //selezionato [comprise]
+                System.out.println("[---lemma---]");
+                System.out.println(obl_sem.getSource().lemma());
+                String sec_comprise_h = obl_sem.getTarget().originalText();
+                System.out.println("second comp : "+ sec_comprise_h);
+                for (SemanticGraphEdge nsubj : temp_list_nsubj){
+                    if(Objects.equals(nsubj.getSource().originalText(), obl_sem.getSource().originalText())){
+                        String prim_comprise_h = nsubj.getTarget().originalText();
+                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        liste.add_item_h_list(hRel);
+                    }
+                }
+            }
+        }
 
 
 
