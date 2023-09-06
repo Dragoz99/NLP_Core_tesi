@@ -222,7 +222,7 @@ public class NLP implements RemoteListener {
     }
     /**
      * inserimento delle info riguardanti il nome del file
-     */
+     **/
     private void check(StoryBuilder a) throws SQLException, RuntimeException, RemoteException {
         stub.insertDDL_userStory(
                 "select exist (select * from filename where filename_id ='"+a.getId()+"')"
