@@ -97,7 +97,6 @@ public class R_EX implements R_RULE {
         for(int i = 0; i<R2_list_temp.size();i++){System.out.println(Arrays.toString(R2_list_temp.toArray()));} */
         // creazione di una lista temporanea --> poi si elimiano i duplicati
 
-
         IndexedWord indW1 = semanticGraph.getNodeByWordPattern("I"); // si assume che I si riferisce al Actor of user story
         IndexedWord indW2;
         for (int i = 0; i < liste.getC_list().size(); i++) {
@@ -153,14 +152,14 @@ public class R_EX implements R_RULE {
         List<SemanticGraphEdge> list_obj =semanticGraph.findAllRelns("obj");
         for (SemanticGraphEdge semanticGraphEdge : list_obj) {
             if (Objects.equals(semanticGraphEdge.getTarget().tag(), "NN")) {
-                rRelNew.getClass1().add(liste.getActor_of_story());
+                rRelNew.getClass1().add(Actor_of_story.getActor_ref());
                 rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
-                System.out.println("inserimento di [" + liste.getActor_of_story() + "," + semanticGraphEdge.getTarget().originalText() + "]");
+                System.out.println("inserimento di [" + Actor_of_story.getActor_ref() + "," + semanticGraphEdge.getTarget().originalText() + "]");
             }
             if (Objects.equals(semanticGraphEdge.getTarget().tag(), "NNS")) {
                 rRelNew.getClass1().add(liste.getActor_of_story());
                 rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
-                System.out.println("inserimento di [" + liste.getActor_of_story() + "," + semanticGraphEdge.getTarget().originalText() + "]");
+                System.out.println("inserimento di [" + Actor_of_story.getActor_ref() + "," + semanticGraphEdge.getTarget().originalText() + "]");
             }
         }
     }
@@ -188,7 +187,6 @@ public class R_EX implements R_RULE {
 
                         rRelNew.getClass1().add(Actor_of_story.getActor_ref());
                         rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
-
 
 
                         liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), semanticGraphEdge.getTarget().originalText())); // "inserimento nella lista"
@@ -266,7 +264,7 @@ public class R_EX implements R_RULE {
      */
     @Override
     public void R4() {
-        System.out.println("---------R4--------");
+        System.out.println("---------R4---------");
 
         for (SemanticGraph graph : List_coref) {
             List<SemanticGraphEdge> list = graph.findAllRelns("nmod:poss");

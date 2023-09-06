@@ -37,6 +37,7 @@ public class H_EX implements H_RULE {
         H1();
         H2();
         H3();
+        liste.sethRelNew(hRelNew);
     }
 
     /**
@@ -127,9 +128,13 @@ public class H_EX implements H_RULE {
                 for (SemanticGraphEdge nsubj : temp_list_nsubj){
                     if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
                         String prim_comprise_h = nsubj.getTarget().originalText();
-                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
-                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
-                        liste.add_item_h_list(hRel);
+
+                        hRelNew.getClass_1().add(prim_comprise_h);
+                        hRelNew.getClass_2().add(sec_comprise_h);
+                        hRelNew.getType().add("composition");
+
+                        System.out.println("aggiunto: ["+prim_comprise_h+","+sec_comprise_h+",composition]");
+
                     }
                 }
             }
@@ -145,8 +150,6 @@ public class H_EX implements H_RULE {
 
         System.out.println("--- have ---");
         for(SemanticGraphEdge obj_sem: temp_list_obj){
-
-
             if(Objects.equals(obj_sem.getSource().lemma(), "have")){
                 System.out.println("--- lemma ---");
                 System.out.println(obj_sem.getSource().lemma());
@@ -155,8 +158,12 @@ public class H_EX implements H_RULE {
                     if(ccomp.getSource().lemma() == ccomp.getTarget().lemma()){
                         for(SemanticGraphEdge obj_sem2: temp_list_obj){
                             if(ccomp.getTarget().index() == obj_sem2.getSource().index()){
-                                System.out.println("["+liste.getActor_of_story()+","+obj_sem2.getSource()+"]");
-                                liste.add_item_h_list(new h_rel(liste.getActor_of_story(), obj_sem2.getSource().originalText(),"composition"));
+
+                                hRelNew.getClass_1().add(liste.getActor_of_story());
+                                hRelNew.getClass_2().add(obj_sem2.getSource().originalText());
+                                hRelNew.getType().add("composition");
+                                System.out.println("aggiunto ["+liste.getActor_of_story()+","+obj_sem2.getSource().originalText()+",composition]");
+
                             }
                         }
                     }
@@ -272,7 +279,6 @@ public class H_EX implements H_RULE {
                     hRelNew.getType().add("composition");
 
                     System.out.println(" aggiunto ["+classH2_primo+","+classH2_sec+",composition]");
-
                 }
             }
         }
@@ -306,11 +312,11 @@ public class H_EX implements H_RULE {
             }
         }
 
-        if(classe_1 == ""){
+        if(Objects.equals(classe_1, "")){
             classe_1 = liste.getActor_of_story();
         }
 
-        if ((classe_1 != "")&& (classe_2 != "") ){
+        if ((!Objects.equals(classe_1, ""))&& (!Objects.equals(classe_2, "")) ){
             liste.add_item_h_list(new h_rel(classe_1,classe_2,"aggregation"));
         }
 

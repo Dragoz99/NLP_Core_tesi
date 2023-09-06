@@ -8,6 +8,7 @@ public class h_rel {
         this.classe_1 = classe_1; // involucro
         this.classe_2 = classe_2; // ucro
         this.type = type;
+
     }
     public static void print(){
         System.out.println("["+classe_1+","+classe_2+","+type+"]");

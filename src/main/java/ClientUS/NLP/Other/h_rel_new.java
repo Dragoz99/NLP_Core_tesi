@@ -9,7 +9,6 @@ public class h_rel_new {
     List<String> class_2;
     List<String> type;
 
-
     public h_rel_new(){
         class_1 = new ArrayList<>();
         class_2 = new ArrayList<>();
@@ -39,7 +38,9 @@ public class h_rel_new {
     public void setType(List<String> type) {
         this.type = type;
     }
-
-
-
+    public void print(){
+        for(int i = 0;i<class_2.size();i++){
+            System.out.println("["+class_1.get(i)+","+class_2.get(i)+ ","+type.get(i)+"]");
+        }
+    }
 }

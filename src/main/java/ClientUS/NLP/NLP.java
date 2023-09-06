@@ -179,12 +179,14 @@ public class NLP implements RemoteListener {
                 System.out.println("----AC--");
                 System.out.println(liste.getAc_list());
                 System.out.println("----R--");
+                liste.getrRelNew().print();
                 System.out.println(liste.getR_list());
                 liste.print_R_list();
                 System.out.println("----A---");
                 System.out.println(liste.getA_list());
                 System.out.println("----H---");
                 System.out.println(liste.getH_list());
+
                 liste.print_h_list();
                 System.out.println("----------");
 

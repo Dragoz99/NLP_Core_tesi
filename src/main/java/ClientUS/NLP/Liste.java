@@ -18,8 +18,9 @@ public class Liste {
 
     List<h_rel> h_list;
 
-    r_rel_new rRelNew ;
+    r_rel_new rRelNew;
 
+    h_rel_new hRelNew;
 
 
     public List<a_rel> getA_list() {
@@ -131,11 +132,15 @@ public class Liste {
             cObj.print();
         }
     }
-
+    public h_rel_new gethRelNew(){
+        return hRelNew;
+    }
+    public void sethRelNew(h_rel_new a){
+        this.hRelNew = a;
+    }
     public void setrRelNew(r_rel_new rRelNew) {
         this.rRelNew = rRelNew;
     }
-
     public Liste(){
         NN_list = new ArrayList<>();
         VB_list = new ArrayList<>();
@@ -145,6 +150,7 @@ public class Liste {
         a_list = new ArrayList<>();
         h_list = new ArrayList<>();
         rRelNew = new r_rel_new();
+        hRelNew = new h_rel_new();
 
 
     }
