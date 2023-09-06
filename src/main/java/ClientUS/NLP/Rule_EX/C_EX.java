@@ -40,6 +40,9 @@ public class C_EX implements C_RULE {
         C6();
        // final_C_remove(); // rimuove tutti i duplicati */
 
+        System.out.println("---- [C_RULE] risultato ----");
+        list.print_c_list();
+
     }
 
     /**
@@ -54,14 +57,23 @@ public class C_EX implements C_RULE {
     public void C1(Actor_of_story actor) {
         System.out.println("--------------[C1]--------------");
         //list.getC_list().add(actor.getActorOfStory());
+
+        c_obj cObj = actor.toC_obj();
+        if (cObj.getNome_cangiante().contains("_")){
+
+            String temp_word = cObj.getNome_cangiante().replace("_"+cObj.getNome_index(),"");
+            System.out.println("sostituzione "+temp_word);
+        }
         list.getC_list().add(actor.toC_obj()); // inserisci il nome dell'attore nella lista
         System.out.print("[C1_RULE] ");
-        for(int i= 0;i<list.getC_list().size();i++){
-            System.out.print(list.getC_list().get(i).getNome_cangiante()+",");
-        }
+
+
+
+        list.print_c_list();
+
         System.out.println();
        //System.out.println("[C1_RULE] "+ );
-       // System.out.println("[C1_RULE] "+ Arrays.toString(list.getC_list().toArray())); // stampa
+       //System.out.println("[C1_RULE] "+ Arrays.toString(list.getC_list().toArray())); // stampa
     }
 
     /**
@@ -132,6 +144,10 @@ public class C_EX implements C_RULE {
         for (int i = 0; i < list.getC_list().size(); i++) {
             System.out.print(list.getC_list().get(i).getNome_cangiante() + "\n");
         }
+
+
+        System.out.println("----- [C2_RULE] risultato -----");
+        list.print_c_list();
     }
 
     /**
@@ -151,11 +167,13 @@ public class C_EX implements C_RULE {
                     String cangiante = List_compound.get(j).getTarget().originalText() +"_"+ IndexedWord_list_compound.get(i).originalText();
                     System.out.println(cangiante);
 
+                    // aggiunta
                     c_obj c = new c_obj(IndexedWord_list_compound.get(i).originalText()); // crazione
                     c.setNome_cangiante(cangiante);
+                    c.setNome_second_index(List_compound.get(j).getTarget().originalText());
 
                     list.getC_list().add(c); // aggiungi il nome composto
-                    System.out.println("[C3]: aggiunto compound ->" +" cangiante:"+ c.getNome_cangiante()+ " index: "+ c.getNome_index());
+                    System.out.println("[C3]: aggiunto compound ->" +" cangiante:"+ c.getNome_cangiante()+ " index: "+ c.getNome_index()+" SecIndex: "+ c.nome_second_index);
                 }else{
 
                 }

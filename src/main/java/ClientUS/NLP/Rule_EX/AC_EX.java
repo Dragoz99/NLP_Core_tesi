@@ -26,8 +26,11 @@ public class AC_EX implements AC_RULE {
         AC2(semanticGraph);
         AC3();
 
+        System.out.println("[-----AC_RISULTATO----]");
         System.out.println("[AC_R - actor]: "+ Actor_of_story.getActorOfStory());
         System.out.println("[AC_R - actor_ref]: " + Actor_of_story.getActor_ref());
+        System.out.println("[AC_R - sec_act_ref]: "+ Actor_of_story.getSecond_actor_ref());
+        System.out.println("[---------------------]");
 
     }
     @Override
@@ -42,6 +45,8 @@ public class AC_EX implements AC_RULE {
                     }
                     Actor_of_story.setActorOfStory(List_case_SG.get(i).getSource().originalText());
                     Actor_of_story.setActor_ref(List_case_SG.get(i).getSource().originalText());
+                    Actor_of_story.setSecondActor_ref(List_case_SG.get(i).getSource().originalText());
+
                     System.out.println("[AC_RULE] - [ACTOR FOUND]: "+act.getActorOfStory());
                 }
             }
@@ -93,6 +98,7 @@ public class AC_EX implements AC_RULE {
                 Actor_of_story.setActorOfStory(concat_NN);//cambio il nome attuale
                 System.out.println("[AC2] Actor_of_user: cangiante : "+ Actor_of_story.getActorOfStory());
                 System.out.println("[AC2] Actor_of_user: index  : "+Actor_of_story.getActor_ref());
+                System.out.println("[AC2] Actor_of_user: second_idnex :"+ Actor_of_story.getSecond_actor_ref());
                 System.out.println("[AC2_R] "+concat_NN);
 
                 break; // chiusura ciclo for
@@ -133,7 +139,7 @@ public class AC_EX implements AC_RULE {
                     System.out.println("[AC3] [inheritance relationships exist] "+ compound_free + " -> " + Actor_Free);
                     System.out.println(semanticGraph.findAllRelns("amod"));
                     Actor_of_story.setActorOfStory(compound_free + "_" +Actor_Free); // inserire memorizzazione
-
+                    Actor_of_story.setSecondActor_ref(compound_free);
                     //classBulder work and Selettore
                     //inserire una memorizzazione di gerarchia. Class Builder
                     //inserire un modo per non ricreare classi già esistenti

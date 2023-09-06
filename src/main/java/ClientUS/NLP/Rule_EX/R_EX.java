@@ -157,7 +157,7 @@ public class R_EX implements R_RULE {
                 System.out.println("inserimento di [" + Actor_of_story.getActor_ref() + "," + semanticGraphEdge.getTarget().originalText() + "]");
             }
             if (Objects.equals(semanticGraphEdge.getTarget().tag(), "NNS")) {
-                rRelNew.getClass1().add(liste.getActor_of_story());
+                rRelNew.getClass1().add(Actor_of_story.getActor_ref());
                 rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
                 System.out.println("inserimento di [" + Actor_of_story.getActor_ref() + "," + semanticGraphEdge.getTarget().originalText() + "]");
             }
@@ -189,8 +189,8 @@ public class R_EX implements R_RULE {
                         rRelNew.getClass2().add(semanticGraphEdge.getTarget().originalText());
 
 
-                        liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), semanticGraphEdge.getTarget().originalText())); // "inserimento nella lista"
-                        liste.removeDuplicates_r_manuale(); // sempre per sicurazza : non funziona ora (05/08/2023)!
+                        //liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), semanticGraphEdge.getTarget().originalText())); // "inserimento nella lista"
+                        //liste.removeDuplicates_r_manuale(); // sempre per sicurazza : non funziona ora (05/08/2023)!
                         r_rel index_rel ;
                         for(int i =0;i<liste.getR_list().size();i++){ // controlla se non ci sono duplicati (tutto scritto a mano)
                             index_rel = liste.getR_list().get(i);
@@ -254,6 +254,8 @@ public class R_EX implements R_RULE {
             }
         }
         System.out.println(R3_list);
+        System.out.println("lista dopo R3");
+        rRelNew.print();
 
     }
     /**
@@ -271,10 +273,11 @@ public class R_EX implements R_RULE {
             System.out.println(list);
             if (!list.isEmpty()) {
                 r_rel r = new r_rel(Actor_of_story.getActor_ref(), list.get(0).getSource().originalText());
-                if(!liste.getR_list().contains(r)){
+                if(!liste.getR_list().contains(r)){ // controllo per evitare i doppioni nella lista
                    System.out.println("non inserisco");
                 }else{
                     liste.add_item_r_list(new r_rel(Actor_of_story.getActor_ref(), list.get(0).getSource().originalText()));
+
                     rRelNew.getClass1().add(Actor_of_story.getActor_ref());
                     rRelNew.getClass2().add(list.get(0).getSource().originalText());
 

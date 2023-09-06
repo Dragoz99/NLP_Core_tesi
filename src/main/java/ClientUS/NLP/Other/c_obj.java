@@ -9,10 +9,10 @@ public class c_obj {
     // la variable cangiante:
     // la variable index:
     //--------------------------------------------------------------------------------------------------
-    private String nome_cangiante;
-    private String nome_index ;
+    public String nome_cangiante;
+    public String nome_index ;
 
-    private String nome_second_index;
+    public String nome_second_index;
 
 
     public c_obj(){
@@ -43,7 +43,7 @@ public class c_obj {
     }
 
     public void setNome_second_index(String nome_index){
-        this.nome_index = nome_index;
+        this.nome_second_index = nome_index;
     }
     public String getNome_second_index(){
         return nome_second_index;

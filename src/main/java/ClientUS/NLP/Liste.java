@@ -119,6 +119,8 @@ public class Liste {
 
     }
 
+
+
     public void print_h_list(){
         for (ClientUS.NLP.Other.h_rel h_rel : h_list) {
             h_rel.print();
@@ -141,6 +143,9 @@ public class Liste {
     public void setrRelNew(r_rel_new rRelNew) {
         this.rRelNew = rRelNew;
     }
+
+
+
     public Liste(){
         NN_list = new ArrayList<>();
         VB_list = new ArrayList<>();
