@@ -37,7 +37,7 @@ public class H_EX implements H_RULE {
         H1();
         H2();
         H3();
-        liste.sethRelNew(hRelNew);
+
     }
 
     /**
@@ -76,9 +76,15 @@ public class H_EX implements H_RULE {
             if((Objects.equals(nmodOFselector.getRelation().getSpecific(), "of")) && (Objects.equals(nmodOFselector.getSource().originalText(), "part"))){
                 for(SemanticGraphEdge aclSelector: temp_list_acl){
                     if(nmodOFselector.getSource().index() == aclSelector.getTarget().index()){ // esiste una relazione ACL:relcl? con target NN? con index uguali
-                           hRelNew.getClass_1().add(nmodOFselector.getTarget().originalText());
+
+
+                        hRelNew.addClass1(nmodOFselector.getTarget().originalText());
+                        hRelNew.addClass2(aclSelector.getSource().originalText());
+                        hRelNew.addType("composition");
+                         /*  hRelNew.getClass_1().add(nmodOFselector.getTarget().originalText());
                            hRelNew.getClass_2().add(aclSelector.getSource().originalText());
-                           hRelNew.getType().add("composition");
+                           hRelNew.getType().add("composition");*/
+
                            System.out.println("["+nmodOFselector.getTarget().originalText()+","+aclSelector.getSource().originalText()+", composition ]");
                     }
                 }
@@ -313,11 +319,19 @@ public class H_EX implements H_RULE {
         }
 
         if ((!Objects.equals(classe_1, ""))&& (!Objects.equals(classe_2, "")) ){
-            liste.add_item_h_list(new h_rel(classe_1,classe_2,"aggregation"));
+            hRelNew.getClass_1().add(classe_1);
+            hRelNew.getClass_2().add(classe_2);
+            hRelNew.getType().add("aggregation");
+            //liste.add_item_h_list(new h_rel(classe_1,classe_2,"aggregation"));
+
+            System.out.println(" aggiunto ["+classe_1+","+classe_2+",aggregation]");
+
         }
 
         System.out.println("~~~~~~~~~~~~~~~~~~~");
-        liste.print_h_list();
+        hRelNew.print();
+        liste.sethRelNew(hRelNew);
+
     }
 
 }

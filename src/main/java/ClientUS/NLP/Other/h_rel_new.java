@@ -43,4 +43,15 @@ public class h_rel_new {
             System.out.println("["+class_1.get(i)+","+class_2.get(i)+ ","+type.get(i)+"]");
         }
     }
+
+    public void addClass1(String class1){
+        this.class_1.add(class1);
+    }
+    public void addClass2(String class2){
+        this.class_2.add(class2);
+    }
+
+    public void addType(String type){
+        this.type.add(type);
+    }
 }

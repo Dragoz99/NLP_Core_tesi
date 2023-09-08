@@ -155,7 +155,7 @@ public class insert_data_list {
         serverReturnObject.esegui_query(cc);
 
         boolean check_boolean = serverReturnObject.checkBoolean(); // controllo
-        System.out.println("controllo c:"+check_boolean);
+        System.out.println("controllo h:"+check_boolean);
 
         if(!check_boolean) { // controllo
             serverReturnObject.esegui_query(
@@ -171,7 +171,6 @@ public class insert_data_list {
                     String nome_class_2 = liste.gethRelNew().getClass_2().get(i);
                     String type = liste.gethRelNew().getType().get(i);
 
-                    String query = "insert int";
                     stub.insertDDL_userStory("insert into h_relazioni" +
                             "(h_className_1, h_className_2, h_classID_1, h_classID_2," +
                             "h_rel_type,h_class_1_fileID,h_class_2_fileID)" +
@@ -181,6 +180,8 @@ public class insert_data_list {
                             " (select class_id from class where class_name = '"
                             + nome_class_2 + "' and class_filename_id = '" + a.getId() + "'),'" +
                             type+"','" + a.getId() + "','" + a.getId() + "')");
+
+                    System.out.println("inserito: ["+nome_class_1+","+nome_class_2+","+type+"]");
                 }
             }
         }

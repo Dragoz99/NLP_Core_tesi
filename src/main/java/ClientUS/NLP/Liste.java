@@ -146,6 +146,7 @@ public class Liste {
 
 
 
+
     public Liste(){
         NN_list = new ArrayList<>();
         VB_list = new ArrayList<>();
@@ -156,8 +157,6 @@ public class Liste {
         h_list = new ArrayList<>();
         rRelNew = new r_rel_new();
         hRelNew = new h_rel_new();
-
-
     }
 
 }
