@@ -228,8 +228,4 @@ public class NLP implements RemoteListener {
                 "select exist (select * from filename where filename_id ='"+a.getId()+"')"
         );
     }
-
-
-
-
 }

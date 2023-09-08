@@ -124,12 +124,16 @@ public class insert_data_list {
                     stub.insertDDL_userStory("insert into relazioni" +
                             "(relazioni_className_1, relazioni_className_2, relazioni_classID_1, relazioni_classID_2," +
                             "relazioni_classFileName_id_1,relazioni_classFileName_id_2)" +
-                            " values ('" + nome_class_1 + "','" + nome_class_2 + "'," +
+                            " values ('"
+                            + nome_class_1 + "','"
+                            + nome_class_2 + "'," +
                             " (select class_id from class where class_name = '"
                             + nome_class_1 + "' and class_filename_id = '" + a.getId() + "')," +
                             " (select class_id from class where class_name = '"
                             + nome_class_2 + "' and class_filename_id = '" + a.getId() + "')," +
-                            "'" + a.getId() + "','" + a.getId() + "')");
+                            "'" + a.getId() + "','"
+                            + a.getId() + "')");
+                    System.out.println("inserito ["+nome_class_1+","+nome_class_2+"]");
                 }
             }
         }
@@ -140,6 +144,47 @@ public class insert_data_list {
     public void insert_attibute(StoryBuilder a, Liste liste) throws SQLException {
         ServerReturnObject attributeObj = new ServerReturnObject(a);
         String cc = "";
+    }
+    public void insert_h_relazioni(StoryBuilder a, Liste liste) throws SQLException, RemoteException {
+        ServerReturnObject serverReturnObject = new ServerReturnObject(a);
+
+        String cc =
+                "select if(count(*) >0,\"true\",\"false\") " +
+                        "from h_relazioni " +
+                        "where h_class_1_fileID  = '"+a.getId()+"' and h_class_2_fileID = '"+a.getId()+"'";
+        serverReturnObject.esegui_query(cc);
+
+        boolean check_boolean = serverReturnObject.checkBoolean(); // controllo
+        System.out.println("controllo c:"+check_boolean);
+
+        if(!check_boolean) { // controllo
+            serverReturnObject.esegui_query(
+                    "select class_id, class_name " +
+                            "from class " +
+                            "where class_filename_id = '" + a.getId() + "'");
+
+            serverReturnObject.esegui_query(cc);
+            if (!serverReturnObject.checkBoolean()) {
+                for (int i = 0; i < liste.gethRelNew().getClass_2().size(); i++) { // se è vuota come può riempire ???
+
+                    String nome_class_1 = liste.gethRelNew().getClass_1().get(i);
+                    String nome_class_2 = liste.gethRelNew().getClass_2().get(i);
+                    String type = liste.gethRelNew().getType().get(i);
+
+                    String query = "insert int";
+                    stub.insertDDL_userStory("insert into h_relazioni" +
+                            "(h_className_1, h_className_2, h_classID_1, h_classID_2," +
+                            "h_rel_type,h_class_1_fileID,h_class_2_fileID)" +
+                            " values ('" + nome_class_1 + "','" + nome_class_2 + "'," +
+                            " (select class_id from class where class_name = '"
+                            + nome_class_1 + "' and class_filename_id = '" + a.getId() + "')," +
+                            " (select class_id from class where class_name = '"
+                            + nome_class_2 + "' and class_filename_id = '" + a.getId() + "'),'" +
+                            type+"','" + a.getId() + "','" + a.getId() + "')");
+                }
+            }
+        }
+
 
     }
 }

@@ -144,8 +144,6 @@ public class H_EX implements H_RULE {
         //     c'è un problema di fondo.
         // bisogna gestire il caso      (Have to have) HTH
         //-----------------------------------
-
-
         // INSOSPESO
 
         System.out.println("--- have ---");
@@ -195,8 +193,6 @@ public class H_EX implements H_RULE {
                 }
             }
         }
-
-
         //-----------------------------------
         //              include
         //-----------------------------------
@@ -241,9 +237,9 @@ public class H_EX implements H_RULE {
                         hRelNew.getClass_2().add(sec_comprise_h);
                         hRelNew.getType().add("composition");
 
-                        //h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
-                       // System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
-                        //liste.add_item_h_list(hRel);
+                        // h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+                        // System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
+                        // liste.add_item_h_list(hRel);
                         System.out.println("aggiunto: ["+prim_comprise_h+","+sec_comprise_h+",composition ]");
                     }
                 }

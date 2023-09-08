@@ -52,7 +52,6 @@ public class Actor_of_story {
     }
     public String getSecond_actor_ref(){
         return Second_actor_ref;
-
     }
 
     public c_obj toC_obj(){
