@@ -122,9 +122,7 @@ public class Liste {
 
 
     public void print_h_list(){
-        for (ClientUS.NLP.Other.h_rel h_rel : h_list) {
-            h_rel.print();
-        }
+        hRelNew.print();
     }
     public r_rel_new getrRelNew() {
         return rRelNew;

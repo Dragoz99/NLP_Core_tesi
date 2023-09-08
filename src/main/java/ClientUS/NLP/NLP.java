@@ -169,8 +169,7 @@ public class NLP implements RemoteListener {
                 System.out.println("----NN--");
                 System.out.println(liste.getNN_list());
                 System.out.println("----C--");
-                System.out.println(liste.getC_list());
-
+                liste.print_c_list();
                 //
                 //esperimento
 
