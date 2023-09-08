@@ -208,7 +208,7 @@ public class C_EX implements C_RULE {
         }
         System.out.println("prima -> [ "+ concat +"]");
         //algoritmo controlla & stermina
-/*
+
         int i=0;
         int j=1;
 
