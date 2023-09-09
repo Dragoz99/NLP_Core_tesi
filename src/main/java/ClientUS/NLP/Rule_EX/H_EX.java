@@ -172,7 +172,7 @@ public class H_EX implements H_RULE {
                     if(ccomp.getSource().lemma() == ccomp.getTarget().lemma()){
                         for(SemanticGraphEdge obj_sem2: temp_list_obj){
                             if(ccomp.getTarget().index() == obj_sem2.getSource().index()){
-                                hRelNew.getClass_1().add(liste.getActor_of_story());
+                                hRelNew.getClass_1().add(liste.getActor_of_story().getActor_ref());
                                 hRelNew.getClass_2().add(obj_sem2.getSource().originalText());
                                 hRelNew.getType().add("composition");
                                 System.out.println("aggiunto ["+liste.getActor_of_story()+","+obj_sem2.getSource().originalText()+",composition]");
@@ -327,7 +327,7 @@ public class H_EX implements H_RULE {
         }
 
         if(Objects.equals(classe_1, "")){
-            classe_1 = liste.getActor_of_story();
+            classe_1 = liste.getActor_of_story().getActor_ref();
         }
 
         if ((!Objects.equals(classe_1, ""))&& (!Objects.equals(classe_2, "")) ){
@@ -336,16 +336,23 @@ public class H_EX implements H_RULE {
             hRelNew.getType().add("aggregation");
             //liste.add_item_h_list(new h_rel(classe_1,classe_2,"aggregation"));
 
-            System.out.println(" aggiunto ["+classe_1+","+classe_2+",aggregation]");
+            System.out.println("aggiunto ["+classe_1+","+classe_2+",aggregation]");
 
         }
-
         System.out.println("~~~~~~~~~~~~~~~~~~~");
         hRelNew.print();
-
-
-
         //liste.print_h_list();
     }
+
+    /**
+     * If the subject and the direct object of the sentence are classes, and the verb that connects the two objects is "to be", then the class (the
+     * object) is the parent class, this rule determines inheritance relationships
+     */
+    public void H4(){
+
+
+
+    }
+
 
 }

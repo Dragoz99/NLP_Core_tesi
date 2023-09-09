@@ -1,6 +1,7 @@
 package ClientUS.NLP.Rule_EX;
 
 import ClientUS.NLP.Interface_rule.AC_RULE;
+import ClientUS.NLP.Liste;
 import ClientUS.NLP.Other.Actor_of_story;
 import ServerUS.UserInterface;
 import edu.stanford.nlp.semgraph.SemanticGraph;
@@ -15,7 +16,7 @@ public class AC_EX implements AC_RULE {
     private SemanticGraph semanticGraph;
     private UserInterface stub;
     Actor_of_story Actor_of_story;
-    public AC_EX(SemanticGraph semanticGraph, Actor_of_story x, UserInterface stub) throws SQLException, RemoteException {
+    public AC_EX(SemanticGraph semanticGraph, Actor_of_story x, UserInterface stub, Liste liste) throws SQLException, RemoteException {
         this.Actor_of_story =x;
         this.semanticGraph = semanticGraph;
         this.stub = stub;
@@ -32,6 +33,7 @@ public class AC_EX implements AC_RULE {
         System.out.println("[AC_R - sec_act_ref]: "+ Actor_of_story.getSecond_actor_ref());
         System.out.println("[---------------------]");
 
+        liste.setActor_of_story(Actor_of_story);
     }
     @Override
     public void AC1(Actor_of_story act) throws SQLException, RemoteException {

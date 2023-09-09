@@ -149,7 +149,7 @@ public class NLP implements RemoteListener {
                         .EnhancedDependenciesAnnotation.class);
 
                 System.out.println("[---------------[AC_RULES]--------------]");
-                AC_EX ac_ex = new AC_EX(dependencies,actor,stub);
+                AC_EX ac_ex = new AC_EX(dependencies,actor,stub,liste);
 
                 System.out.println("[---------------[C_RULES]---------------]");
                 C_EX c_ex = new C_EX(dependencies,actor,liste);
@@ -215,6 +215,8 @@ public class NLP implements RemoteListener {
 
                 data_list.insert_relazioni_new(storyBuilder,liste);
                 data_list.insert_h_relazioni(storyBuilder,liste);
+
+
 
 
 

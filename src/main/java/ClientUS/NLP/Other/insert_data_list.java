@@ -171,15 +171,30 @@ public class insert_data_list {
                     String nome_class_2 = liste.gethRelNew().getClass_2().get(i);
                     String type = liste.gethRelNew().getType().get(i);
 
-                    stub.insertDDL_userStory("insert into h_relazioni" +
-                            "(h_className_1, h_className_2, h_classID_1, h_classID_2," +
-                            "h_rel_type,h_class_1_fileID,h_class_2_fileID)" +
-                            " values ('" + nome_class_1 + "','" + nome_class_2 + "'," +
-                            " (select class_id from class where class_name = '"
-                            + nome_class_1 + "' and class_filename_id = '" + a.getId() + "')," +
-                            " (select class_id from class where class_name = '"
-                            + nome_class_2 + "' and class_filename_id = '" + a.getId() + "'),'" +
-                            type+"','" + a.getId() + "','" + a.getId() + "')");
+                    try{
+                        stub.insertDDL_userStory("insert into h_relazioni" +
+                                "(h_className_1, h_className_2, h_classID_1, h_classID_2," +
+                                "h_rel_type,h_class_1_fileID,h_class_2_fileID)" +
+                                " values ('" + nome_class_1 + "','" + nome_class_2 + "'," +
+                                " (select class_id from class where class_name = '"
+                                + nome_class_1 + "' and class_filename_id = '" + a.getId() + "')," +
+                                " (select class_id from class where class_name = " +
+                                "'"+ nome_class_2 + "' and class_filename_id = '" + a.getId() + "'),'" +
+                                type+"','" + a.getId() + "','" + a.getId() + "')");
+
+                    }catch (Exception e){ //inserimento di emergenza se non esite una classe
+                        stub.insertDDL_userStory("insert into class(class_name,class_filename_id,class_type,name_cangiante) " +
+                                "values ('" +nome_class_2 +"','"+a.getId()+"','private','"+nome_class_2+"')");
+                        stub.insertDDL_userStory("insert into h_relazioni" +
+                                "(h_className_1, h_className_2, h_classID_1, h_classID_2," +
+                                "h_rel_type,h_class_1_fileID,h_class_2_fileID)" +
+                                " values ('" + nome_class_1 + "','" + nome_class_2 + "'," +
+                                " (select class_id from class where class_name = '"
+                                + nome_class_1 + "' and class_filename_id = '" + a.getId() + "')," +
+                                " (select class_id from class where class_name = " +
+                                "'"+ nome_class_2 + "' and class_filename_id = '" + a.getId() + "'),'" +
+                                type+"','" + a.getId() + "','" + a.getId() + "')");
+                    }
 
                     System.out.println("inserito: ["+nome_class_1+","+nome_class_2+","+type+"]");
 

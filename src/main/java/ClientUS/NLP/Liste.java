@@ -10,7 +10,7 @@ import java.util.Set;
 public class Liste {
     List<String> NN_list;
     List<String> VB_list;
-    String Actor_of_story;
+    Actor_of_story Actor_of_story;
     List<c_obj> c_list; // contine le classi
     List<r_rel> r_list; // contine le relazioni
     List<String> ac_list;
@@ -41,10 +41,10 @@ public class Liste {
     public void setVB_list(List<String> VB_list) {
         this.VB_list = VB_list;
     }
-    public String getActor_of_story() {
+    public Actor_of_story getActor_of_story() {
         return Actor_of_story;
     }
-    public void setActor_of_story(String actor_of_story) {
+    public void setActor_of_story(Actor_of_story actor_of_story) {
         Actor_of_story = actor_of_story;
     }
     public List<c_obj> getC_list() {
