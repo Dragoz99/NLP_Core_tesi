@@ -77,10 +77,14 @@ public class H_EX implements H_RULE {
                 for(SemanticGraphEdge aclSelector: temp_list_acl){
                     if(nmodOFselector.getSource().index() == aclSelector.getTarget().index()){ // esiste una relazione ACL:relcl? con target NN? con index uguali
 
-
                         hRelNew.addClass1(nmodOFselector.getTarget().originalText());
                         hRelNew.addClass2(aclSelector.getSource().originalText());
                         hRelNew.addType("composition");
+
+
+                        System.out.println("["+hRelNew.getClass_1().get(hRelNew.getClass_1().size()-1)+
+                                ","+hRelNew.getClass_1().get(hRelNew.getClass_2().size()-1)+
+                                ",composition]");
                          /*  hRelNew.getClass_1().add(nmodOFselector.getTarget().originalText());
                            hRelNew.getClass_2().add(aclSelector.getSource().originalText());
                            hRelNew.getType().add("composition");*/
@@ -109,9 +113,11 @@ public class H_EX implements H_RULE {
                         System.out.println("ok: Acl_sem");
                         for (SemanticGraphEdge nmod_sem : temp_list_nmod) {
                             if (obj_sem.getTarget().index() == nmod_sem.getSource().index()) { // i due index combaciano
+
                                 hRelNew.getClass_1().add(obj_sem.getSource().originalText());
                                 hRelNew.getClass_2().add(nmod_sem.getTarget().originalText());
                                 hRelNew.getType().add("composition");
+
                             }
                         }
                     }
@@ -140,7 +146,6 @@ public class H_EX implements H_RULE {
                         hRelNew.getType().add("composition");
 
                         System.out.println("aggiunto: ["+prim_comprise_h+","+sec_comprise_h+",composition]");
-
                     }
                 }
             }
@@ -189,12 +194,12 @@ public class H_EX implements H_RULE {
                 for (SemanticGraphEdge nsubj : temp_list_nsubj){
                     if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
                         String prim_comprise_h = nsubj.getTarget().originalText();
-                        h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
+
+
                         hRelNew.getClass_1().add(prim_comprise_h);
                         hRelNew.getClass_2().add(sec_comprise_h);
                         hRelNew.getType().add("composition");
-                        System.out.println("["+hRel.getClasse_1()+","+hRel.getClasse_2()+"]");
-                        liste.add_item_h_list(hRel);
+                        System.out.println("["+prim_comprise_h+","+sec_comprise_h+",composition]");
                     }
                 }
             }

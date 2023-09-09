@@ -189,7 +189,6 @@ public class NLP implements RemoteListener {
                 liste.print_h_list();
                 System.out.println("----------");
 
-
 //---------------------------------------------------------------------------------------------------------------
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -216,8 +215,11 @@ public class NLP implements RemoteListener {
                 }
                 // inserimento relazioni
                 //data_list.insert_relazion(storyBuilder,liste);
+
                 data_list.insert_relazioni_new(storyBuilder,liste);
                 data_list.insert_h_relazioni(storyBuilder,liste);
+
+
 
             }
     }

@@ -67,8 +67,6 @@ public class Liste {
         this.ac_list = ac_list;
     }
 
-
-
     public List<r_rel>  removeDuplicates_r(){
         Set<r_rel> set = new HashSet<>(r_list);
         r_list.clear();
@@ -118,9 +116,6 @@ public class Liste {
         System.out.println("inserimento nella lista");
 
     }
-
-
-
     public void print_h_list(){
         hRelNew.print();
     }
@@ -141,9 +136,6 @@ public class Liste {
     public void setrRelNew(r_rel_new rRelNew) {
         this.rRelNew = rRelNew;
     }
-
-
-
 
     public Liste(){
         NN_list = new ArrayList<>();

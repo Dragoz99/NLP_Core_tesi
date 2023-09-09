@@ -182,6 +182,8 @@ public class insert_data_list {
                             type+"','" + a.getId() + "','" + a.getId() + "')");
 
                     System.out.println("inserito: ["+nome_class_1+","+nome_class_2+","+type+"]");
+
+
                 }
             }
         }

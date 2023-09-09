@@ -1,14 +1,20 @@
 package ClientUS.NLP.Other;
 
 public class h_rel {
-    private static String classe_1;
-    private static String classe_2;
-    private static String type;
+    public static String classe_1;
+    public  static String classe_2;
+    public static String type;
     public h_rel(String classe_1, String classe_2, String type){
-        this.classe_1 = classe_1; // involucro
-        this.classe_2 = classe_2; // ucro
-        this.type = type;
+        h_rel.classe_1 = classe_1; // involucro
+        h_rel.classe_2 = classe_2; // ucro
+        h_rel.type = type;
+    }
 
+
+    public h_rel(){
+        classe_1 = "";
+        classe_2 = "";
+        type = "";
     }
     public static void print(){
         System.out.println("["+classe_1+","+classe_2+","+type+"]");
@@ -31,6 +37,6 @@ public class h_rel {
     }
 
     public void setType(String type) {
-        this.type = type;
+        h_rel.type = type;
     }
 }
