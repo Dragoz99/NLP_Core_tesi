@@ -51,7 +51,7 @@ public class H_EX implements H_RULE {
         temp_list_acl = semanticGraph.findAllRelns("acl:relcl");
         temp_list_obl = semanticGraph.findAllRelns("obl");
         temp_list_nmod = semanticGraph.findAllRelns("nmod");
-        temp_list_nsubj = semanticGraph.findAllRelns("nsubj");
+        temp_list_nsubj = semanticGraph.findAllRelns("nsubj:xsubj");
         temp_list_ccomp = semanticGraph.findAllRelns("ccomp");
 
         //temp_list_nmodOF = semanticGraph.findAllRelns("nmod:of");
@@ -75,7 +75,7 @@ public class H_EX implements H_RULE {
             System.out.println(nmodOFselector.getSource().originalText());
             if((Objects.equals(nmodOFselector.getRelation().getSpecific(), "of")) && (Objects.equals(nmodOFselector.getSource().originalText(), "part"))){
                 for(SemanticGraphEdge aclSelector: temp_list_acl){
-                    if(nmodOFselector.getSource().index() == aclSelector.getTarget().index()){ // esiste una relazione ACL:relcl? con target NN? con index uguali
+                    if(nmodOFselector.getSource().index() != aclSelector.getTarget().index()){ // esiste una relazione ACL:relcl? con target NN? con index uguali
 
                         hRelNew.addClass1(nmodOFselector.getTarget().originalText());
                         hRelNew.addClass2(aclSelector.getSource().originalText());
@@ -109,10 +109,11 @@ public class H_EX implements H_RULE {
             // in questo caso consist se è prulare, allora ci saranno moteplici H da salvare
             if (obj_sem.getSource().lemma() == "consist") {
                 for (SemanticGraphEdge acl_sem : temp_list_acl) {
-                    if (acl_sem.getTarget().index() == obj_sem.getSource().index()) { // se esiste una relazione acl:relcl
+                    if (acl_sem.getTarget().index() != obj_sem.getSource().index()) { // se esiste una relazione acl:relcl
                         System.out.println("ok: Acl_sem");
                         for (SemanticGraphEdge nmod_sem : temp_list_nmod) {
-                            if (obj_sem.getTarget().index() == nmod_sem.getSource().index()) { // i due index combaciano
+
+                            if (obj_sem.getTarget().index() != nmod_sem.getSource().index()) { // i due index combaciano
 
                                 hRelNew.getClass_1().add(obj_sem.getSource().originalText());
                                 hRelNew.getClass_2().add(nmod_sem.getTarget().originalText());
@@ -138,7 +139,9 @@ public class H_EX implements H_RULE {
                 String sec_comprise_h = obj_sem.getTarget().originalText();
                 System.out.println("second comp : "+ sec_comprise_h);
                 for (SemanticGraphEdge nsubj : temp_list_nsubj){
-                    if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
+
+                    if(nsubj.getSource().index() == obj_sem.getSource().index()){
+                   // if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
                         String prim_comprise_h = nsubj.getTarget().originalText();
 
                         hRelNew.getClass_1().add(prim_comprise_h);
@@ -167,7 +170,6 @@ public class H_EX implements H_RULE {
                     if(ccomp.getSource().lemma() == ccomp.getTarget().lemma()){
                         for(SemanticGraphEdge obj_sem2: temp_list_obj){
                             if(ccomp.getTarget().index() == obj_sem2.getSource().index()){
-
                                 hRelNew.getClass_1().add(liste.getActor_of_story());
                                 hRelNew.getClass_2().add(obj_sem2.getSource().originalText());
                                 hRelNew.getType().add("composition");
@@ -192,7 +194,7 @@ public class H_EX implements H_RULE {
                 String sec_comprise_h = obj_sem.getTarget().originalText();
                 System.out.println("second comp : "+ sec_comprise_h);
                 for (SemanticGraphEdge nsubj : temp_list_nsubj){
-                    if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
+                    if(nsubj.getSource().originalText() != obj_sem.getSource().originalText()){
                         String prim_comprise_h = nsubj.getTarget().originalText();
 
 
@@ -200,7 +202,7 @@ public class H_EX implements H_RULE {
                         hRelNew.getClass_2().add(sec_comprise_h);
                         hRelNew.getType().add("composition");
 
-                        System.out.println("["+prim_comprise_h+","+sec_comprise_h+",composition]");
+                        System.out.println(" aggiunto h_ex ["+prim_comprise_h+","+sec_comprise_h+",composition]");
                     }
                 }
             }
@@ -217,7 +219,9 @@ public class H_EX implements H_RULE {
                 String sec_comprise_h = obj_sem.getTarget().originalText();
                 System.out.println("second comp : "+ sec_comprise_h);
                 for (SemanticGraphEdge nsubj : temp_list_nsubj){
-                    if(Objects.equals(nsubj.getSource().originalText(), obj_sem.getSource().originalText())){
+                    System.out.println("nsubj "+nsubj.getSource().originalText());
+                    System.out.println("obj "+obj_sem.getSource().originalText());
+                    if(nsubj.getSource().originalText() == obj_sem.getSource().originalText()){
                         String prim_comprise_h = nsubj.getTarget().originalText();
                        // h_rel hRel = new h_rel(prim_comprise_h,sec_comprise_h,"composition");
 
@@ -336,8 +340,10 @@ public class H_EX implements H_RULE {
 
         System.out.println("~~~~~~~~~~~~~~~~~~~");
         hRelNew.print();
-        liste.sethRelNew(hRelNew);
 
+
+
+        //liste.print_h_list();
     }
 
 }

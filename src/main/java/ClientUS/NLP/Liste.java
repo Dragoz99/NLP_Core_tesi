@@ -134,6 +134,13 @@ public class Liste {
         this.rRelNew = rRelNew;
     }
 
+    public void hListAddAll(h_rel_new a){
+
+        hRelNew.getClass_2().addAll(a.getClass_2());
+        hRelNew.getClass_1().addAll(a.getClass_1());
+        hRelNew.getType().addAll(a.getType());
+
+    }
     public Liste(){
         NN_list = new ArrayList<>();
         VB_list = new ArrayList<>();
