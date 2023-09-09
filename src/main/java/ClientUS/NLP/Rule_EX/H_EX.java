@@ -38,6 +38,8 @@ public class H_EX implements H_RULE {
         H2();
         H3();
 
+        liste.sethRelNew(hRelNew);
+
     }
 
     /**

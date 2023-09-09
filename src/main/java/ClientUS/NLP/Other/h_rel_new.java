@@ -10,9 +10,9 @@ public class h_rel_new {
     List<String> type;
 
     public h_rel_new(){
-        class_1 = new ArrayList<>();
-        class_2 = new ArrayList<>();
-        type = new ArrayList<>();
+        this.class_1 = new ArrayList<>();
+        this.class_2 = new ArrayList<>();
+        this.type = new ArrayList<>();
     }
 
     public List<String> getClass_1() {
