@@ -199,6 +199,7 @@ public class H_EX implements H_RULE {
                         hRelNew.getClass_1().add(prim_comprise_h);
                         hRelNew.getClass_2().add(sec_comprise_h);
                         hRelNew.getType().add("composition");
+
                         System.out.println("["+prim_comprise_h+","+sec_comprise_h+",composition]");
                     }
                 }

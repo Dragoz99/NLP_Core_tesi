@@ -107,9 +107,6 @@ public class Liste {
         return h_list;
     }
 
-    public void setH_list(List<h_rel> h_list) {
-        this.h_list = h_list;
-    }
 
     public void add_item_h_list(h_rel hRel){
         h_list.add(hRel);
