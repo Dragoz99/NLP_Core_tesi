@@ -344,15 +344,4 @@ public class H_EX implements H_RULE {
         //liste.print_h_list();
     }
 
-    /**
-     * If the subject and the direct object of the sentence are classes, and the verb that connects the two objects is "to be", then the class (the
-     * object) is the parent class, this rule determines inheritance relationships
-     */
-    public void H4(){
-
-
-
-    }
-
-
 }

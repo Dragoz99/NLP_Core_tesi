@@ -15,14 +15,10 @@ public class Liste {
     List<r_rel> r_list; // contine le relazioni
     List<String> ac_list;
     List<a_rel> a_list;
-
+    List<String> JJ_list;
     List<h_rel> h_list;
-
     r_rel_new rRelNew;
-
     h_rel_new hRelNew;
-
-
     public List<a_rel> getA_list() {
         return a_list;
     }
@@ -56,7 +52,6 @@ public class Liste {
     public List<r_rel> getR_list() {
         return r_list;
     }
-
     public void setR_list(List<r_rel> r_list) {
         this.r_list = r_list;
     }
@@ -66,14 +61,12 @@ public class Liste {
     public void setAc_list(List<String> ac_list) {
         this.ac_list = ac_list;
     }
-
     public List<r_rel>  removeDuplicates_r(){
         Set<r_rel> set = new HashSet<>(r_list);
         r_list.clear();
         r_list.addAll(set);
         return r_list;
     }
-
     public void removeDuplicates_r_manuale(){
         List<r_rel> newList = new ArrayList<>();
         for (int i = 0; i < r_list.size(); i++) {
@@ -133,13 +126,17 @@ public class Liste {
     public void setrRelNew(r_rel_new rRelNew) {
         this.rRelNew = rRelNew;
     }
+    public List<String> getJJ_list() {
+        return JJ_list;
+    }
+    public void setJJ_list(List<String> JJ_list) {
+        this.JJ_list = JJ_list;
+    }
 
     public void hListAddAll(h_rel_new a){
-
         hRelNew.getClass_2().addAll(a.getClass_2());
         hRelNew.getClass_1().addAll(a.getClass_1());
         hRelNew.getType().addAll(a.getType());
-
     }
     public Liste(){
         NN_list = new ArrayList<>();
@@ -151,6 +148,6 @@ public class Liste {
         h_list = new ArrayList<>();
         rRelNew = new r_rel_new();
         hRelNew = new h_rel_new();
+        JJ_list = new ArrayList<>();
     }
-
 }

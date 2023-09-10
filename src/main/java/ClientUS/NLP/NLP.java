@@ -22,7 +22,6 @@ import edu.stanford.nlp.util.CoreMap;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -100,27 +99,15 @@ public class NLP implements RemoteListener {
                          //VB_list.add(word);
                         liste.getVB_list().add(word);
                     }
+
+                    if(pos.equalsIgnoreCase("JJ")){
+                        liste.getJJ_list().add(word);
+                    }
                 }
                 for(int i =0;i<liste.getNN_list().size();i++){
                     System.out.println(liste.getNN_list().get(i));
                 }
 
-                //-----------------------------
-                //----     OPEN IE        ----
-                //-----------------------------
-             /*   System.out.println("[---OPENIE---]");
-                for (CoreMap TT : Document.get(CoreAnnotations.SentencesAnnotation.class)) {
-                    // Get the OpenIE triples for the sentence
-                    triples = TT.get(NaturalLogicAnnotations.RelationTriplesAnnotation.class);
-                    // Print the triples
-                    for (RelationTriple triple : triples) {
-                        System.out.println(triple.confidence + "\t -" +
-                                triple.subjectLemmaGloss() + "\t -" +
-                                triple.relationLemmaGloss() + "\t -" +
-                                triple.objectLemmaGloss());
-                    }
-                }
-*/
                 //--------------------------
                 //---     Coreference    ---
                 //--------------------------
@@ -165,33 +152,25 @@ public class NLP implements RemoteListener {
 
 
                 // prova
-                System.out.println("-------");
-                System.out.println("----NN--");
+                System.out.println("------------");
+                System.out.println("-----NN-----");
                 System.out.println(liste.getNN_list());
-                System.out.println("----C--");
+                System.out.println("-----C------");
                 liste.print_c_list();
-                //
-                //esperimento
-
-
-                //-----------------------------
-                System.out.println("----AC--");
+                System.out.println("-----AC-----");
                 System.out.println(liste.getAc_list());
-                System.out.println("----R--");
+                System.out.println("-----R------");
                 liste.getrRelNew().print();
-                System.out.println("----A---");
+                System.out.println("-----A------");
                 System.out.println(liste.getA_list());
-                System.out.println("----H---");
-
+                System.out.println("-----H------");
                 liste.print_h_list();
-                System.out.println("----------");
+                System.out.println("------------");
 
-//---------------------------------------------------------------------------------------------------------------
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//---------------------------------------------------------------------------------------------------------------
+
                 insert_data_list data_list = new insert_data_list(liste,stub); // filename
                 data_list.insert_filename(storyBuilder);
+
                 ServerReturnObject returnObject = new ServerReturnObject(storyBuilder);
 
                 // esecuzione controllo nel database
@@ -215,19 +194,8 @@ public class NLP implements RemoteListener {
 
                 data_list.insert_relazioni_new(storyBuilder,liste);
                 data_list.insert_h_relazioni(storyBuilder,liste);
-
-
-
-
+                data_list.insert_attribute(storyBuilder,liste);
 
             }
-    }
-    /**
-     * inserimento delle info riguardanti il nome del file
-     **/
-    private void check(StoryBuilder a) throws SQLException, RuntimeException, RemoteException {
-        stub.insertDDL_userStory(
-                "select exist (select * from filename where filename_id ='"+a.getId()+"')"
-        );
     }
 }

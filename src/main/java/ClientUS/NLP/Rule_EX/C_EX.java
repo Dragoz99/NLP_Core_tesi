@@ -30,16 +30,9 @@ public class C_EX implements C_RULE {
         C1(actor);
         C2();
         C3();
-        //for(int i = 0;i<List_case.size();i++){ // per ogni case
         C4();
         C5();
-
-
-
-       //System.out.println("[C4_rule & C5_rule] "+ Arrays.toString(list.getC_list().toArray()));
         C6();
-       // final_C_remove(); // rimuove tutti i duplicati */
-
         System.out.println("---- [C_RULE] risultato ----");
         list.print_c_list();
 
@@ -101,11 +94,7 @@ public class C_EX implements C_RULE {
                 System.out.println("aggiunto");
                 // 2) altrimenti inserisci il contenitore in liste.getC_list()
                 // aggiungi se non esiste il compound !!!
-
-
-
                 // se esiste un compound va a C3
-
 
             }
             System.out.println("[C2_indexedword] " + IndexedWord_list_compound);
@@ -113,7 +102,7 @@ public class C_EX implements C_RULE {
             System.out.print("[C2_RULE] ");
 
             System.out.println("IndexedWord_list: " + IndexedWord_list_compound);
-/*              QUESTA PARTE è SPERIMENTALE NON FUNZIONA NSUBJ
+/*      QUESTA PARTE è SPERIMENTALE NON FUNZIONA NSUBJ
         List<SemanticGraphEdge> List_nsubj = semanticGraph.findAllRelns("nsubj");
         List<SemanticGraphEdge> List_concat ;
         IndexedWord indW1;
@@ -138,7 +127,6 @@ public class C_EX implements C_RULE {
                 }
             }
         }
-
  */
         }
         for (int i = 0; i < list.getC_list().size(); i++) {
@@ -268,11 +256,6 @@ public class C_EX implements C_RULE {
             }
         }*/
 
-
-
-
-
-
     /**
      * [C4] The noun that precedes the possessive apostrophe is a
      * class
@@ -302,29 +285,7 @@ public class C_EX implements C_RULE {
 
     @Override
     public void C5() {
-      /*  if((List_case.get(i).getSource().tag().equalsIgnoreCase("NNS") || List_case.get(i).getSource().tag().equalsIgnoreCase("NN")
-                && List_case.get(i).getTarget().tag().equalsIgnoreCase("IN"))){
-
-            switch(List_case.get(i).getTarget().originalText()){
-                case "of":
-                    list.getC_list().add(List_case.get(i).getSource().originalText());
-                    System.out.println(List_case.get(i).getSource().originalText() + " added");
-                    break;
-                case "to":
-                    list.getC_list().add(List_case.get(i).getSource().originalText());
-                    System.out.println(List_case.get(i).getSource().originalText() + " added");
-                    break;
-                case "for":
-                    list.getC_list().add(List_case.get(i).getSource().originalText());
-                    System.out.println(List_case.get(i).getSource().originalText() + " added");
-                    break;
-            }
-
-        }
-        System.out.println("[C5] "+ list.getC_list()); */
-
         System.out.println("--------------[C5]--------------");
-
         List_case = semanticGraph.findAllRelns("case");
         System.out.println(semanticGraph.findAllRelns("case"));
         for (SemanticGraphEdge semanticGraphEdge : List_case) {
@@ -370,7 +331,6 @@ public class C_EX implements C_RULE {
         }
         System.out.println();
 
-
         //cancella le duplicazioni
         removeDuplicates(list.getC_list());
         //System.out.println(Arrays.toString(list.getC_list().toArray()));
@@ -385,29 +345,6 @@ public class C_EX implements C_RULE {
     public void fix_compound_noun_list(SemanticGraphEdge semanticGraphEdge) {
 
     }
-
-    /**
-     * final_C_remove:
-     *
-     * rimuove tutti i duplicati all'interno della lista.
-     * */
-
-   /* public void final_C_remove(){
-        list.setC_list(removeDuplicates(list.getC_list()));
-    } */
-
-
-    private static IndexedWord getCommonElement(List<IndexedWord> list1, List<SemanticGraphEdge> list2){
-        IndexedWord ind = null;
-        for(IndexedWord indexedWord : list1){
-            if(list2.contains(indexedWord)){
-                ind = indexedWord;
-                break;
-            }
-        }
-        return ind;
-    }
-
 
     public static List<c_obj> removeDuplicates(List<c_obj> list) {
         // Create a new ArrayList

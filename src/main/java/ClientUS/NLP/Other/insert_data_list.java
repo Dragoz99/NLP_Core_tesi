@@ -22,7 +22,8 @@ public class insert_data_list {
         this.stub=stub;
     }
     public void insert_class(StoryBuilder storyBuilder, String name_index, String name_cangiante ) throws SQLException, RemoteException {
-            stub.insertDDL_userStory("INSERT INTO class (class_name,class_filename_id,class_type,name_cangiante)" +
+
+        stub.insertDDL_userStory("INSERT INTO class (class_name,class_filename_id,class_type,name_cangiante)" +
                     "VALUES('" + name_index +
                     "','" + storyBuilder.getId()+
                     "','" + " private "+ "','" + name_cangiante+
@@ -38,7 +39,6 @@ public class insert_data_list {
         int memoryCountClass = a.continNumber();
         System.out.println(memoryCountClass);
 
-        System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
         if( memoryCountClass == 0 ){
             try{
                 stub.insertDDL_userStory("INSERT INTO filename (filename_id,filename_name,filename_tag,filename_data) " +
@@ -140,11 +140,6 @@ public class insert_data_list {
         // \(^-^)/
     }
 
-
-    public void insert_attibute(StoryBuilder a, Liste liste) throws SQLException {
-        ServerReturnObject attributeObj = new ServerReturnObject(a);
-        String cc = "";
-    }
     public void insert_h_relazioni(StoryBuilder a, Liste liste) throws SQLException, RemoteException {
         ServerReturnObject serverReturnObject = new ServerReturnObject(a);
 
@@ -197,12 +192,21 @@ public class insert_data_list {
                     }
 
                     System.out.println("inserito: ["+nome_class_1+","+nome_class_2+","+type+"]");
-
-
                 }
             }
         }
 
 
     }
+    public void insert_attribute(StoryBuilder a, Liste liste) throws SQLException, RemoteException {
+
+        for(int i = 0;i<liste.getJJ_list().size();i++){
+
+
+            stub.insertDDL_userStory("insert into attributi(nome_attributo, tipo_attributo, fileName_attributo) values ('"
+                    +liste.getJJ_list().get(0)+"','private','"+a.getId()+"');");
+        }
+    }
+
+
 }
