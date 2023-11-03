@@ -54,6 +54,10 @@ public class A_EX implements A_RULE {
      *
      * <h3>relazioni [advmod] tra VBD/VB e RB/JJ </h3>
      */
+
+    /**
+     * questa regola non è stata implementata
+     */
     @Override
     public void A2() {
        A2_list = semanticGraph.findAllRelns("advmod");

@@ -101,7 +101,8 @@ public class ServerUS extends UnicastRemoteObject implements UserInterface{
         System.out.println("Prova RMI TEST");
     }
 
-    public boolean check_db(StoryBuilder a) throws RemoteException, SQLException {
+    @Override
+    public synchronized boolean check_db(StoryBuilder a) throws RemoteException, SQLException {
         String checkQuery =  "select exists (select * from filename where filename_id ='"+a.getId()+"')";
         connection_icescrum = DriverManager.getConnection(URL_UserStoryDB,user,password);
         Statement statement = connection_userstorydb.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);

@@ -88,7 +88,6 @@ public class NLP implements RemoteListener {
                     String pos = token.get(CoreAnnotations.PartOfSpeechAnnotation.class);
                     // this is the NER label of the token
                     String ne = token.get(CoreAnnotations.NamedEntityTagAnnotation.class);
-
                     // riempimento delle list
                     if(pos.equalsIgnoreCase("NN") ){
                         liste.getNN_list().add(word);
@@ -100,9 +99,7 @@ public class NLP implements RemoteListener {
                         liste.getVB_list().add(word);
                     }
 
-                    if(pos.equalsIgnoreCase("JJ")){
-                        liste.getJJ_list().add(word);
-                    }
+
                 }
                 for(int i =0;i<liste.getNN_list().size();i++){
                     System.out.println(liste.getNN_list().get(i));
@@ -144,12 +141,13 @@ public class NLP implements RemoteListener {
                 System.out.println("[---------------[R_RULES]---------------]");
                 R_EX r_ex = new R_EX(dependencies,liste,actor,List_coref);
 
-                System.out.println("[---------------[A_RULES]---------------]");
-                A_EX a_ex = new A_EX(dependencies,liste);
+
+
+               /* System.out.println("[---------------[A_RULES]---------------]");
+                A_EX a_ex = new A_EX(dependencies,liste);*/
 
                 System.out.println("[---------------[H_RULES]---------------]");
                 H_EX h_ex = new H_EX(liste,dependencies);
-
 
                 // prova
                 System.out.println("------------");

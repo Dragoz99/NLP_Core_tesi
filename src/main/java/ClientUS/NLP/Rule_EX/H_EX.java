@@ -265,7 +265,10 @@ public class H_EX implements H_RULE {
         }
 
     }
-
+    /**
+     * [H2]
+     * Compound noun: if both of nouns are classes then there is a composition relationship between them.
+     */
 
     @Override
     public void H2() {
@@ -302,6 +305,11 @@ public class H_EX implements H_RULE {
 
     }
 
+
+    /**
+     * [H3]
+     * The verb which belongs list of verbs that indicate a relationship aggregation: (participate ...)
+     */
     @Override
     public void H3() {
         System.out.println("[---------H3----------]");
@@ -343,5 +351,4 @@ public class H_EX implements H_RULE {
         hRelNew.print();
         //liste.print_h_list();
     }
-
 }

@@ -43,11 +43,11 @@ public class VisualizzaUserStory extends JFrame {
 
         jLabel1.setText("Data:");
 
-        jLabel2.setText("Versione:");
+        jLabel2.setText("Progetto:");
 
         jLabel3.setText("Autore:");
 
-        jLabel4.setText("Progetto:");
+        jLabel4.setText("Versione:");
 
         jLabel5.setText(a.getData_creazione());
 

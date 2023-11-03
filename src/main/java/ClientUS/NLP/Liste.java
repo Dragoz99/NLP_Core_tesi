@@ -67,6 +67,11 @@ public class Liste {
         r_list.addAll(set);
         return r_list;
     }
+
+
+    /**
+     * funzione che rimuove i duplicati
+     */
     public void removeDuplicates_r_manuale(){
         List<r_rel> newList = new ArrayList<>();
         for (int i = 0; i < r_list.size(); i++) {
