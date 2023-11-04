@@ -21,9 +21,9 @@ public class ServerUS extends UnicastRemoteObject implements UserInterface{
     private static String port = "3307";        //5432
     private static String user = "root";
     private static String password = "1234";
-    private static final String URL_Icescrum = "jdbc:mysql://localhost:3307/icescrum";
+    private static final String URL_Icescrum = "jdbc:mysql://localhost:3307/icescrum"; // database iceScrum
 
-    private static final String URL_UserStoryDB = "jdbc:mysql://localhost:3307/userstorydb";
+    private static final String URL_UserStoryDB = "jdbc:mysql://localhost:3307/userstorydb"; // database del programma
 
     public static String REG_NAME ="";
 
@@ -39,7 +39,6 @@ public class ServerUS extends UnicastRemoteObject implements UserInterface{
             ServerUS obj = new ServerUS();
             System.setProperty("java.rmi.server.hostname", "192.168.1.101");
             Registry reg = LocateRegistry.createRegistry(1099);
-
             reg.rebind(REG_NAME,obj);
             System.out.println("Server ok");
 
@@ -50,12 +49,18 @@ public class ServerUS extends UnicastRemoteObject implements UserInterface{
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 connection_icescrum = DriverManager.getConnection(URL_Icescrum, user, password);
                 Statement statement_icescrum = connection_icescrum.createStatement();
-                ResultSet resultSet_1 = statement_icescrum.executeQuery("select description from is_story");
 
+                ResultSet resultSet_1 = statement_icescrum.executeQuery("select count(*) from is_story");
+                while (resultSet_1.next()) {
+                    System.out.println("User stories totali: "+ resultSet_1.getString(1));
+                    System.out.println("-----------");
+                }
+
+                /*ResultSet resultSet_1 = statement_icescrum.executeQuery("select description from is_story");
                 while (resultSet_1.next()){
                     System.out.println(resultSet_1.getString(1));
                     System.out.println("-----------");
-                }
+                }*/
 
                 connection_icescrum.close();
 

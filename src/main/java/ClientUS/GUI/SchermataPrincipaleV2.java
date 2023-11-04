@@ -252,7 +252,7 @@ public class SchermataPrincipaleV2 extends javax.swing.JFrame {
     // bottone genera
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,row_selezionata);
+    //    JOptionPane.showMessageDialog(null,row_selezionata);
 
         userStorySelected.print();
         ThreadNLP threadNLP = new ThreadNLP(userStorySelected,stub);
