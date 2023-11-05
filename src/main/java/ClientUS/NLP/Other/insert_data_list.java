@@ -199,12 +199,9 @@ public class insert_data_list {
 
     }
     public void insert_attribute(StoryBuilder a, Liste liste) throws SQLException, RemoteException {
-
         for(int i = 0;i<liste.getJJ_list().size();i++){
-
-
             stub.insertDDL_userStory("insert into attributi(nome_attributo, tipo_attributo, fileName_attributo) values ('"
-                    +liste.getJJ_list().get(0)+"','private','"+a.getId()+"');");
+                    +liste.getJJ_list().get(i)+"','private','"+a.getId()+"');");
         }
     }
 

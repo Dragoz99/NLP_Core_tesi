@@ -99,6 +99,11 @@ public class NLP implements RemoteListener {
                         liste.getVB_list().add(word);
                     }
 
+                    if(pos.equalsIgnoreCase("JJ") ){
+                        liste.getJJ_list().add(word);
+                        //NN_list.add(word);
+                    }
+
 
                 }
                 for(int i =0;i<liste.getNN_list().size();i++){
@@ -160,7 +165,7 @@ public class NLP implements RemoteListener {
                 System.out.println("-----R------");
                 liste.getrRelNew().print();
                 System.out.println("-----A------");
-                System.out.println(liste.getA_list());
+                System.out.println(liste.getJJ_list());
                 System.out.println("-----H------");
                 liste.print_h_list();
                 System.out.println("------------");
