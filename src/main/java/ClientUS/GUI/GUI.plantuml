@@ -1,0 +1,274 @@
+@startuml
+
+title __GUI's Class Diagram__\n
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.InputUserStory {
+          - DeleteBtn : JButton
+          - jButton1 : JButton
+          - jButton3 : JButton
+          - jList1 : JList<String>
+          - jPanel1 : JPanel
+          - jPanel2 : JPanel
+          - jScrollPane1 : JScrollPane
+          - jScrollPane2 : JScrollPane
+          - jTextArea1 : JTextArea
+          - model : DefaultListModel<String>
+          + InputUserStory()
+          {static} + main()
+          - DeleteBtnActionPerformed()
+          - initComponents()
+          - jButton1ActionPerformed()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.SchermataPrincipale {
+          - contentPane : JPanel
+          + SchermataPrincipale()
+          {static} + main()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.SchermataPrincipaleV2 {
+          - jButton1 : JButton
+          - jButton2 : JButton
+          - jButton3 : JButton
+          - jEditorPane1 : JEditorPane
+          - jPanel1 : JPanel
+          - jPanel2 : JPanel
+          - jScrollPane1 : JScrollPane
+          - jScrollPane2 : JScrollPane
+          - jTable1 : JTable
+          - row_selezionata : int
+          - text_story : JButton
+          + SchermataPrincipaleV2()
+          - initComponents()
+          - jButton1ActionPerformed()
+          - jButton2ActionPerformed()
+          - jButton3ActionPerformed()
+          - viewBtnActionPerformed()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.SchermataPrincipaleV2.ButtonEditor {
+          - label : String
+          + ButtonEditor()
+          + getCellEditorValue()
+          + getTableCellEditorComponent()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.SchermataPrincipaleV2.ButtonRenderer {
+          + ButtonRenderer()
+          + getTableCellRendererComponent()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.SearchTagUserStory {
+          - jButton1 : JButton
+          - jButton2 : JButton
+          - jButton3 : JButton
+          - jLabel1 : JLabel
+          - jList1 : JList<String>
+          - jScrollPane1 : JScrollPane
+          - jTextField1 : JTextField
+          + SearchTagUserStory()
+          {static} + main()
+          - jButton2ActionPerformed()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaCodice {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaCodicePlum {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaIMG {
+          + VisualizzaIMG()
+          {static} + main()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaListaFile {
+          ~ btn : JButton
+          ~ button : JButton
+          ~ indietro : JButton
+          - columnNames : String[]
+          - dataValues : String[][]
+          - scrollPane : JScrollPane
+          - scrollPane1 : JScrollPane
+          - table : JTable
+          - topPanel : JPanel
+          - topPanel1 : JPanel
+          + VisualizzaListaFile()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaListaFile.ButtonEditor {
+          - label : String
+          + ButtonEditor()
+          + getCellEditorValue()
+          + getTableCellEditorComponent()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaListaFile.ButtonEditor_IMG {
+          - label : String
+          + ButtonEditor_IMG()
+          + getCellEditorValue()
+          + getTableCellEditorComponent()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaListaFile.ButtonRenderer {
+          + ButtonRenderer()
+          + getTableCellRendererComponent()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaListaFile.ButtonRenderer_IMG {
+          + ButtonRenderer_IMG()
+          + getTableCellRendererComponent()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaListaFile.myTableModel {
+          ~ button : JButton
+          ~ dat : String
+          + isCellEditable()
+          ~ myTableModel()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaUserStory {
+          - jLabel1 : JLabel
+          - jLabel2 : JLabel
+          - jLabel3 : JLabel
+          - jLabel4 : JLabel
+          - jLabel5 : JLabel
+          - jLabel6 : JLabel
+          - jLabel7 : JLabel
+          - jLabel8 : JLabel
+          - jScrollPane1 : JScrollPane
+          - jTextArea1 : JTextArea
+          + VisualizzaUserStory()
+          - initComponents()
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.inputNewNameFile {
+          - jButton1 : JButton
+          - jButton2 : JButton
+          - jLabel1 : JLabel
+          - jTextField1 : JTextField
+          + inputNewNameFile()
+      }
+    }
+  }
+  
+
+  ClientUS.GUI.InputUserStory -up-|> javax.swing.JFrame
+  ClientUS.GUI.SchermataPrincipale -up-|> javax.swing.JFrame
+  ClientUS.GUI.SchermataPrincipaleV2 -up-|> javax.swing.JFrame
+  ClientUS.GUI.SchermataPrincipaleV2 o-- ServerUS.UserInterface : stub
+  ClientUS.GUI.SchermataPrincipaleV2 o-- ServerUS.StoryBuilder : userStorySelected
+  ClientUS.GUI.SchermataPrincipaleV2 +-down- ClientUS.GUI.SchermataPrincipaleV2.ButtonEditor
+  ClientUS.GUI.SchermataPrincipaleV2 +-down- ClientUS.GUI.SchermataPrincipaleV2.ButtonRenderer
+  ClientUS.GUI.SchermataPrincipaleV2.ButtonEditor -up-|> javax.swing.DefaultCellEditor
+  ClientUS.GUI.SchermataPrincipaleV2.ButtonRenderer .up.|> javax.swing.table.TableCellRenderer
+  ClientUS.GUI.SchermataPrincipaleV2.ButtonRenderer -up-|> javax.swing.JButton
+  ClientUS.GUI.SearchTagUserStory -up-|> javax.swing.JFrame
+  ClientUS.GUI.VisualizzaIMG -up-|> javax.swing.JFrame
+  ClientUS.GUI.VisualizzaListaFile -up-|> javax.swing.JFrame
+  ClientUS.GUI.VisualizzaListaFile +-down- ClientUS.GUI.VisualizzaListaFile.ButtonEditor
+  ClientUS.GUI.VisualizzaListaFile +-down- ClientUS.GUI.VisualizzaListaFile.ButtonEditor_IMG
+  ClientUS.GUI.VisualizzaListaFile +-down- ClientUS.GUI.VisualizzaListaFile.ButtonRenderer
+  ClientUS.GUI.VisualizzaListaFile +-down- ClientUS.GUI.VisualizzaListaFile.ButtonRenderer_IMG
+  ClientUS.GUI.VisualizzaListaFile +-down- ClientUS.GUI.VisualizzaListaFile.myTableModel
+  ClientUS.GUI.VisualizzaListaFile.ButtonEditor -up-|> javax.swing.DefaultCellEditor
+  ClientUS.GUI.VisualizzaListaFile.ButtonEditor_IMG -up-|> javax.swing.DefaultCellEditor
+  ClientUS.GUI.VisualizzaListaFile.ButtonRenderer .up.|> javax.swing.table.TableCellRenderer
+  ClientUS.GUI.VisualizzaListaFile.ButtonRenderer -up-|> javax.swing.JButton
+  ClientUS.GUI.VisualizzaListaFile.ButtonRenderer_IMG .up.|> javax.swing.table.TableCellRenderer
+  ClientUS.GUI.VisualizzaListaFile.ButtonRenderer_IMG -up-|> javax.swing.JButton
+  ClientUS.GUI.VisualizzaListaFile.myTableModel -up-|> javax.swing.table.DefaultTableModel
+  ClientUS.GUI.VisualizzaUserStory -up-|> javax.swing.JFrame
+  ClientUS.GUI.inputNewNameFile -up-|> javax.swing.JFrame
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

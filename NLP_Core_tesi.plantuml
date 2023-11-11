@@ -1,0 +1,428 @@
+@startuml
+
+title __NLP_CORE_TESI's Class Diagram__\n
+
+  namespace ClientUS {
+    namespace Builder {
+      class ClientUS.Builder.ClassBuilder {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    class ClientUS.ClientUS {
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.InputUserStory {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.SchermataPrincipale {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.SchermataPrincipaleV2 {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.SearchTagUserStory {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaCodice {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaCodicePlum {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaIMG {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaListaFile {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.VisualizzaUserStory {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace GUI {
+      class ClientUS.GUI.inputNewNameFile {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Interface_rule {
+        interface ClientUS.NLP.Interface_rule.AC_RULE {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Interface_rule {
+        interface ClientUS.NLP.Interface_rule.A_RULE {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Interface_rule {
+        interface ClientUS.NLP.Interface_rule.C_RULE {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Interface_rule {
+        interface ClientUS.NLP.Interface_rule.H_RULE {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Interface_rule {
+        interface ClientUS.NLP.Interface_rule.R_RULE {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      class ClientUS.NLP.Liste {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      class ClientUS.NLP.NLP {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Other {
+        class ClientUS.NLP.Other.Actor_of_story {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Other {
+        class ClientUS.NLP.Other.a_rel {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Other {
+        class ClientUS.NLP.Other.c_obj {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Other {
+        class ClientUS.NLP.Other.h_rel {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Other {
+        class ClientUS.NLP.Other.h_rel_new {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Other {
+        class ClientUS.NLP.Other.insert_data_list {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Other {
+        class ClientUS.NLP.Other.r_rel {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Other {
+        class ClientUS.NLP.Other.r_rel_new {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Other {
+        class ClientUS.NLP.Other.test_rimovi {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Rule_EX {
+        class ClientUS.NLP.Rule_EX.AC_EX {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Rule_EX {
+        class ClientUS.NLP.Rule_EX.A_EX {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Rule_EX {
+        class ClientUS.NLP.Rule_EX.C_EX {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Rule_EX {
+        class ClientUS.NLP.Rule_EX.H_EX {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Rule_EX {
+        class ClientUS.NLP.Rule_EX.H_EX {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      namespace Rule_EX {
+        class ClientUS.NLP.Rule_EX.R_EX {
+        }
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    namespace NLP {
+      class ClientUS.NLP.ThreadNLP {
+      }
+    }
+  }
+  
+
+  namespace ClientUS {
+    interface ClientUS.RemoteListener {
+    }
+  }
+  
+
+  namespace ServerUS {
+    namespace CheckObject {
+      class ServerUS.CheckObject.ServeReturnClassCheck {
+      }
+    }
+  }
+  
+
+  namespace ServerUS {
+    namespace CheckObject {
+      class ServerUS.CheckObject.ServerReturnObject {
+      }
+    }
+  }
+  
+
+  namespace ServerUS {
+    namespace CheckObject {
+      class ServerUS.CheckObject.ServerReturnRelaCheck {
+      }
+    }
+  }
+  
+
+  namespace ServerUS {
+    class ServerUS.ServerUS {
+    }
+  }
+  
+
+  namespace ServerUS {
+    class ServerUS.StoryBuilder {
+    }
+  }
+  
+
+  namespace ServerUS {
+    interface ServerUS.UserInterface {
+    }
+  }
+  
+
+  ClientUS.ClientUS .up.|> ClientUS.RemoteListener
+  ClientUS.GUI.InputUserStory -up-|> javax.swing.JFrame
+  ClientUS.GUI.SchermataPrincipale -up-|> javax.swing.JFrame
+  ClientUS.GUI.SchermataPrincipaleV2 -up-|> javax.swing.JFrame
+  ClientUS.GUI.SchermataPrincipaleV2 o-- ServerUS.UserInterface : stub
+  ClientUS.GUI.SchermataPrincipaleV2 o-- ServerUS.StoryBuilder : userStorySelected
+  ClientUS.GUI.SearchTagUserStory -up-|> javax.swing.JFrame
+  ClientUS.GUI.VisualizzaIMG -up-|> javax.swing.JFrame
+  ClientUS.GUI.VisualizzaListaFile -up-|> javax.swing.JFrame
+  ClientUS.GUI.VisualizzaUserStory -up-|> javax.swing.JFrame
+  ClientUS.GUI.inputNewNameFile -up-|> javax.swing.JFrame
+  ClientUS.NLP.Liste o-- ClientUS.NLP.Other.Actor_of_story : Actor_of_story
+  ClientUS.NLP.Liste o-- ClientUS.NLP.Other.h_rel_new : hRelNew
+  ClientUS.NLP.Liste o-- ClientUS.NLP.Other.r_rel_new : rRelNew
+  ClientUS.NLP.NLP .up.|> ClientUS.RemoteListener
+  ClientUS.NLP.NLP o-- ClientUS.NLP.Other.Actor_of_story : actor
+  ClientUS.NLP.Other.insert_data_list o-- ClientUS.NLP.Liste : liste
+  ClientUS.NLP.Other.insert_data_list o-- ServerUS.UserInterface : stub
+  ClientUS.NLP.Rule_EX.AC_EX .up.|> ClientUS.NLP.Interface_rule.AC_RULE
+  ClientUS.NLP.Rule_EX.AC_EX o-- ClientUS.NLP.Other.Actor_of_story : Actor_of_story
+  ClientUS.NLP.Rule_EX.AC_EX o-- ServerUS.UserInterface : stub
+  ClientUS.NLP.Rule_EX.A_EX .up.|> ClientUS.NLP.Interface_rule.A_RULE
+  ClientUS.NLP.Rule_EX.A_EX o-- ClientUS.NLP.Liste : liste
+  ClientUS.NLP.Rule_EX.C_EX .up.|> ClientUS.NLP.Interface_rule.C_RULE
+  ClientUS.NLP.Rule_EX.C_EX o-- ClientUS.NLP.Other.Actor_of_story : actorOfStory
+  ClientUS.NLP.Rule_EX.C_EX o-- ClientUS.NLP.Liste : list
+  ClientUS.NLP.Rule_EX.H_EX .up.|> ClientUS.NLP.Interface_rule.H_RULE
+  ClientUS.NLP.Rule_EX.H_EX o-- ClientUS.NLP.Other.h_rel : h
+  ClientUS.NLP.Rule_EX.H_EX o-- ClientUS.NLP.Other.h_rel_new : hRelNew
+  ClientUS.NLP.Rule_EX.H_EX o-- ClientUS.NLP.Liste : liste
+  ClientUS.NLP.Rule_EX.H_EX .up.|> ClientUS.NLP.Interface_rule.H_RULE
+  ClientUS.NLP.Rule_EX.H_EX o-- ClientUS.NLP.Other.h_rel : h
+  ClientUS.NLP.Rule_EX.H_EX o-- ClientUS.NLP.Liste : liste
+  ClientUS.NLP.Rule_EX.R_EX .up.|> ClientUS.NLP.Interface_rule.R_RULE
+  ClientUS.NLP.Rule_EX.R_EX o-- ClientUS.NLP.Other.Actor_of_story : Actor_of_story
+  ClientUS.NLP.Rule_EX.R_EX o-- ClientUS.NLP.Liste : liste
+  ClientUS.NLP.Rule_EX.R_EX o-- ClientUS.NLP.Other.r_rel_new : rRelNew
+  ClientUS.NLP.ThreadNLP .up.|> ClientUS.RemoteListener
+  ClientUS.NLP.ThreadNLP .up.|> java.lang.Runnable
+  ClientUS.NLP.ThreadNLP o-- ServerUS.StoryBuilder : storyBuilder
+  ClientUS.NLP.ThreadNLP o-- ServerUS.UserInterface : stub
+  ServerUS.CheckObject.ServeReturnClassCheck .up.|> java.io.Serializable
+  ServerUS.CheckObject.ServerReturnObject .up.|> java.io.Serializable
+  ServerUS.CheckObject.ServerReturnRelaCheck .up.|> java.io.Serializable
+  ServerUS.CheckObject.ServerReturnRelaCheck o-- ServerUS.StoryBuilder : storyBuilder
+  ServerUS.ServerUS .up.|> ServerUS.UserInterface
+  ServerUS.ServerUS -up-|> java.rmi.server.UnicastRemoteObject
+  ServerUS.StoryBuilder .up.|> java.io.Serializable
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

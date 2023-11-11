@@ -41,12 +41,17 @@ public class NLP implements RemoteListener {
     Collection<RelationTriple> triples;
     Scanner scan = new Scanner(System.in);
 
-
+    /**
+     * Costruttore principale che
+     * @param storyBuilder
+     * @param stub
+     * @throws IOException
+     * @throws SQLException
+     */
     public NLP(StoryBuilder storyBuilder,UserInterface stub) throws IOException, SQLException {
 
         this.stub = stub; // collegamento
         Liste liste = new Liste();
-
 
         // pre regole
         Properties props = new Properties();
@@ -54,7 +59,6 @@ public class NLP implements RemoteListener {
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
         //file
-
         this.NN_list = new ArrayList<String>();
         this.VB_list = new ArrayList<String>();
         actor = new Actor_of_story("");
@@ -145,8 +149,6 @@ public class NLP implements RemoteListener {
 
                 System.out.println("[---------------[R_RULES]---------------]");
                 R_EX r_ex = new R_EX(dependencies,liste,actor,List_coref);
-
-
 
                /* System.out.println("[---------------[A_RULES]---------------]");
                 A_EX a_ex = new A_EX(dependencies,liste);*/

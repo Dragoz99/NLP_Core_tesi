@@ -2,13 +2,6 @@ package ClientUS.NLP.Other;
 
 public class c_obj {
 
-
-
-    //--------------------------------------------------------------------------------------------------
-    // DESCRIZIONI VARIABILI:
-    // la variable cangiante:
-    // la variable index:
-    //--------------------------------------------------------------------------------------------------
     public String nome_cangiante;
     public String nome_index ;
 

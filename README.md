@@ -34,12 +34,13 @@ che contiene i comandi DDL per la creazione del database in MySQL.
 E' IMPORTANTE creare IL Database CON il nome "userstorydb".
 
 
+una volta creato il database bisogna inserire gli URL dei database all'interno
+della classe ServerUS nella line 24,26
+
 NOTE IMPORTANTI: 
 
 porta server : 1099
 porta client : 1100
-
-
 
 
 ---------------------------------------------------------------------

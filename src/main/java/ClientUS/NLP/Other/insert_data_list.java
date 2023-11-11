@@ -21,8 +21,16 @@ public class insert_data_list {
         this.liste=liste;
         this.stub=stub;
     }
-    public void insert_class(StoryBuilder storyBuilder, String name_index, String name_cangiante ) throws SQLException, RemoteException {
 
+    /**
+     * Funzione utilizzata per inserire i dati di una classe all'interno del database
+     * @param storyBuilder
+     * @param name_index
+     * @param name_cangiante
+     * @throws SQLException
+     * @throws RemoteException
+     */
+    public void insert_class(StoryBuilder storyBuilder, String name_index, String name_cangiante ) throws SQLException, RemoteException {
         stub.insertDDL_userStory("INSERT INTO class (class_name,class_filename_id,class_type,name_cangiante)" +
                     "VALUES('" + name_index +
                     "','" + storyBuilder.getId()+
@@ -31,6 +39,12 @@ public class insert_data_list {
             System.out.println("[Inserimento] "+name_index+" ," +name_cangiante + " : con successo");
     }
 
+    /**
+     * Funzione utilizzata per inserire i dati informativi del file all'interno del database
+     * @param storyBuilder
+     * @throws SQLException
+     * @throws RemoteException
+     */
     public void insert_filename(StoryBuilder storyBuilder) throws SQLException, RemoteException {
         String ddl = "select * from class;";
         ServerReturnObject a = new ServerReturnObject(storyBuilder);
@@ -77,7 +91,7 @@ public class insert_data_list {
 
         serverReturnObject.esegui_query(cc);
             if (!serverReturnObject.checkBoolean()) {
-                for (int i = 0; i < liste.getR_list().size(); i++) { // se è vuota come può riempire ???
+                for (int i = 0; i < liste.getR_list().size(); i++) {
 
                     String nome_class_1 = liste.getR_list().get(i).getClass_1();
                     String nome_class_2 = liste.getR_list().get(i).getClass_2();
@@ -93,9 +107,16 @@ public class insert_data_list {
                 }
             }
         }
-        // \(^-^)/
+
     }
 
+    /**
+     * Fuznione utilizzata per inserire i dati di una relazione all'interno del database
+     * @param a
+     * @param liste
+     * @throws SQLException
+     * @throws RemoteException
+     */
     public void insert_relazioni_new(StoryBuilder a, Liste liste) throws SQLException, RemoteException{
         ServerReturnObject serverReturnObject = new ServerReturnObject(a);
 
@@ -140,6 +161,13 @@ public class insert_data_list {
         // \(^-^)/
     }
 
+    /**
+     * Funzione utilizzata per inserire i dati relativi a una relazione gerarchica all'interno di un database
+     * @param a
+     * @param liste
+     * @throws SQLException
+     * @throws RemoteException
+     */
     public void insert_h_relazioni(StoryBuilder a, Liste liste) throws SQLException, RemoteException {
         ServerReturnObject serverReturnObject = new ServerReturnObject(a);
 
@@ -198,6 +226,14 @@ public class insert_data_list {
 
 
     }
+
+    /**
+     * Funzione per inserire tutti gli attributi all'interno del database.
+     * @param a
+     * @param liste
+     * @throws SQLException
+     * @throws RemoteException
+     */
     public void insert_attribute(StoryBuilder a, Liste liste) throws SQLException, RemoteException {
         for(int i = 0;i<liste.getJJ_list().size();i++){
             stub.insertDDL_userStory("insert into attributi(nome_attributo, tipo_attributo, fileName_attributo) values ('"
